@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AfterSecret.Models
 {
-    public class Member:BaseModel
+    public class BaseMember : BaseModel
     {
         [Required]
         [MaxLength(100)]

@@ -1,4 +1,5 @@
-﻿using Pingpp.Models;
+﻿using AfterSecret.Filter;
+using Pingpp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,16 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
+    [ApiAuthorize]
     public class RegisterController : BaseApiController
     {
         public IHttpActionResult Post([FromBody]string code)
         {
-            
-            return Ok();
+            var model = UW.AgentCodeListRepository.Get().Where(a => a.AgentCode == code).FirstOrDefault();
+            if (model != null)
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }

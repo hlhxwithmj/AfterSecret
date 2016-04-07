@@ -10,5 +10,12 @@ namespace AfterSecret.Models
         public int Id { get; set; }
 
         public bool IsValidate { get; set; }
+        public DateTime EditTime { get; set; }
+
+        public BaseModel()
+        {
+            IsValidate = true;
+            EditTime = DateTime.Now;
+        }
     }
 }
