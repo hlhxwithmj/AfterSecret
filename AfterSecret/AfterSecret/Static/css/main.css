@@ -13,3 +13,24 @@
 :-ms-input-placeholder {  
    text-align: center; 
 }
+
+input{
+    text-align:center;
+}
+
+.bg-star {
+    background-image: url('../image/bg.png');
+    height:100%;
+    width:100%;
+}
+
+html,body{
+    height:100%;
+    width:100%;
+    font-family:''
+}
+
+@font-face {
+    font-family: 'pen'; /*a name to be used later*/
+    src: url('http://domain.com/fonts/font.ttf'); /*URL to font*/
+}

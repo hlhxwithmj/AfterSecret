@@ -8,16 +8,22 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    [ApiAuthorize]
+    //[ApiAuthorize]
     public class RegisterController : BaseApiController
     {
-        public IHttpActionResult Post([FromBody]string code)
+        public IHttpActionResult Get(string code)
         {
             var model = UW.AgentCodeListRepository.Get().Where(a => a.AgentCode == code).FirstOrDefault();
+
             if (model != null)
                 return Ok();
             else
-                return BadRequest();
+            {
+                var ticket = UW.TicketRepository.Get().Where(a => a.Code == code).FirstOrDefault();
+                if (ticket != null)
+                    return Ok();
+            }
+            return BadRequest();
         }
     }
 }

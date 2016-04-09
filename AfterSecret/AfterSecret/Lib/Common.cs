@@ -143,5 +143,13 @@ namespace AfterSecret.Lib
             System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
+
+        public static string GenerateCredential(string openId)
+        {
+            TimeSpan s = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            long now = (long)s.TotalMilliseconds;
+
+            return Common.DesEncrypt(now.ToString() + openId);
+        }
     }
 }

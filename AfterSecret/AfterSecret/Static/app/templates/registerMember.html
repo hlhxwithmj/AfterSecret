@@ -1,0 +1,57 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <form role="form" novalidate="novalidate">
+                <label>Name</label>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="model.firstName" required placeholder="Fitst Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="model.lastName" required placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <input type="checkbox" data-on-text="M" data-off-text="F"
+                           checked name="gender" ng-checked="model.gender">
+                </div>
+                <div class="form-group">
+                    <label>Nationality</label>
+                    <select class="form-control" required ng-model="model.nationality">
+                        <option></option>
+                        <option>CN</option>
+                        <option>US</option>
+                        <option>HK</option>
+                        <option>UK</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input type="tel" maxlength="11" class="form-control" ng-model="model.mobile" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" ng-model="model.email" required>
+                </div>
+                <div class="form-group">
+                    <label>Wechat ID</label>
+                    <input type="text" class="form-control" ng-model="model.wechatID">
+                </div>
+                <div class="form-group">
+                    <label>Your Occupation</label>
+                    <input type="text" class="form-control" ng-model="model.occupation">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" checked> <a>Terms and Conditions</a>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-click="save()" class="btn btn-success btn-block">Accept and Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

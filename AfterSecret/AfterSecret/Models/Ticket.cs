@@ -12,7 +12,8 @@ namespace AfterSecret.Models
 
         public virtual Purchase Purchase { get; set; }
 
-        [Range(80000000000, 89999999999)]
-        public long Code { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Code { get; set; }
     }
 }

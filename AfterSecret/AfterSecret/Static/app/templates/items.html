@@ -1,0 +1,26 @@
+﻿<div class="col-md-12">
+    <div ng-repeat="item in model track by $index">
+        <div class="col-md2">
+            <img />
+        </div>
+        <div class="col-md8">
+            <span ng-bind="item.name"></span>
+            <span ng-bind="'￥'+item.unitPrice*item.factor"></span>
+            <span ng-bind="item.remark"></span>
+        </div>
+        <div class="col-md2">
+            <select ng-model="item.count">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+        <span ng-bind="total"></span>
+        <button type="submit" ng-click="skip()" class="btn btn-success">skip</button>
+        <button type="submit" ng-click="confirm()" class="btn btn-success">confirm</button>
+    </div>
+</div>

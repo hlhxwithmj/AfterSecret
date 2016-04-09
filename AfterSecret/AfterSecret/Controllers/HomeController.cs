@@ -76,9 +76,12 @@ namespace AfterSecret.Controllers
         {
             if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(state))
             {
-                ViewBag.openId = WxPubUtils.GetOpenId(PayConfig.APPID, PayConfig.APPSECRET, code);
-                ViewBag.state = state;
-                return RedirectToAction("Default", path);
+                Session["openIdForPay"] = WxPubUtils.GetOpenId(PayConfig.APPID, PayConfig.APPSECRET, code);//服务号openId
+                Session["openId"] = Common.DesEncrypt(state);//订阅号openId
+                Session["token"] = Common.GenerateCredential(state);//token
+                Session["path"] = path;
+
+                return RedirectToAction("Default");
             }
             else
             {
@@ -86,9 +89,15 @@ namespace AfterSecret.Controllers
             }
         }
 
-        public ActionResult Default(string path = null)
+        public ActionResult Default()
         {
-            return View(path);
+            ViewBag.openIdForPay = Session["openIdForPay"];
+            ViewBag.openId = Session["openId"];//订阅号openId
+            ViewBag.token = Session["token"];//订阅号openId
+            ViewBag.path = Session["path"];
+            Session.Abandon();
+
+            return View();
         }
 
         /// <summary>
@@ -178,7 +187,7 @@ namespace AfterSecret.Controllers
                     break;
             }
             url = @"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + PayConfig.APPID
-                + "&redirect_uri=" + HttpUtility.UrlEncode(SubscribeConfig.DOMAIN + "/Home/Oauth2?path" + path)
+                + "&redirect_uri=" + HttpUtility.UrlEncode(SubscribeConfig.DOMAIN + "/Home/Oauth2?path=" + path)
                 + "&response_type=code&scope=snsapi_base&state=" + openId + "#wechat_redirect";
             log.Warn(url);
             result = new News()

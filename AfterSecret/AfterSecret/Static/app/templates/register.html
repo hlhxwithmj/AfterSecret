@@ -6,11 +6,9 @@
                 <div class="form-group">
                     <center>Welcome</center>
                     <img src="/Static/image/secret.png" style="width:100%;" />
-                    <input type="text" required name="code" class="form-control" placeholder="Agent Code" style="text-align: center;" ng-model="code">
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" ng-click="check()" class="btn btn-success btn-block">Submit</button>
+                    <input type="number" pattern="[0-9]*" required name="code" class="form-control"
+                           placeholder="Agent Code" style="text-align: center;"
+                           ng-model="code" ng-change="check()" ng-disabled="disabled">
                 </div>
             </form>
         </div>

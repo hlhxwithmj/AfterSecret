@@ -8,9 +8,13 @@
                templateUrl: "/static/app/templates/terms.html",
                controller: 'termsCtrl'
            });
-           $routeProvider.when("/member", {
-               templateUrl: "/static/app/templates/member.html",
-               controller: 'memberCtrl'
+           $routeProvider.when("/registerMember", {
+               templateUrl: "/static/app/templates/registerMember.html",
+               controller: 'registerMemberCtrl'
+           });
+           $routeProvider.when("/items", {
+               templateUrl: "/static/app/templates/items.html",
+               controller: 'itemsCtrl'
            });
            $routeProvider.otherwise("/register", {
                templateUrl: "/static/app/templates/register.html",

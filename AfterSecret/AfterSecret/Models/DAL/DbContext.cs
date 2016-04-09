@@ -47,6 +47,8 @@ namespace AfterSecret.Models.DAL
     {
         protected override void Seed(ASDbContext db)
         {
+
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON AgentCodeList(AgentCode)");
             db.Item.Add(new Item()
             {
                 Factor = 5,
@@ -92,9 +94,9 @@ namespace AfterSecret.Models.DAL
             });
             for (int i = 0; i < 20; i++)
             {
-                Random generator = new Random();
-                generator.Next(1, int.MaxValue).ToString("D10");
-                db.AgentCodeList.Add(new AgentCodeList() { AgentCode = SubscribeConfig._seedUser_Prefix + generator.ToString() });
+                Random generator = new Random(i);
+                var n = generator.Next(1, int.MaxValue).ToString("D10");
+                db.AgentCodeList.Add(new AgentCodeList() { AgentCode = SubscribeConfig._seedUser_Prefix + n });              
             }
 
             db.SaveChanges();
