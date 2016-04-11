@@ -14,6 +14,6 @@ namespace AfterSecret.Models
 
         [Required]
         [MaxLength(50)]
-        public string Code { get; set; }
+        public string TicketCode { get; set; }
     }
 }

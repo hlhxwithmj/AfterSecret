@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AfterSecret.Models.Constant;
+using AfterSecret.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +26,19 @@ namespace AfterSecret.Models
         public decimal UnitPrice { get; set; }
 
         public int Total { get; set; }
-        public int Remain { get; set; }
+        public int Remain
+        {
+            get
+            {
+                using (var uw = new UnitOfWork())
+                {
+                    return Total - uw.PurchaseRepository.Get()
+                        .Where(a => a.Order.OrderStatus != OrderStatus.Expired
+                            && a.Order.OrderStatus != OrderStatus.Failed).Where(a => a.ItemId == Id)
+                            .Select(a => a.Quantity).ToList().Sum();
+                }
+            }
+        }
 
         public int Order { get; set; }
     }

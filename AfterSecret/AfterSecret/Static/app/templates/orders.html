@@ -1,0 +1,14 @@
+﻿<div ng-repeat="m in model track by $index">
+    <div>
+        <span ng-bind="m.order_no"></span>
+        <span ng-bind="m.amount"></span>
+        <span ng-bind="m.orderStatus"></span>
+    </div>
+    <div ng-repeat="item in m.items">
+        <div>
+            <span ng-bind="item.name"></span>
+            <span ng-bind="item.quantity"></span>
+            <span ng-bind="item.price"></span>
+        </div>
+    </div>
+</div>

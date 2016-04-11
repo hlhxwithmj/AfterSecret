@@ -27,10 +27,15 @@ input{
 html,body{
     height:100%;
     width:100%;
-    font-family:''
+    font-family:'Helvetica','Penguin Sans 0.500';
+    color: white;
+}
+
+.number{
+    font-family:'Helvetica';
 }
 
 @font-face {
-    font-family: 'pen'; /*a name to be used later*/
-    src: url('http://domain.com/fonts/font.ttf'); /*URL to font*/
+    font-family: 'Penguin Sans 0.500';
+    src: url('../fonts/Penguin Sans 0.500.ttf') format('truetype');
 }

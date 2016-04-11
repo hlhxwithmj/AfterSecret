@@ -30,6 +30,9 @@ namespace AfterSecret.Lib
     public class PingConfig
     {
         public const string APPID = "app_4G0GS0eH4uPSDqv9";
+        public const string TESTSECRETKEY = "sk_test_eDWfj5T88yT4jvz5m9yLSyDG";
+        public const string LIVESECRETKEY = "sk_live_TyTOyLWHyPK8jHSWb9nDOSWH";
+        public const string SUBJECT = "Secret Dinner";
     }
 }
 

@@ -16,8 +16,30 @@
                templateUrl: "/static/app/templates/items.html",
                controller: 'itemsCtrl'
            });
+           $routeProvider.when("/orders", {
+               templateUrl: "/static/app/templates/orders.html",
+               controller: 'ordersCtrl'
+           });
+           $routeProvider.when("/pay", {
+               templateUrl: "/static/app/templates/pay.html",
+               controller: 'payCtrl'
+           });
            $routeProvider.otherwise("/register", {
                templateUrl: "/static/app/templates/register.html",
                controller: 'registerCtrl'
            });
-       });
+       })
+.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($q, $location) {
+        return {
+            'responseError': function (rejection) {
+                var defer = $q.defer();
+                if (rejection.status == 401) {
+                    $location.path("/unauthorized");
+                }
+                defer.reject(rejection);
+                return defer.promise;
+            }
+        };
+    });
+}]);

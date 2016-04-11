@@ -1,2 +1,33 @@
 2016-04-08 16:54:32,972 [47] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - 
 2016-04-08 16:55:01,711 [46] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - 
+2016-04-10 23:47:16,530 [53] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.OrderController.Post(List`1 model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 30
+2016-04-10 23:47:22,861 [46] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.OrderController.Post(List`1 model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 30
+2016-04-10 23:48:07,863 [53] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.OrderController.Post(List`1 model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 30
+2016-04-11 12:00:07,696 [42] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.RegisterMemberController.Post(RegisterMemberVM model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\RegisterMemberController.cs:行号 50
+2016-04-11 12:15:45,404 [70] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.RegisterMemberController.Post(RegisterMemberVM model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\RegisterMemberController.cs:行号 50
+2016-04-11 12:16:33,843 [72] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - {AfterSecret.Models.ViewModel.CheckoutList, AfterSecret.Models.ViewModel.CheckoutList, AfterSecret.Models.ViewModel.CheckoutList, AfterSecret.Models.ViewModel.CheckoutList}
+2016-04-11 12:16:33,885 [72] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.Data.Entity.Validation.DbEntityValidationException: Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+   在 System.Data.Entity.Internal.InternalContext.SaveChanges()
+   在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   在 System.Data.Entity.DbContext.SaveChanges()
+   在 AfterSecret.APIControllers.OrderController.Post(List`1 model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 31

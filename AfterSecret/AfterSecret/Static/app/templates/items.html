@@ -1,14 +1,14 @@
-﻿<div class="col-md-12">
+﻿<div class="col-md-12 number" ng-hide="isConfirmed">
     <div ng-repeat="item in model track by $index">
-        <div class="col-md2">
+        <div class="col-md-2">
             <img />
         </div>
-        <div class="col-md8">
+        <div class="col-md-8 number">
             <span ng-bind="item.name"></span>
             <span ng-bind="'￥'+item.unitPrice*item.factor"></span>
             <span ng-bind="item.remark"></span>
         </div>
-        <div class="col-md2">
+        <div class="col-md-2" style="color:black;">
             <select ng-model="item.count">
                 <option>0</option>
                 <option>1</option>
@@ -19,8 +19,34 @@
     </div>
 
     <div>
-        <span ng-bind="total"></span>
+        <span>total:</span>
+        <span class="number" ng-bind="total"></span>
+    </div>
+    <div>
         <button type="submit" ng-click="skip()" class="btn btn-success">skip</button>
         <button type="submit" ng-click="confirm()" class="btn btn-success">confirm</button>
+    </div>
+</div>
+<div class="col-md-12" ng-show="isConfirmed">
+    <div ng-repeat="item in model | filter:greaterThan('count', 0)" track by $index">
+        <div class="col-md-8 number">
+            <span ng-bind="item.name"></span>
+            <span ng-bind="item.remark"></span>
+        </div>
+        <div class="col-md-2" style="color:black;">
+            <span ng-bind="item.count"></span>
+            <span ng-bind="'￥'+item.unitPrice*item.factor*item.count"></span>
+        </div>
+    </div>
+    <div>
+        <span>total:</span>
+        <span class="number" ng-bind="total"></span>
+    </div>
+    <div>
+        <span>支付剩余时间:</span>
+        <span class="number" ng-bind="time_remain"></span>
+    </div>
+    <div>
+        <button type="submit" ng-click="pay()" class="btn btn-success">pay</button>
     </div>
 </div>

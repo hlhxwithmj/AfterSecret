@@ -1,14 +1,20 @@
 ﻿using AfterSecret.Lib;
+using AfterSecret.Models.DAL;
 using AfterSecret.Models.ViewModel;
 using log4net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Pingpp;
+using Pingpp.Models;
 using Pingpp.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -20,6 +26,7 @@ namespace AfterSecret.Controllers
     public class HomeController : Controller
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(HomeController).FullName);
+
         public void Index()
         {
             //判断是否来自于微信                       
@@ -72,11 +79,106 @@ namespace AfterSecret.Controllers
             }
         }
 
+        public ActionResult WebHooks()
+        {
+            log.Warn("start");
+            if (Request.HttpMethod == "POST")
+            {
+                //获取 post 的 event 对象
+                string inputData = ReadStream(Request.InputStream);
+
+                //获取 header 中的签名
+                string sig = Request.Headers.Get("x-pingplusplus-signature");
+
+                //公钥路径（请检查你的公钥 .pem 文件存放路径）
+                string pem = @"-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsX1iZl5uQXbIMxugTaED
+9fqZNpiJ4ggAyMApQmlr0ZDh7/VfEvsosx5BJtnGRukTTQwybTv9FhMzgYrH6x4r
+HQICh46s3VVsZa9VDugFQCP49z4pt+zXvA7QtEo44ElT3e/WLHj0yU9LIcJ0cP+r
+5mrpTRz+sQUMNiEuh8S9Em8Yw8GzwOY9fVcDcWLAMU7/6nrJI6KwrrhroTlMU5YO
+QVom8p1XLNdcWh0sLbQTNlBh5RzsvFVIQrFMxuReY7ma/mJIKN3xkSAIAV5sBNbG
+lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
+5wIDAQAB
+-----END PUBLIC KEY-----
+";
+
+                //验证签名
+                string result = VerifySignedHash(inputData, sig, pem);
+
+                var jObject = JObject.Parse(inputData);
+                var type = jObject.SelectToken("type");
+                if (type.ToString() == "charge.succeeded")
+                {
+                    // TODO what you need do    
+                    var chargeId = jObject["data"]["object"]["id"].Value<string>();
+                    Common.OrderSucceeded(chargeId);
+                    log.Warn("end");
+                    Response.StatusCode = 200;
+                }
+                else
+                {
+                    // TODO what you need do
+                    Response.StatusCode = 500;
+                }
+            }
+            
+            return Content("");
+        }
+
+        private static string ReadStream(Stream stream)
+        {
+            using (var reader = new StreamReader(stream, Encoding.UTF8))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+
+        public static string ReadFileToString(string path)
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+
+        public static string VerifySignedHash(string str_DataToVerify, string str_SignedData, string pem)
+        {
+            byte[] SignedData = Convert.FromBase64String(str_SignedData);
+
+            ASCIIEncoding ByteConverter = new ASCIIEncoding();
+            byte[] DataToVerify = ByteConverter.GetBytes(str_DataToVerify);
+            try
+            {
+                string sPublicKeyPEM = pem;
+                RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+
+                rsa.PersistKeyInCsp = false;
+                rsa.LoadPublicKeyPEM(pem);
+
+                if (rsa.VerifyData(DataToVerify, "SHA256", SignedData))
+                {
+                    return "verify success";
+                }
+                else
+                {
+                    return "verify fail";
+                }
+
+            }
+            catch (CryptographicException e)
+            {
+                log.Warn(e);
+                return "verify error";
+            }
+        }
+
+
         public ActionResult Oauth2(string path = null, string code = null, string state = null)
         {
             if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(state))
             {
-                Session["openIdForPay"] = WxPubUtils.GetOpenId(PayConfig.APPID, PayConfig.APPSECRET, code);//服务号openId
+                Session["openIdForPay"] = Common.DesEncrypt(WxPubUtils.GetOpenId(PayConfig.APPID, PayConfig.APPSECRET, code));//服务号openId
                 Session["openId"] = Common.DesEncrypt(state);//订阅号openId
                 Session["token"] = Common.GenerateCredential(state);//token
                 Session["path"] = path;

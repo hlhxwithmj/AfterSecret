@@ -19,7 +19,7 @@ namespace AfterSecret.APIControllers
                 return Ok();
             else
             {
-                var ticket = UW.TicketRepository.Get().Where(a => a.Code == code).FirstOrDefault();
+                var ticket = UW.TicketRepository.Get().Where(a => a.TicketCode == code).FirstOrDefault();
                 if (ticket != null)
                     return Ok();
             }

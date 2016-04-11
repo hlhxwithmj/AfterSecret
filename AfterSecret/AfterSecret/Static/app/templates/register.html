@@ -6,7 +6,7 @@
                 <div class="form-group">
                     <center>Welcome</center>
                     <img src="/Static/image/secret.png" style="width:100%;" />
-                    <input type="number" pattern="[0-9]*" required name="code" class="form-control"
+                    <input type="number" pattern="[0-9]*" required name="code" ng-class={'form-control':true,'number':isEmpty}
                            placeholder="Agent Code" style="text-align: center;"
                            ng-model="code" ng-change="check()" ng-disabled="disabled">
                 </div>

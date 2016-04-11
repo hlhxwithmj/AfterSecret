@@ -1,22 +1,27 @@
 ﻿using AfterSecret.Models;
 using AfterSecret.Models.DAL;
+using AfterSecret.Models.ViewModel;
+using log4net;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 
 namespace AfterSecret.Lib
 {
     public class Common
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Common).FullName);
         public static int ConvertToTimestamp(DateTime value)
         {
             TimeSpan span = (value - new DateTime(1970, 1, 1, 0, 0, 0, 0).ToLocalTime());
             return (int)span.TotalSeconds;
         }
-        
+
         public static string get_AccessToken(string appID, string appsecret)
         {
             using (var uw = new UnitOfWork())
@@ -150,6 +155,46 @@ namespace AfterSecret.Lib
             long now = (long)s.TotalMilliseconds;
 
             return Common.DesEncrypt(now.ToString() + openId);
+        }
+
+        public static string GenerateOrderNo()
+        {
+            TimeSpan s = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
+            long now = (long)s.TotalMilliseconds;
+            Random r = new Random();
+            var postfix = r.Next(10, 99);
+            return now.ToString() + postfix.ToString();
+        }
+
+        public static string GetChargeBody(List<Item> list, List<CheckoutList> checkout)
+        {
+            var result = string.Empty;
+            list.ForEach(a =>
+            {
+                var count = checkout.Where(b => b.Id == a.Id).Where(b => b.Count > 0).Select(b => b.Count).FirstOrDefault();
+                if (count > 0)
+                    result = result + a.Name + " * " +
+                         count + ";";
+            });
+            return result.Length > 128 ? result.Substring(0, 128) : result;
+        }
+
+        public static void OrderSucceeded(string chargeId)
+        {
+            try
+            {
+                using (var uw = new UnitOfWork())
+                {
+                    var model = uw.OrderRepository.Get(false).Where(a => a.ChargeId == chargeId).SingleOrDefault();
+                    model.OrderStatus = Models.Constant.OrderStatus.Paid;
+                    model.PaidTime = DateTime.Now;
+                    uw.context.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                log.Warn(ex);
+            }
         }
     }
 }

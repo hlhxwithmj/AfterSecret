@@ -28,7 +28,7 @@ namespace AfterSecret.Models.DAL
                 result = result.Where(a => a.IsValidate == true);
             }
 
-            if (!noTrack)
+            if (noTrack)
             {
                 return result.AsNoTracking();
             }

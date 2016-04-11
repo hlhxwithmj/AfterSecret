@@ -28,6 +28,12 @@
                 data: model
             });
         };
+        _service.doGet = function () {
+            return $http({
+                method: 'get',
+                url: '/api/RegisterMember'
+            });
+        };
         return _service;
     }])
     .factory("itemsService", ['$http', function ($http) {
@@ -36,6 +42,32 @@
             return $http({
                 method: 'get',
                 url: '/api/Items'
+            });
+        };
+        _service.doSave = function (items) {
+            return $http({
+                method: 'post',
+                url: '/api/Order',
+                data: JSON.stringify(items),
+            });
+        };
+        return _service;
+    }])
+    .factory("orderService", ['$http', function ($http) {
+        var _service = {};
+        _service.doGet = function () {
+            return $http({
+                method: 'get',
+                url: '/api/Order'
+            });
+        };
+        _service.doCheck = function (status) {
+            return $http({
+                method: 'get',
+                url: '/api/Order',
+                params: {
+                    status: status
+                }
             });
         };
         return _service;

@@ -21,8 +21,6 @@ namespace AfterSecret.Models.DAL
 
         public DbSet<AccessToken> AccessToken { get; set; }
 
-        public DbSet<Charge> Charge { get; set; }
-
         public DbSet<Order> Order { get; set; }
 
         public DbSet<Invitation> Invitation { get; set; }
@@ -39,7 +37,7 @@ namespace AfterSecret.Models.DAL
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            modelBuilder.Entity<Charge>().Property(x => x.Amount).HasPrecision(18, 2);
+            modelBuilder.Entity<Order>().Property(x => x.Amount).HasPrecision(18, 2);
         }
     }
 
@@ -47,16 +45,17 @@ namespace AfterSecret.Models.DAL
     {
         protected override void Seed(ASDbContext db)
         {
-
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON AgentCodeList(AgentCode)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Order](Order_No)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [RegisterMember](OpenId)");
+
             db.Item.Add(new Item()
             {
                 Factor = 5,
                 Name = "5人卡座",
-                Remain = 100,
                 Remark = "5个座位",
                 Total = 100,
-                UnitPrice = 100,
+                UnitPrice = 10,
                 Order = 10
             });
 
@@ -64,10 +63,9 @@ namespace AfterSecret.Models.DAL
             {
                 Factor = 3,
                 Name = "3人卡座",
-                Remain = 100,
                 Remark = "3个座位",
                 Total = 200,
-                UnitPrice = 200,
+                UnitPrice = 11,
                 Order = 20
             });
 
@@ -75,10 +73,9 @@ namespace AfterSecret.Models.DAL
             {
                 Factor = 1,
                 Name = "葡萄酒",
-                Remain = 500,
                 Remark = "原产地法国",
                 Total = 500,
-                UnitPrice = 80,
+                UnitPrice = 12,
                 Order = 30
             });
 
@@ -86,10 +83,9 @@ namespace AfterSecret.Models.DAL
             {
                 Factor = 1,
                 Name = "鸡尾酒",
-                Remain = 700,
                 Remark = "现场制作",
                 Total = 700,
-                UnitPrice = 120,
+                UnitPrice = 13,
                 Order = 40
             });
             for (int i = 0; i < 20; i++)
@@ -100,6 +96,7 @@ namespace AfterSecret.Models.DAL
             }
 
             db.SaveChanges();
+            //db.Database.ExecuteSqlCommand("ALTER DATABASE secret SET ALLOW_SNAPSHOT_ISOLATION ON");
         }
     }
 }

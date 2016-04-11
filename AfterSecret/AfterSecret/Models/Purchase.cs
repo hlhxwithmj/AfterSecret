@@ -13,10 +13,10 @@ namespace AfterSecret.Models
         public int ItemId { get; set; }
         public virtual Item Item { get; set; }
 
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
 
         //剩余
-        public decimal Remain { get; set; }
+        public int Remain { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

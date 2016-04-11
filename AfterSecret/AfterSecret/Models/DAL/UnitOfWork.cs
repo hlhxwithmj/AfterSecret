@@ -30,14 +30,14 @@ namespace AfterSecret.Models.DAL
             }
         }
 
-        private GenericRepository<Charge> charge { get; set; }
-        public GenericRepository<Charge> ChargeRepository
+        private GenericRepository<Order> order { get; set; }
+        public GenericRepository<Order> OrderRepository
         {
             get
             {
-                if (charge == null)
-                    charge = new GenericRepository<Charge>(this, context);
-                return charge;
+                if (order == null)
+                    order = new GenericRepository<Order>(this, context);
+                return order;
             }
         }
 
@@ -63,16 +63,6 @@ namespace AfterSecret.Models.DAL
             }
         }
 
-        private GenericRepository<Order> order { get; set; }
-        public GenericRepository<Order> OrderRepository
-        {
-            get
-            {
-                if (order == null)
-                    order = new GenericRepository<Order>(this, context);
-                return order;
-            }
-        }
 
         private GenericRepository<Purchase> purchase { get; set; }
         public GenericRepository<Purchase> PurchaseRepository
