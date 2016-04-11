@@ -23,8 +23,6 @@ namespace AfterSecret.Models.DAL
 
         public DbSet<Order> Order { get; set; }
 
-        public DbSet<Invitation> Invitation { get; set; }
-
         public DbSet<Item> Item { get; set; }
         public DbSet<Purchase> Purchase { get; set; }
 
@@ -48,7 +46,7 @@ namespace AfterSecret.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON AgentCodeList(AgentCode)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Order](Order_No)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [RegisterMember](OpenId)");
-
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Purchase](TicketCode)");
             db.Item.Add(new Item()
             {
                 Factor = 5,
@@ -56,7 +54,8 @@ namespace AfterSecret.Models.DAL
                 Remark = "5个座位",
                 Total = 100,
                 UnitPrice = 10,
-                Order = 10
+                Order = 10,
+                NeedInvite = true
             });
 
             db.Item.Add(new Item()
@@ -66,7 +65,8 @@ namespace AfterSecret.Models.DAL
                 Remark = "3个座位",
                 Total = 200,
                 UnitPrice = 11,
-                Order = 20
+                Order = 20,
+                NeedInvite = true
             });
 
             db.Item.Add(new Item()
@@ -92,7 +92,7 @@ namespace AfterSecret.Models.DAL
             {
                 Random generator = new Random(i);
                 var n = generator.Next(1, int.MaxValue).ToString("D10");
-                db.AgentCodeList.Add(new AgentCodeList() { AgentCode = SubscribeConfig._seedUser_Prefix + n });              
+                db.AgentCodeList.Add(new AgentCodeList() { AgentCode = SubscribeConfig._seedUser_Prefix + n });
             }
 
             db.SaveChanges();

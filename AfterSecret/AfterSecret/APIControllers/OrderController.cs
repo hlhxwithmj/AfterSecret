@@ -19,7 +19,7 @@ namespace AfterSecret.APIControllers
         public IHttpActionResult Post([FromBody]List<CheckoutList> model)
         {
             var created = UW.OrderRepository.Get().Where(a => a.OrderStatus == Models.Constant.OrderStatus.Created).Count();
-            if(created > 0)
+            if (created > 0)
             {
                 return BadRequest("needtopay");
             }
@@ -28,7 +28,7 @@ namespace AfterSecret.APIControllers
             var total = items.Sum(a => a.UnitPrice * a.Factor * (model.Where(b => b.Id == a.Id).SingleOrDefault().Count));
             var charge = new Order(total, Common.GetChargeBody(items, model), HttpContext.Current.Request.UserHostAddress, OpenId, openIdForPay);
             try
-            {              
+            {
                 Charge c = Charge.Create(charge.Param);
                 using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
                 {
@@ -43,7 +43,7 @@ namespace AfterSecret.APIControllers
                                 ItemId = m.Id,
                                 OrderId = charge.Id,
                                 Quantity = m.Count,
-                                Remain = m.Count
+                                TicketCode = Common.GenerateTicketCode()
                             });
                     }
                     UW.context.SaveChanges();
@@ -65,12 +65,34 @@ namespace AfterSecret.APIControllers
 
         public IHttpActionResult Get()
         {
-            var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList();
-            return Ok(result);
+            try
+            {
+                var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList()
+                    .Select(a => new OrderVM()
+                    {
+                        amount = a.Amount,
+                        order_no = a.Order_No,
+                        orderStatus = a.OrderStatus,
+                        purchases = a.Purchases.Select(b => new PurchaseVM()
+                        {
+                            name = b.Item.Name,
+                            remark = b.Item.Remark,
+                            quantity = b.Quantity,
+                            amount = b.Item.UnitPrice * b.Item.Factor * b.Quantity
+                        }).ToList()
+                    });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                log.Warn(ex);
+                return BadRequest();
+            }
         }
 
         public IHttpActionResult Get(string status)
         {
+            log.Warn("status");
             var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId);
             int count = 0;
             if (status == "created")

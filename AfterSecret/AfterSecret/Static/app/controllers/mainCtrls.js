@@ -1,12 +1,12 @@
 ﻿angular.module("WeChat.Controllers", ["WeChat.Services"])
-    .controller("MainCtrl", function ($scope, $http, httpRequestTracker) {
+    .controller("MainCtrl", function ($scope, $location, $http, httpRequestTracker) {
         $scope.hasPendingRequests = function () {
             return httpRequestTracker.hasPendingRequests();
         };
         $http.defaults.headers.common['token'] = window.sessionStorage["token"];
         $http.defaults.headers.common['openId'] = window.sessionStorage["openId"];
-        $http.defaults.headers.common['path'] = window.sessionStorage["path"];
         $http.defaults.headers.common['openIdForPay'] = window.sessionStorage["openIdForPay"];
+        $location.path('/' + window.sessionStorage["path"]);
     })
     .controller('registerCtrl', function ($rootScope, $scope, $location, registerService) {
         $('form').validator();
@@ -134,17 +134,20 @@
             $location.path('/items');
     })
     .controller('ordersCtrl', function ($rootScope, $scope, $location, orderService) {
-        alert('order');
+        $rootScope.bg = "bg-star";
         $scope.model = [];
         orderService.doGet().success(function (data) {
-            angular.forEach(data, function (item, index) {
-                $scope.model.push({
-                    order_no: item.Order_No,
-                    amount: item.Amount,
-                    orderStatus: item.OrderStatus == 10 ? 'created' : item.OrderStatus == 20 ? 'paid'
-                        : item.OrderStatus == 30 ? 'failed' : 'expired',
-                    items: item.items
-                });
-            });
+            $scope.model = data;
+        }).error(function () { });
+
+        $scope.invite = function () {
+            $location.path('/invite');
+        };
+    })
+    .controller('inviteCtrl', function ($rootScope, $scope, $location, orderService) {
+        $rootScope.bg = "bg-star";
+        $scope.model = [];
+        orderService.doGet().success(function (data) {
+            $scope.model = data;
         }).error(function () { });
     });

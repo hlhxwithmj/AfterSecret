@@ -278,11 +278,20 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             {
                 case SubscribeConfig.mREGISTER:
                     path = "register";
-                    description = "test";
+                    description = "register";
                     picUrl = "a";
-                    title = "标题";
+                    title = "register";
                     break;
                 case SubscribeConfig.mPURCHASE:
+
+                    break;
+                case SubscribeConfig.myPURCHASE:
+                    path = "orders";
+                    description = "orders";
+                    picUrl = "a";
+                    title = "orders";
+                    break;
+                case SubscribeConfig.myTICKET:
 
                     break;
                 default:

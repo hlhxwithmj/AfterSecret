@@ -1,5 +1,6 @@
 ﻿using AfterSecret.Models.Constant;
 using AfterSecret.Models.DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,19 +14,26 @@ namespace AfterSecret.Models
     {
         [Required]
         [MaxLength(100)]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         [Required]
         [MaxLength(200)]
+        [JsonProperty("remark")]
         public string Remark { get; set; }
 
         //系数
         [DefaultValue(1.00)]
+        [JsonProperty("factor")]
         public decimal Factor { get; set; }
 
+        [JsonProperty("unitPrice")]
         public decimal UnitPrice { get; set; }
 
+        [JsonProperty("total")]
         public int Total { get; set; }
+
+        [JsonProperty("remain")]
         public int Remain
         {
             get
@@ -33,13 +41,17 @@ namespace AfterSecret.Models
                 using (var uw = new UnitOfWork())
                 {
                     return Total - uw.PurchaseRepository.Get()
-                        .Where(a => a.Order.OrderStatus != OrderStatus.Expired
-                            && a.Order.OrderStatus != OrderStatus.Failed).Where(a => a.ItemId == Id)
+                        .Where(a => a.Order.OrderStatus == OrderStatus.Created
+                            || a.Order.OrderStatus == OrderStatus.Paid).Where(a => a.ItemId == Id)
                             .Select(a => a.Quantity).ToList().Sum();
                 }
             }
         }
 
+        [JsonProperty("order")]
         public int Order { get; set; }
+
+        [JsonProperty("needInvite")]
+        public bool NeedInvite { get; set; }
     }
 }

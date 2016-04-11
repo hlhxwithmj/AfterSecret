@@ -7,6 +7,7 @@ using System.Web;
 using AfterSecret.Models.Constant;
 using AfterSecret.Models.ViewModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace AfterSecret.Models
 {
@@ -26,6 +27,7 @@ namespace AfterSecret.Models
 
         [Required]
         [MaxLength(50)]
+        [JsonProperty("order_no")]
         //订单号
         public string Order_No { get; set; }
 
@@ -37,6 +39,7 @@ namespace AfterSecret.Models
         [MaxLength(100)]
         public string AppId { get; set; }
 
+        [JsonProperty("amount")]
         public decimal Amount { get; set; }
 
         [Required]
@@ -70,6 +73,7 @@ namespace AfterSecret.Models
         public DateTime CreatedTime { get; set; }
 
         [Required]
+        [JsonProperty("orderStatus")]
         public OrderStatus OrderStatus { get; set; }
 
         public string FailureCode { get; set; }

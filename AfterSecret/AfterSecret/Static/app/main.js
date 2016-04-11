@@ -24,6 +24,10 @@
                templateUrl: "/static/app/templates/pay.html",
                controller: 'payCtrl'
            });
+           $routeProvider.when("/inivite", {
+               templateUrl: "/static/app/templates/invite.html",
+               controller: 'inviteCtrl'
+           });
            $routeProvider.otherwise("/register", {
                templateUrl: "/static/app/templates/register.html",
                controller: 'registerCtrl'

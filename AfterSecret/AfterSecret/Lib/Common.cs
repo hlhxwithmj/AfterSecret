@@ -191,10 +191,17 @@ namespace AfterSecret.Lib
                     uw.context.SaveChanges();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Warn(ex);
             }
+        }
+
+        public static string GenerateTicketCode()
+        {
+            Random generator = new Random();
+            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            return SubscribeConfig._invitedUser_Prefix + n;
         }
     }
 }

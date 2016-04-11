@@ -1,14 +1,20 @@
 ﻿<div ng-repeat="m in model track by $index">
     <div>
-        <span ng-bind="m.order_no"></span>
+        order no: <span ng-bind="m.order_no"></span>
         <span ng-bind="m.amount"></span>
-        <span ng-bind="m.orderStatus"></span>
+        <span ng-bind="m.orderStatus==10?'created'
+                       :m.orderStatus==20?'paid'
+                       :m.orderStatus==30?'failed'
+                       :'expired'"></span>
     </div>
-    <div ng-repeat="item in m.items">
+    <div ng-repeat="item in m.purchases">
         <div>
             <span ng-bind="item.name"></span>
             <span ng-bind="item.quantity"></span>
-            <span ng-bind="item.price"></span>
+            <span ng-bind="item.amount"></span>
         </div>
     </div>
+</div>
+<div>
+    <button type="submit" ng-click="invite()" class="btn btn-success">invite</button>
 </div>

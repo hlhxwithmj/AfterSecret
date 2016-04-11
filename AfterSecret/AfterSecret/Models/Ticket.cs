@@ -12,8 +12,8 @@ namespace AfterSecret.Models
 
         public virtual Purchase Purchase { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string TicketCode { get; set; }
+        public int RegisterMemberId { get; set; }
+
+        public virtual RegisterMember RegisterMember { get; set; }
     }
 }

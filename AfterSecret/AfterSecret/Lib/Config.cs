@@ -17,6 +17,7 @@ namespace AfterSecret.Lib
         public const string myPURCHASE = "MYPURCHASE";
         public const string myTICKET = "MYTICKET";
         public const string _seedUser_Prefix = "88";
+        public const string _invitedUser_Prefix = "16";
     }
 
     public class PayConfig

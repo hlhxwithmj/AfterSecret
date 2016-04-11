@@ -41,17 +41,6 @@ namespace AfterSecret.Models.DAL
             }
         }
 
-        private GenericRepository<Invitation> invitation { get; set; }
-        public GenericRepository<Invitation> InvitationRepository
-        {
-            get
-            {
-                if (invitation == null)
-                    invitation = new GenericRepository<Invitation>(this, context);
-                return invitation;
-            }
-        }
-
         private GenericRepository<Item> item { get; set; }
         public GenericRepository<Item> ItemRepository
         {
