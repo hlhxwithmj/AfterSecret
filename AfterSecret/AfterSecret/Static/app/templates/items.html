@@ -22,7 +22,7 @@
         <span class="number" ng-bind="total"></span>
     </div>
     <div>
-        <button type="submit" ng-click="skip()" class="btn btn-success">skip</button>
+        <button type="submit" ng-click="skip()" ng-show="hasPermission" class="btn btn-success">skip</button>
         <button type="submit" ng-click="confirm()" class="btn btn-success">confirm</button>
     </div>
 </div>

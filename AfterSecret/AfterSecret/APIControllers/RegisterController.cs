@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class RegisterController : BaseApiController
     {
         public IHttpActionResult Get(string code)
@@ -19,7 +19,8 @@ namespace AfterSecret.APIControllers
                 return Ok();
             else
             {
-                var ticket = UW.PurchaseRepository.Get().Where(a => a.TicketCode == code).FirstOrDefault();
+                var ticket = UW.PurchaseRepository.Get().Where(a => a.Item.NeedInvite == true)
+                    .Where(a => a.TicketCode == code).FirstOrDefault();
                 if (ticket != null)
                     return Ok();
             }

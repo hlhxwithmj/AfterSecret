@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class TicketController : BaseApiController
     {
         public IHttpActionResult Get()
@@ -21,7 +21,7 @@ namespace AfterSecret.APIControllers
                 if (ticket != null)
                     return Ok(new
                     {
-                        src = ticket.QRCodePath,
+                        src = SubscribeConfig.DOMAIN + "/Content/QR/" + ticket.QRCodePath,
                         name = ticket.RegisterMember.FirstName + " " + ticket.RegisterMember.LastName,
                         ticketId = ticket.Id
                     });

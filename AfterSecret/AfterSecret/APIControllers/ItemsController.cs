@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class ItemsController : BaseApiController
     {
         public IHttpActionResult Get()

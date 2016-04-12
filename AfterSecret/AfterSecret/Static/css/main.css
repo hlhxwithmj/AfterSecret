@@ -1,39 +1,81 @@
 ﻿::-webkit-input-placeholder {
-   text-align: center;
+    text-align: center;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
+    text-align: center;
 }
 
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
+::-moz-placeholder { /* Firefox 19+ */
+    text-align: center;
 }
 
-:-ms-input-placeholder {  
-   text-align: center; 
+:-ms-input-placeholder {
+    text-align: center;
 }
 
-input{
-    text-align:center;
+input {
+    text-align: center;
 }
 
 .bg-star {
     background-image: url('../image/bg.png');
-    height:100%;
-    width:100%;
 }
 
-html,body{
-    height:100%;
-    width:100%;
-    font-family:'Helvetica','Penguin Sans 0.500';
+.bg {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Penguin Sans 0.500';
     color: white;
 }
 
-.number{
-    font-family:'Helvetica';
+.number {
+    font-family: 'Helvetica';
 }
+
+.welcome {
+    background-image: url('../image/welcome.jpg');
+}
+
+.error {
+    position:absolute;
+    top:73%;
+}
+.error-msg {
+        text-align:center;
+        background-color:black;
+        opacity:0.9;
+        width: 90%;
+        margin:0 auto;
+        font-weight:200;
+    }
+
+    .welcome input {
+        background-color: black;
+        border: none;
+        color: white;
+        line-height: 40px;
+        font-size: x-large;
+        width: 100%;
+    }
+
+        .welcome input::-webkit-input-placeholder {
+            color: white;
+            font-weight: 300;
+        }
+
+.welcome-input {
+    position: absolute;
+    top: 65%;
+}
+
 
 @font-face {
     font-family: 'Penguin Sans 0.500';

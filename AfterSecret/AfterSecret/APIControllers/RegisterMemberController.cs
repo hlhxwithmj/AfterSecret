@@ -1,4 +1,5 @@
 ﻿using AfterSecret.Filter;
+using AfterSecret.Lib;
 using AfterSecret.Models;
 using AfterSecret.Models.ViewModel;
 using System;
@@ -6,21 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Transactions;
 using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class RegisterMemberController : BaseApiController
     {
         public IHttpActionResult Post([FromBody]RegisterMemberVM model)
         {
             try
             {
-                var old = UW.RegisterMemberRepository.Get(false).Where(a => a.OpenId == OpenId).SingleOrDefault();
-                if (old == null)
+                var result = UW.RegisterMemberRepository.Get(false).Where(a => a.OpenId == OpenId).SingleOrDefault();
+                if (result == null)
                 {
-                    var result = new RegisterMember()
+                    result = new RegisterMember()
                     {
                         AgentCode = model.AgentCode,
                         Email = model.Email,
@@ -37,20 +39,44 @@ namespace AfterSecret.APIControllers
                 }
                 else
                 {
-                    old.AgentCode = model.AgentCode;
-                    old.Email = model.Email;
-                    old.FirstName = model.FirstName;
-                    old.Gender = model.Gender;
-                    old.LastName = model.LastName;
-                    old.Mobile = model.Mobile;
-                    old.Nationality = model.Nationality;
-                    old.Occupation = model.Occupation;
-                    old.WeChatID = model.WeChatID;
+                    result.AgentCode = model.AgentCode;
+                    result.Email = model.Email;
+                    result.FirstName = model.FirstName;
+                    result.Gender = model.Gender;
+                    result.LastName = model.LastName;
+                    result.Mobile = model.Mobile;
+                    result.Nationality = model.Nationality;
+                    result.Occupation = model.Occupation;
+                    result.WeChatID = model.WeChatID;
                 }
                 UW.context.SaveChanges();
+                if (model.AgentCode.StartsWith(SubscribeConfig._invitedUser_Prefix))
+                {
+                    using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
+                    {
+                        var purchase = UW.PurchaseRepository.Get().Where(a => a.TicketCode == model.AgentCode).SingleOrDefault();
+                        if (purchase.Remain > 0)
+                        {
+                            UW.TicketRepository.Insert(new Ticket()
+                            {
+                                PurchaseId = purchase.Id,
+                                QRCodePath = Common.GenerateQRImage(OpenId),
+                                RegisterMemberId = result.Id
+                            });
+                            UW.context.SaveChanges();
+                            scope.Complete();
+                        }
+                        else
+                        {
+                            scope.Dispose();
+                            return BadRequest();
+                        }
+                            
+                    }
+                }
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Warn(ex);
                 return BadRequest();

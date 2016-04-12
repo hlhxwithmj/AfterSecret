@@ -1,4 +1,5 @@
-﻿using AfterSecret.Lib;
+﻿using AfterSecret.Filter;
+using AfterSecret.Lib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
+    [ApiAuthorize]
     public class ShareController : BaseApiController
     {
         public IHttpActionResult Get()
@@ -23,7 +25,9 @@ namespace AfterSecret.APIControllers
 
         public IHttpActionResult Post()
         {
-            var code = Common.GenerateShareCode();
+            Random r = new Random();
+            var code = Common.GenerateShareCode(r);
+            UW.AgentCodeListRepository.Insert(new Models.AgentCodeList() { AgentCode = code });
             return Ok(code);
         }
     }

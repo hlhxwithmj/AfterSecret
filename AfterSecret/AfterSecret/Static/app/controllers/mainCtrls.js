@@ -9,6 +9,8 @@
         $location.path('/' + window.sessionStorage["path"]);
     })
     .controller('registerCtrl', function ($rootScope, $scope, $location, registerService) {
+        $rootScope.bg = "welcome";
+        $scope.error = false;
         $('form').validator();
         $scope.check = function () {
             $scope.isEmpty = $scope.code && $scope.code.toString().length > 0;
@@ -19,7 +21,9 @@
                     $location.path("/registerMember");
                 }).error(function () {
                     $scope.code = '';
+                    $scope.isEmpty = false;
                     $scope.disabled = false;
+                    $scope.error = true;
                 });
             };
         };
@@ -46,14 +50,20 @@
             });
         };
     })
-    .controller('itemsCtrl', function ($rootScope, $scope, $location, $interval, itemsService, orderService) {
+    .controller('itemsCtrl', function ($rootScope, $scope, $location, $interval, itemsService, orderService, inviteService) {
         $rootScope.bg = "bg-star";
         $scope.model = [];
-        (function () {
-            orderService.doCheck().success(function (data) {
-                if (data > 0)
-                    $location.path('/orders');
-            }).error(function () { });
+        $scope.hasPermission = false;
+        orderService.doCheck().success(function (data) {
+            if (data > 0)
+                $location.path('/orders');
+        }).error(function () { });
+
+        inviteService.share().success(function () {
+            $scope.hasPermission = true;
+        })
+        .error(function () {
+            $scope.hasPermission = false;
         });
 
         itemsService.doGet().success(function (data) {
@@ -83,7 +93,7 @@
         });
 
         $scope.skip = function () {
-            $location.path("/purchaseList");
+            $location.path("/orders");
         };
 
         $scope.confirm = function () {
@@ -176,7 +186,7 @@
             });
         };
     })
-    .controller('ticketCtrl', function ($scope,ticketService) {
+    .controller('ticketCtrl', function ($scope, ticketService) {
         ticketService.doGet().success(function (data) {
             $scope.model = data;
         }).error(function () { });

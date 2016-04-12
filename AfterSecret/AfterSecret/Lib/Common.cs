@@ -162,11 +162,10 @@ namespace AfterSecret.Lib
             return Common.DesEncrypt(now.ToString() + openId);
         }
 
-        public static string GenerateOrderNo()
+        public static string GenerateOrderNo(Random r)
         {
             TimeSpan s = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0);
             long now = (long)s.TotalMilliseconds;
-            Random r = new Random();
             var postfix = r.Next(10, 99);
             return now.ToString() + postfix.ToString();
         }
@@ -202,24 +201,27 @@ namespace AfterSecret.Lib
             }
         }
 
-        public static string GenerateTicketCode()
+        public static string GenerateTicketCode(Random generator)
         {
-            Random generator = new Random();
             var n = generator.Next(1, int.MaxValue).ToString("D10");
             return SubscribeConfig._invitedUser_Prefix + n;
         }
 
-        public static string GenerateShareCode()
+        public static string GenerateShareCode(Random generator)
         {
-            Random generator = new Random();
             var n = generator.Next(1, int.MaxValue).ToString("D10");
             return SubscribeConfig._shareUser_Prefix + n;
         }
 
-        public static string GenerateQRImage(string url)
+        public static string GenerateQRImage(string openId)
         {
             try
             {
+                var param = Common.DesEncrypt(openId);
+                var url = SubscribeConfig.DOMAIN + "/Static/ticket.html?param=" + param;
+                string path = AppDomain.CurrentDomain.BaseDirectory + SystemConfig.QRPATH;
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
                 //初始化二维码生成工具
                 QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
                 qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
@@ -230,7 +232,7 @@ namespace AfterSecret.Lib
                 //将字符串生成二维码图片
                 Bitmap image = qrCodeEncoder.Encode(url, Encoding.Default);
                 var filename = Guid.NewGuid().ToString() + ".png";
-                image.Save(AppDomain.CurrentDomain.BaseDirectory + SystemConfig.QRPATH + filename, ImageFormat.Png);
+                image.Save(path + filename, ImageFormat.Png);
                 return filename;
             }
             catch (Exception ex)

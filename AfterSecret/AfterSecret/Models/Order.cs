@@ -100,7 +100,7 @@ namespace AfterSecret.Models
             OrderStatus = OrderStatus.Created;
             OpenIdForPay = openIdForPay;
             OpenId = openId;
-            Order_No = Common.GenerateOrderNo();
+            Order_No = Common.GenerateOrderNo(new Random());
             Amount = amount;
             Body = body;
             Subject = PingConfig.SUBJECT;

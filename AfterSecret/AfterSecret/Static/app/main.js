@@ -28,6 +28,10 @@
                templateUrl: "/static/app/templates/invite.html",
                controller: 'inviteCtrl'
            });
+           $routeProvider.when("/ticket", {
+               templateUrl: "/static/app/templates/ticket.html",
+               controller: 'ticketCtrl'
+           });
            $routeProvider.otherwise("/register", {
                templateUrl: "/static/app/templates/register.html",
                controller: 'registerCtrl'

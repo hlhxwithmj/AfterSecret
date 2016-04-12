@@ -1,16 +1,15 @@
-﻿<div class="container">
-    <div class="row">
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-            <form role="form" novalidate="novalidate">
-                <div class="form-group">
-                    <center>Welcome</center>
-                    <img src="/Static/image/secret.png" style="width:100%;" />
-                    <input type="number" pattern="[0-9]*" required name="code" ng-class={'form-control':true,'number':isEmpty}
-                           placeholder="Agent Code" style="text-align: center;"
-                           ng-model="code" ng-change="check()" ng-disabled="disabled">
-                </div>
-            </form>
-        </div>
+﻿<div class="col-xs-12 welcome-input">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <input type="text" pattern="[0-9]*" required name="code" ng-class={'number':isEmpty}
+               placeholder="Agent Code" style="text-align: center;"
+               ng-model="code" ng-change="check()" ng-disabled="disabled">
+    </div>
+    <div class="col-xs-1"></div>
+</div>
+<div class="col-xs-12 error">
+    <div class="error-msg" ng-show="error">
+        <div>Oops, Code failed.</div>
+        <div> Please contact your agent.</div>
     </div>
 </div>

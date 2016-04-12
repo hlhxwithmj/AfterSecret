@@ -13,7 +13,7 @@ using System.Transactions;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class InviteController : BaseApiController
     {
         public IHttpActionResult Get()
@@ -62,9 +62,7 @@ namespace AfterSecret.APIControllers
                     foreach (var old in oldtickets)
                         UW.TicketRepository.Delete(old);
                     //add ticket
-                    var param = Common.DesEncrypt(OpenId);
-                    var url = SubscribeConfig.DOMAIN + "/Static/ticket.html?param=" + param;
-                    var path = Common.GenerateQRImage(url);
+                    var path = Common.GenerateQRImage(OpenId);
                     UW.TicketRepository.Insert(new Ticket() { PurchaseId = purchase.Id, RegisterMemberId = registerMember.Id, QRCodePath = path });
                     UW.context.SaveChanges();
                     return Ok();

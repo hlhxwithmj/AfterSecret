@@ -13,7 +13,7 @@ using System.Transactions;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class OrderController : BaseApiController
     {
         public IHttpActionResult Post([FromBody]List<CheckoutList> model)
@@ -35,6 +35,8 @@ namespace AfterSecret.APIControllers
                     charge.ChargeId = c.Id;
                     UW.OrderRepository.Insert(charge);
                     UW.context.SaveChanges();
+
+                    var random = new Random();
                     foreach (var m in model)
                     {
                         if (m.Count > 0)
@@ -43,7 +45,7 @@ namespace AfterSecret.APIControllers
                                 ItemId = m.Id,
                                 OrderId = charge.Id,
                                 Quantity = m.Count,
-                                TicketCode = Common.GenerateTicketCode()
+                                TicketCode = Common.GenerateTicketCode(random)
                             });
                     }
                     UW.context.SaveChanges();
