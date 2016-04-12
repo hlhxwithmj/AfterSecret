@@ -18,6 +18,7 @@ namespace AfterSecret.Lib
         public const string myTICKET = "MYTICKET";
         public const string _seedUser_Prefix = "88";
         public const string _invitedUser_Prefix = "16";
+        public const string _shareUser_Prefix = "18";
     }
 
     public class PayConfig
@@ -35,5 +36,11 @@ namespace AfterSecret.Lib
         public const string LIVESECRETKEY = "sk_live_TyTOyLWHyPK8jHSWb9nDOSWH";
         public const string SUBJECT = "Secret Dinner";
     }
+
+    public class SystemConfig
+    {
+        public const string QRPATH = "Content/QR/";
+    }
 }
 
+ 

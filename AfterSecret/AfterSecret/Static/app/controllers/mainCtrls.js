@@ -31,12 +31,10 @@
         $rootScope.bg = "bg-star";
         $('form').validator();
         $("[name='gender']").bootstrapSwitch();
-        $scope.model = {
-            agentCode: $rootScope.agentCode
-        };
 
         registerMemberService.doGet().success(function (data) {
-            $scope.model = data;
+            $scope.model = data || {};
+            $scope.model.agentCode = $rootScope.agentCode;
         }).error(function () { });
 
         $scope.save = function () {
@@ -61,12 +59,12 @@
         itemsService.doGet().success(function (data) {
             angular.forEach(data, function (item, index) {
                 $scope.model.push({
-                    name: item.Name,
-                    remark: item.Remark,
-                    factor: item.Factor,
-                    unitPrice: item.UnitPrice,
-                    remain: item.Remain,
-                    order: item.Order,
+                    name: item.name,
+                    remark: item.remark,
+                    factor: item.factor,
+                    unitPrice: item.unitPrice,
+                    remain: item.remain,
+                    order: item.order,
                     id: item.Id,
                     count: 0
                 });
@@ -118,8 +116,10 @@
                 pingpp.createPayment(charge, function (result, error) {
                     if (result == "success") {
                         // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
-                        //$rootScope.order = undefined;
-                        $location.path('/orders');
+                        $rootScope.$apply(function () {
+                            $rootScope.order = undefined;
+                            $location.path('/orders');
+                        });
                     } else if (result == "fail") {
                         // charge 不正确或者微信公众账号支付失败时会在此处返回
                     } else if (result == "cancel") {
@@ -144,10 +144,40 @@
             $location.path('/invite');
         };
     })
-    .controller('inviteCtrl', function ($rootScope, $scope, $location, orderService) {
+    .controller('inviteCtrl', function ($rootScope, $scope, $location, inviteService) {
         $rootScope.bg = "bg-star";
         $scope.model = [];
-        orderService.doGet().success(function (data) {
+        $scope.hasPermission = false;
+        var getData = function () {
+            inviteService.doGet().success(function (data) {
+                $scope.model = data;
+            }).error(function () { });
+            inviteService.share().success(function () {
+                $scope.hasPermission = true;
+            }).error(function () {
+                $scope.hasPermission = false;
+            });
+        };
+        getData();
+
+        $scope.myseat = function (purchaseId) {
+            inviteService.myseat(purchaseId).then(function () {
+                getData();
+            });
+        };
+        $scope.arrange = function (ticketCode, purchaseId) {
+            window.location.href = $location.protocol() + '://' + $location.host() + ':' + $location.port()
+                + '/Static/invitation.html?ticketCode=' + ticketCode + '&purchaseId=' + purchaseId;
+        };
+
+        $scope.cancel = function (registerMemberId) {
+            inviteService.cancel(registerMemberId).then(function () {
+                getData();
+            });
+        };
+    })
+    .controller('ticketCtrl', function ($scope,ticketService) {
+        ticketService.doGet().success(function (data) {
             $scope.model = data;
         }).error(function () { });
     });

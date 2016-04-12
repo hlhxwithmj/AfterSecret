@@ -283,7 +283,10 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     title = "register";
                     break;
                 case SubscribeConfig.mPURCHASE:
-
+                    path = "items";
+                    description = "purchase";
+                    picUrl = "a";
+                    title = "purchase";
                     break;
                 case SubscribeConfig.myPURCHASE:
                     path = "orders";
@@ -292,7 +295,10 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     title = "orders";
                     break;
                 case SubscribeConfig.myTICKET:
-
+                    path = "ticket";
+                    description = "ticket";
+                    picUrl = "a";
+                    title = "ticket";
                     break;
                 default:
                     break;

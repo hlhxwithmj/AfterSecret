@@ -15,5 +15,9 @@ namespace AfterSecret.Models
         public int RegisterMemberId { get; set; }
 
         public virtual RegisterMember RegisterMember { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public string QRCodePath { get; set; }
     }
 }

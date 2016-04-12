@@ -6,10 +6,15 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
+using System.Text;
 using System.Web;
+using ThoughtWorks.QRCode.Codec;
 
 namespace AfterSecret.Lib
 {
@@ -202,6 +207,37 @@ namespace AfterSecret.Lib
             Random generator = new Random();
             var n = generator.Next(1, int.MaxValue).ToString("D10");
             return SubscribeConfig._invitedUser_Prefix + n;
+        }
+
+        public static string GenerateShareCode()
+        {
+            Random generator = new Random();
+            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            return SubscribeConfig._shareUser_Prefix + n;
+        }
+
+        public static string GenerateQRImage(string url)
+        {
+            try
+            {
+                //初始化二维码生成工具
+                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+                qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+                qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+                qrCodeEncoder.QRCodeVersion = 0;
+                qrCodeEncoder.QRCodeScale = 5;
+
+                //将字符串生成二维码图片
+                Bitmap image = qrCodeEncoder.Encode(url, Encoding.Default);
+                var filename = Guid.NewGuid().ToString() + ".png";
+                image.Save(AppDomain.CurrentDomain.BaseDirectory + SystemConfig.QRPATH + filename, ImageFormat.Png);
+                return filename;
+            }
+            catch (Exception ex)
+            {
+                log.Warn(ex);
+                return "";
+            }
         }
     }
 }
