@@ -53,5 +53,10 @@ namespace AfterSecret.Models
 
         [JsonProperty("needInvite")]
         public bool NeedInvite { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        [JsonProperty("imgSrc")]
+        public string ImgSrc { get; set; }
     }
 }

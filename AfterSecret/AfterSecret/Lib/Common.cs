@@ -67,6 +67,56 @@ namespace AfterSecret.Lib
                     return token.Token;
             }
         }
+
+        public static string get_jsapi_ticket(string appID, string appsecret)
+        {
+            using (var uw = new UnitOfWork())
+            {
+                var ticket = uw.JsApiTicketRepository.dbSet.Take(1).FirstOrDefault();
+                if (ticket == null || ticket.IsValid == false)
+                {
+                    string access_token = get_AccessToken(appID, appsecret);
+                    string url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=" + access_token + "&type=jsapi";
+
+                    int expires_in = 0;
+                    string errcode = string.Empty;
+                    string errmsg = string.Empty;
+                    string newTicket = string.Empty;
+                    using (var client = new WebClient())
+                    {
+                        string json = client.DownloadString(url);
+                        JObject jObj = JObject.Parse(json);
+                        newTicket = (string)jObj["ticket"];
+                        expires_in = (int)jObj["expires_in"];
+                        errcode = (string)jObj["errcode"];
+                        errmsg = (string)jObj["errmsg"];
+                    }
+                    //end
+                    if (ticket == null)
+                        uw.JsApiTicketRepository.Insert(new JsApiTicket()
+                        {
+                            EditTime = DateTime.Now,
+                            ErrCode = errcode,
+                            ErrMsg = errmsg,
+                            ExpireTime = DateTime.Now.AddSeconds(expires_in - 60),
+                            Ticket = newTicket
+                        });
+                    else
+                    {
+                        ticket.Ticket = newTicket;
+                        ticket.ExpireTime = DateTime.Now.AddSeconds(expires_in - 60);
+                        ticket.EditTime = DateTime.Now;
+                        ticket.ErrMsg = errmsg;
+                        ticket.ErrCode = errcode;
+                    }
+                    uw.JsApiTicketRepository.context.SaveChanges();
+                    return newTicket;
+                }
+                else
+                    return ticket.Ticket;
+            }
+        }
+
         public static string get_AccessToken()
         {
             var _appID = SubscribeConfig.APPID;

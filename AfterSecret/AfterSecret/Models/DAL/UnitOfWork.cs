@@ -86,7 +86,16 @@ namespace AfterSecret.Models.DAL
             }
         }
 
-
+        private GenericRepository<JsApiTicket> jsApiTicket { get; set; }
+        public GenericRepository<JsApiTicket> JsApiTicketRepository
+        {
+            get
+            {
+                if (jsApiTicket == null)
+                    jsApiTicket = new GenericRepository<JsApiTicket>(this, context);
+                return jsApiTicket;
+            }
+        }
 
         private bool disposed = false;
 

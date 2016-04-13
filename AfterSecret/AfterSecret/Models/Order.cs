@@ -17,6 +17,10 @@ namespace AfterSecret.Models
         private Dictionary<string, Object> _param = new Dictionary<String, Object>();
         private Dictionary<String, Object> _extra = new Dictionary<String, Object>();
 
+        public int RegisterMemberId { get; set; }
+
+        public virtual RegisterMember RegisterMember { get; set; }
+
         [Required]
         [MaxLength(200)]
         public string OpenId { get; set; }
@@ -95,8 +99,9 @@ namespace AfterSecret.Models
 
         }
 
-        public Order(decimal amount, string body, string ip, string openId, string openIdForPay)
+        public Order(int registerMemberId, decimal amount, string body, string ip, string openId, string openIdForPay)
         {
+            RegisterMemberId = registerMemberId;
             OrderStatus = OrderStatus.Unpaid;
             OpenIdForPay = openIdForPay;
             OpenId = openId;

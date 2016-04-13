@@ -24,10 +24,11 @@ namespace AfterSecret.APIControllers
             {
                 return BadRequest("needtopay");
             }
+            var member = UW.RegisterMemberRepository.Get().Where(a=>a.OpenId == OpenId).SingleOrDefault();
             var openIdForPay = Common.DesDecrypt(this.Request.Headers.GetValues("openIdForPay").SingleOrDefault());
             var items = UW.ItemRepository.Get().ToList();
             var total = items.Sum(a => a.UnitPrice * a.Factor * (model.Where(b => b.Id == a.Id).SingleOrDefault().Count));
-            var charge = new Order(total, Common.GetChargeBody(items, model), HttpContext.Current.Request.UserHostAddress, OpenId, openIdForPay);
+            var charge = new Order(member.Id,total, Common.GetChargeBody(items, model), HttpContext.Current.Request.UserHostAddress, OpenId, openIdForPay);
             try
             {
                 Charge c = Charge.Create(charge.Param);

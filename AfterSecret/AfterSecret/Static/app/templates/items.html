@@ -1,5 +1,5 @@
 ﻿<div class="col-md-12 number" ng-hide="isConfirmed">
-    <div ng-repeat="item in model track by $index">
+    <div ng-repeat="item in model track by $index | orderBy:'order':reverse">
         <div class="col-md-2">
             <img />
         </div>
@@ -9,11 +9,7 @@
             <span ng-bind="item.remark"></span>
         </div>
         <div class="col-md-2" style="color:black;">
-            <select ng-model="item.count">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
+            <input type="text" pattern="[0-9]*" ng-model="item.count" />
         </div>
     </div>
 

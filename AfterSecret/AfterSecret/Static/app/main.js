@@ -32,6 +32,10 @@
                templateUrl: "/static/app/templates/invite.html",
                controller: 'inviteCtrl'
            });
+           $routeProvider.when("/invitation/:code", {
+               templateUrl: "/static/app/templates/invitation.html",
+               controller: 'invitationCtrl'
+           });
            $routeProvider.when("/ticket", {
                templateUrl: "/static/app/templates/ticket.html",
                controller: 'ticketCtrl'

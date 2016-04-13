@@ -55,7 +55,8 @@ namespace AfterSecret.Models.DAL
                 Total = 100,
                 UnitPrice = 10,
                 Order = 10,
-                NeedInvite = true
+                NeedInvite = true,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });
 
             db.Item.Add(new Item()
@@ -66,7 +67,8 @@ namespace AfterSecret.Models.DAL
                 Total = 2,
                 UnitPrice = 11,
                 Order = 20,
-                NeedInvite = true
+                NeedInvite = true,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });
 
             db.Item.Add(new Item()
@@ -76,7 +78,8 @@ namespace AfterSecret.Models.DAL
                 Remark = "原产地法国",
                 Total = 500,
                 UnitPrice = 12,
-                Order = 30
+                Order = 30,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });
 
             db.Item.Add(new Item()
@@ -86,7 +89,8 @@ namespace AfterSecret.Models.DAL
                 Remark = "现场制作",
                 Total = 700,
                 UnitPrice = 13,
-                Order = 40
+                Order = 40,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });
             for (int i = 0; i < 20; i++)
             {
