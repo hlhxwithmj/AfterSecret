@@ -8,6 +8,7 @@ namespace AfterSecret.Models.ViewModel
 {
     public class OrderVM
     {
+        public int id { get; set; }
         public string order_no { get; set; }
 
         public decimal amount { get; set; }

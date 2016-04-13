@@ -55,6 +55,7 @@ namespace AfterSecret.APIControllers
                     using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
                     {
                         var purchase = UW.PurchaseRepository.Get().Where(a => a.TicketCode == model.AgentCode).SingleOrDefault();
+                        log.Warn(purchase.Remain);
                         if (purchase.Remain > 0)
                         {
                             UW.TicketRepository.Insert(new Ticket()

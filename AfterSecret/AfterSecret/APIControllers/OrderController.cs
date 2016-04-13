@@ -18,7 +18,8 @@ namespace AfterSecret.APIControllers
     {
         public IHttpActionResult Post([FromBody]List<CheckoutList> model)
         {
-            var created = UW.OrderRepository.Get().Where(a => a.OrderStatus == Models.Constant.OrderStatus.Created).Count();
+            var created = UW.OrderRepository.Get()
+                .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid).Count();
             if (created > 0)
             {
                 return BadRequest("needtopay");
@@ -72,6 +73,7 @@ namespace AfterSecret.APIControllers
                 var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList()
                     .Select(a => new OrderVM()
                     {
+                        id = a.Id,
                         amount = a.Amount,
                         order_no = a.Order_No,
                         orderStatus = a.OrderStatus,
@@ -97,9 +99,9 @@ namespace AfterSecret.APIControllers
             log.Warn("status");
             var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId);
             int count = 0;
-            if (status == "created")
+            if (status == "unpaid")
             {
-                count = result.Where(a => a.OrderStatus == Models.Constant.OrderStatus.Created).Count();
+                count = result.Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid).Count();
             }
             else if (status == "expired")
             {
@@ -108,6 +110,19 @@ namespace AfterSecret.APIControllers
             else
                 count = result.Count();
             return Ok(count);
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var order = UW.OrderRepository.Get().Where(a => a.Id == id)
+                .Where(a => a.OpenId == OpenId).SingleOrDefault();
+            if (order != null)
+            {
+                UW.OrderRepository.Delete(order);
+                UW.context.SaveChanges();
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

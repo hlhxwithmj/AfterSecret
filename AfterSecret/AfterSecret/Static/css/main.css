@@ -34,6 +34,11 @@ html, body {
     width: 100%;
     font-family: 'Penguin Sans 0.500';
     color: white;
+    letter-spacing:3px;
+}
+
+label{
+    font-weight: lighter;
 }
 
 .number {
@@ -46,7 +51,7 @@ html, body {
 
 .error {
     position:absolute;
-    top:73%;
+    top:75%;
 }
 .error-msg {
         text-align:center;
@@ -64,6 +69,7 @@ html, body {
         line-height: 40px;
         font-size: x-large;
         width: 100%;
+        border-radius:0px;
     }
 
         .welcome input::-webkit-input-placeholder {
@@ -76,6 +82,15 @@ html, body {
     top: 65%;
 }
 
+.bg-star {
+    background-image: url('../image/bg-star.jpg');
+}
+
+.register-title{
+    width:60%;
+    text-align:center;
+    background-color:grey;
+}
 
 @font-face {
     font-family: 'Penguin Sans 0.500';

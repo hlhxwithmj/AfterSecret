@@ -50,7 +50,7 @@
             });
         };
     })
-    .controller('itemsCtrl', function ($rootScope, $scope, $location, $interval, itemsService, orderService, inviteService) {
+    .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, itemsService, orderService, inviteService) {
         $rootScope.bg = "bg-star";
         $scope.model = [];
         $scope.hasPermission = false;
@@ -79,9 +79,21 @@
                     count: 0
                 });
             });
+            if ($routeParams.id) {
+                var id = parseInt($routeParams.id);
+                itemsService.doGetDetail(id).success(function (result) {
+                    angular.forEach(result, function (r, i) {
+                        angular.forEach($scope.model, function (m, j) {
+                            if (m.id == r.id)
+                                m.count = r.count;
+                        });
+                    });
+                }).error(function () { });
+            }
         }).error(function () {
 
         });
+
         $scope.$watch(function () {
             var sum = 0;
             angular.forEach($scope.model, function (item, index) {
@@ -97,14 +109,27 @@
         };
 
         $scope.confirm = function () {
-            orderService.doGet('created').success(function (data) {
-                if (data > 0) {
-                    alert('您有未完成订单，请先支付完再下单');
-                    $location.path('/orders');
-                }
-            }).error(function () {
+            if ($routeParams.id)
+                itemsService.doDelete($routeParams.id).success(function () {
+                    orderService.doCheck('unpaid').success(function (data) {
+                        if (data > 0) {
+                            alert('您有未完成订单，请先支付完再下单');
+                            $location.path('/orders');
+                        }
+                    }).error(function () {
 
-            });
+                    });
+                });
+            else {
+                orderService.doCheck('unpaid').success(function (data) {
+                    if (data > 0) {
+                        alert('您有未完成订单，请先支付完再下单');
+                        $location.path('/orders');
+                    }
+                }).error(function () {
+
+                });
+            }
             if ($scope.total > 0) {
                 $scope.isConfirmed = true;
             }
@@ -125,16 +150,16 @@
             itemsService.doSave($rootScope.order).success(function (charge) {
                 pingpp.createPayment(charge, function (result, error) {
                     if (result == "success") {
-                        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
-                        $rootScope.$apply(function () {
-                            $rootScope.order = undefined;
-                            $location.path('/orders');
-                        });
+                        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。            
                     } else if (result == "fail") {
                         // charge 不正确或者微信公众账号支付失败时会在此处返回
                     } else if (result == "cancel") {
                         // 微信公众账号支付取消支付
                     }
+                    $rootScope.$apply(function () {
+                        $rootScope.order = undefined;
+                        $location.path('/orders');
+                    });
                 });
             }).error(function (error) {
                 $location.path('/orders');
@@ -152,6 +177,13 @@
 
         $scope.invite = function () {
             $location.path('/invite');
+        };
+        $scope.purchase = function () {
+            $location.path('/items');
+        };
+
+        $scope.edit = function (id) {
+            $location.path('/items/' + id);
         };
     })
     .controller('inviteCtrl', function ($rootScope, $scope, $location, inviteService) {

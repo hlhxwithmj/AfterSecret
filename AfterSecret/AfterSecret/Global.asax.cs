@@ -46,7 +46,7 @@ namespace AfterSecret
                 using (UnitOfWork uw = new UnitOfWork())
                 {
                     var result = uw.OrderRepository.Get(false)
-                        .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Created)
+                        .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid)
                         .Where(a => a.ExpireTime < DateTime.Now).ToList();
                     try
                     {

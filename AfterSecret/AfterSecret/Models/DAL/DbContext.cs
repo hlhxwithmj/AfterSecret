@@ -60,10 +60,10 @@ namespace AfterSecret.Models.DAL
 
             db.Item.Add(new Item()
             {
-                Factor = 3,
-                Name = "3人卡座",
-                Remark = "3个座位",
-                Total = 200,
+                Factor = 2,
+                Name = "2人卡座",
+                Remark = "2个座位",
+                Total = 2,
                 UnitPrice = 11,
                 Order = 20,
                 NeedInvite = true

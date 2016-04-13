@@ -23,9 +23,9 @@ namespace AfterSecret.Models
         public string Remark { get; set; }
 
         //系数
-        [DefaultValue(1.00)]
+        [DefaultValue(1)]
         [JsonProperty("factor")]
-        public decimal Factor { get; set; }
+        public int Factor { get; set; }
 
         [JsonProperty("unitPrice")]
         public decimal UnitPrice { get; set; }
@@ -41,7 +41,7 @@ namespace AfterSecret.Models
                 using (var uw = new UnitOfWork())
                 {
                     return Total - uw.PurchaseRepository.Get()
-                        .Where(a => a.Order.OrderStatus == OrderStatus.Created
+                        .Where(a => a.Order.OrderStatus == OrderStatus.Unpaid
                             || a.Order.OrderStatus == OrderStatus.Paid).Where(a => a.ItemId == Id)
                             .Select(a => a.Quantity).ToList().Sum();
                 }

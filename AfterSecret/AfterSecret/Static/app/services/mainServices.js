@@ -44,11 +44,27 @@
                 url: '/api/Items'
             });
         };
+        _service.doGetDetail = function (id) {
+            return $http({
+                method: 'get',
+                url: '/api/OrderDetail',
+                params: {
+                    id: id
+                }
+            });
+        };
         _service.doSave = function (items) {
             return $http({
                 method: 'post',
                 url: '/api/Order',
                 data: JSON.stringify(items),
+            });
+        };
+        _service.doDelete = function (id) {
+            return $http({
+                method: 'delete',
+                url: '/api/Order',
+                param: { id: id }
             });
         };
         return _service;

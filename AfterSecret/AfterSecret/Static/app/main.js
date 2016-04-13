@@ -12,7 +12,11 @@
                templateUrl: "/static/app/templates/registerMember.html",
                controller: 'registerMemberCtrl'
            });
-           $routeProvider.when("/items", {
+           $routeProvider.when("/items/:id", {
+               templateUrl: "/static/app/templates/items.html",
+               controller: 'itemsCtrl'
+           });
+           $routeProvider.when("/items/", {
                templateUrl: "/static/app/templates/items.html",
                controller: 'itemsCtrl'
            });

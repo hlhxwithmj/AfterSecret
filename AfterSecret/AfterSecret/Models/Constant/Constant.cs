@@ -7,7 +7,7 @@ namespace AfterSecret.Models.Constant
 {
     public enum OrderStatus
     {
-        Created = 10,
+        Unpaid = 10,
         Paid = 20,
         Failed = 30,
         Expired = 40

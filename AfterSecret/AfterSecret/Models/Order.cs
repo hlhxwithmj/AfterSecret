@@ -97,7 +97,7 @@ namespace AfterSecret.Models
 
         public Order(decimal amount, string body, string ip, string openId, string openIdForPay)
         {
-            OrderStatus = OrderStatus.Created;
+            OrderStatus = OrderStatus.Unpaid;
             OpenIdForPay = openIdForPay;
             OpenId = openId;
             Order_No = Common.GenerateOrderNo(new Random());

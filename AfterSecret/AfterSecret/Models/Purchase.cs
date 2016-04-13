@@ -27,8 +27,13 @@ namespace AfterSecret.Models
             {
                 using (var uw = new UnitOfWork())
                 {
-                    var tickets = uw.TicketRepository.Get().Where(a => a.PurchaseId == Id).Count();
-                    return Quantity - tickets;
+                    var purchase = uw.PurchaseRepository.Get().Where(a => a.Id == Id).SingleOrDefault();
+                    if(purchase != null)
+                    {
+                        var tickets = purchase.Tickets.Count();
+                        return purchase.Item.Factor * purchase.Quantity - tickets;
+                    }
+                    return 0;
                 }
             }
         }
