@@ -32,7 +32,7 @@
                templateUrl: "/static/app/templates/invite.html",
                controller: 'inviteCtrl'
            });
-           $routeProvider.when("/invitation/:code", {
+           $routeProvider.when("/invitation/:code/:inviter", {
                templateUrl: "/static/app/templates/invitation.html",
                controller: 'invitationCtrl'
            });

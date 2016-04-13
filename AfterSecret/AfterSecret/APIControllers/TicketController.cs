@@ -22,8 +22,8 @@ namespace AfterSecret.APIControllers
                     return Ok(new
                     {
                         src = SubscribeConfig.DOMAIN + "/Content/QR/" + ticket.QRCodePath,
-                        inviter = ticket.RegisterMember.FirstName + " " + ticket.RegisterMember.LastName,
-                        invitee = ticket.Purchase.Order.RegisterMember.FirstName + " " + ticket.Purchase.Order.RegisterMember.LastName,
+                        inviter = ticket.RegisterMember.ToString(),
+                        invitee = ticket.Purchase.Order.RegisterMember.ToString(),
                         ticketId = ticket.Id
                     });
                 else

@@ -1,7 +1,7 @@
 ﻿<div class="col-md-12 number" ng-hide="isConfirmed">
-    <div ng-repeat="item in model track by $index | orderBy:'order':reverse">
+    <div ng-repeat="item in model | orderBy:'order'">
         <div class="col-md-2">
-            <img />
+            <img ng-src="{{item.imgSrc}}" />
         </div>
         <div class="col-md-8 number">
             <span ng-bind="item.name"></span>

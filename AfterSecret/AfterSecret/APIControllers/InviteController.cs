@@ -27,9 +27,10 @@ namespace AfterSecret.APIControllers
                     purchaseId = a.Id,
                     seats = a.Quantity,
                     ticketCode = a.TicketCode,
+                    inviter = a.Order.RegisterMember.ToString(),
                     attendees = a.Tickets.Select(b => new AttendeeVM()
                     {
-                        name = b.RegisterMember.FirstName + " " + b.RegisterMember.LastName,
+                        name = b.RegisterMember.ToString(),
                         registerMemberId = b.RegisterMemberId
                     }).ToList()
                 });

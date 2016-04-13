@@ -13,6 +13,8 @@ namespace AfterSecret.Models.ViewModel
 
         public string ticketCode { get; set; }
 
+        public string inviter { get; set; }
+
         public List<AttendeeVM> attendees { get; set; }
     }
 }

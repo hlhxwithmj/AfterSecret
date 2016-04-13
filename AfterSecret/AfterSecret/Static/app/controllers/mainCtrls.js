@@ -207,9 +207,9 @@
                 getData();
             });
         };
-        $scope.arrange = function (ticketCode, purchaseId) {
-            window.location.href = 
-            };
+        $scope.arrange = function (ticketCode, inviter) {
+            $location.path('/invitation/' + ticketCode + '/' + inviter);
+        };
 
         $scope.cancel = function (registerMemberId) {
             inviteService.cancel(registerMemberId).then(function () {
@@ -217,7 +217,7 @@
             });
         };
     })
-    .controller('invitationCtrl', function ($scope,$location,$routeParams,invitationService) {
+    .controller('invitationCtrl', function ($scope, $location, $routeParams, invitationService) {
         invitationService.wxConfig();
         wx.onMenuShareAppMessage({
             title: '', // 分享标题
@@ -236,9 +236,11 @@
             }
         });
 
-        $scope.back = function(){
+        $scope.back = function () {
             $location.path('/invite');
         };
+        $scope.ticketCode = $routeParams.code;
+        $scope.inviter = $routeParams.iniviter;
     })
     .controller('ticketCtrl', function ($scope, ticketService) {
         ticketService.doGet().success(function (data) {

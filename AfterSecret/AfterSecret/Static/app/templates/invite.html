@@ -6,7 +6,7 @@
             <span>- No.</span>
             <span ng-bind="m.purchaseId"></span>
             <button type="submit" ng-click="myseat(m.purchaseId)" class="btn btn-success">my seat</button>
-            <button type="submit" ng-click="arrange(m.ticketCode,m.purchaseId)" class="btn btn-success">arrange others</button>
+            <button type="submit" ng-click="arrange(m.ticketCode,m.inviter)" class="btn btn-success">arrange others</button>
         </div>
     </div>
     <div ng-repeat="p in m.attendees">

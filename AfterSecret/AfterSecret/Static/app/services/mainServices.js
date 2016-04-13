@@ -128,7 +128,7 @@
         };
         return _service;
     }])
-    .factory("invitationService", ['$http', function ($http) {
+    .factory("invitationService", ['$http', '$location', function ($http, $location) {
         var _service = {};
         _service.wxConfig = function () {
             $http({

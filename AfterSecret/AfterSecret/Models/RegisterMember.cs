@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,11 @@ namespace AfterSecret.Models
         [Required]
         [MaxLength(200)]
         public string OpenId { get; set; }
+
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }
