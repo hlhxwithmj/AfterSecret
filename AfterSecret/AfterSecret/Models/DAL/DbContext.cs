@@ -27,6 +27,7 @@ namespace AfterSecret.Models.DAL
         public DbSet<Purchase> Purchase { get; set; }
 
         public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<JsApiTicket> JsApiTicket { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

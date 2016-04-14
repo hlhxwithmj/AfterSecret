@@ -133,7 +133,7 @@
         _service.wxConfig = function () {
             $http({
                 method: 'get',
-                url: '/api/wxConfig',
+                url: '/api/WxConfig',
                 params: {
                     url: $location.absUrl().substring(0, $location.absUrl().indexOf('#'))
                 }

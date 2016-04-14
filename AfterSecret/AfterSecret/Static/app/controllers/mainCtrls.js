@@ -1,4 +1,4 @@
-﻿angular.module("WeChat.Controllers", ["WeChat.Services"])
+﻿angular.module("WeChat.Controllers", ["WeChat.Services","constantService"])
     .controller("MainCtrl", function ($scope, $location, $http, httpRequestTracker) {
         $scope.hasPendingRequests = function () {
             return httpRequestTracker.hasPendingRequests();
@@ -11,7 +11,6 @@
     .controller('registerCtrl', function ($rootScope, $scope, $location, registerService) {
         $rootScope.bg = "welcome";
         $scope.error = false;
-        $('form').validator();
         $scope.check = function () {
             $scope.isEmpty = $scope.code && $scope.code.toString().length > 0;
             if ($scope.code && $scope.code.toString().length == 12) {
@@ -31,11 +30,10 @@
     .controller('termsCtrl', function () {
 
     })
-    .controller('registerMemberCtrl', function ($rootScope, $scope, $location, registerMemberService) {
+    .controller('registerMemberCtrl', function ($rootScope, $scope, $location, registerMemberService,constantService) {
         $rootScope.bg = "bg-star";
-        $('form').validator();
-        $("[name='gender']").bootstrapSwitch();
-
+        $scope.nationalityList = constantService.nationality;
+    
         registerMemberService.doGet().success(function (data) {
             $scope.model = data || {};
             $scope.model.agentCode = $rootScope.agentCode;
@@ -219,28 +217,34 @@
     })
     .controller('invitationCtrl', function ($scope, $location, $routeParams, invitationService) {
         invitationService.wxConfig();
-        wx.onMenuShareAppMessage({
-            title: '', // 分享标题
-            desc: '', // 分享描述
-            link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
-                + '/Static/invitation.html?ticketCode=' + $routeParams.code, // 分享链接
-            imgUrl: '', // 分享图标
-            type: 'link', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                $location.path('/invite');
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
+        wx.ready(function () {
+            wx.hideMenuItems({
+                menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+            });
+            wx.onMenuShareAppMessage({
+                title: '', // 分享标题
+                desc: '', // 分享描述
+                link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
+                    + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
+                imgUrl: '', // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    $location.path('/invite');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
         });
+
 
         $scope.back = function () {
             $location.path('/invite');
         };
         $scope.ticketCode = $routeParams.code;
-        $scope.inviter = $routeParams.iniviter;
+        $scope.inviter = $routeParams.inviter;
     })
     .controller('ticketCtrl', function ($scope, ticketService) {
         ticketService.doGet().success(function (data) {

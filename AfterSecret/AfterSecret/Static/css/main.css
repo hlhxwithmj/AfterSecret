@@ -1,5 +1,6 @@
 ﻿::-webkit-input-placeholder {
     text-align: center;
+    font-family: 'Penguin Sans 0.500';
 }
 
 :-moz-placeholder { /* Firefox 18- */
@@ -16,7 +17,55 @@
 
 input {
     text-align: center;
+    background-color: transparent;
+    color: white;
+    border-radius: 0px;
+    border: solid 1px white;
+    font-family: 'Helvetica Light';
 }
+
+    input[type=radio] {
+        width: 13px;
+    }
+
+    input[type=radio] {
+        border: solid 1px white;
+    }
+
+    input[type=submit] {
+        background-color: #d0d0d0;
+        width: 100%;
+        border: none;
+        height: 40px;
+        line-height: 40px;
+        font-size: larger;
+        font-weight: 200;
+        color: #333;
+    }
+
+label {
+    float: left;
+    line-height: 25px;
+    height: 20px;
+    font-family: 'Penguin Sans 0.500';
+    color: white;
+}
+
+select {
+    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat 60px center;
+    border: solid 1px white;
+    width: 100%;
+    font-family: 'Penguin Sans 0.500';
+    color: white;
+    text-align: center;
+    height: 24px;
+}
+
+    select option {
+        background-color: black;
+        font-family: 'Penguin Sans 0.500';
+    }
+/****************************************************/
 
 .bg-star {
     background-image: url('../image/bg.png');
@@ -33,16 +82,11 @@ html, body {
     height: 100%;
     width: 100%;
     font-family: 'Penguin Sans 0.500';
-    color: white;
-    letter-spacing:3px;
+    letter-spacing: 3px;
 }
 
-label{
+label {
     font-weight: lighter;
-}
-
-.number {
-    font-family: 'Helvetica';
 }
 
 .welcome {
@@ -50,49 +94,57 @@ label{
 }
 
 .error {
-    position:absolute;
-    top:75%;
+    position: absolute;
+    top: 75%;
 }
+
 .error-msg {
-        text-align:center;
-        background-color:black;
-        opacity:0.9;
-        width: 90%;
-        margin:0 auto;
-        font-weight:200;
-    }
+    text-align: center;
+    background-color: black;
+    opacity: 0.8;
+    width: 90%;
+    margin: 0 auto;
+    font-weight: 200;
+    color: white;
+}
 
-    .welcome input {
-        background-color: black;
-        border: none;
+.welcome input {
+    background-color: black;
+    font-size: x-large;
+    border: none;
+    line-height: 40px;
+}
+
+    .welcome input::-webkit-input-placeholder {
         color: white;
-        line-height: 40px;
-        font-size: x-large;
-        width: 100%;
-        border-radius:0px;
+        font-weight: 300;
     }
-
-        .welcome input::-webkit-input-placeholder {
-            color: white;
-            font-weight: 300;
-        }
 
 .welcome-input {
     position: absolute;
     top: 65%;
+    text-align: center;
 }
 
 .bg-star {
     background-image: url('../image/bg-star.jpg');
 }
 
-.register-title{
-    width:60%;
-    text-align:center;
-    background-color:grey;
+.title {
+    width: 80%;
+    padding-left: 15px;
+    background-color: #d2d2d3;
+    line-height: 40px;
+    height: 35px;
 }
+
 
 @font-face {
     font-family: 'Penguin Sans 0.500';
     src: url('../fonts/Penguin Sans 0.500.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Helvetica Light';
+    src: url('../fonts/Helvetica Light.ttf') format('truetype');
 }

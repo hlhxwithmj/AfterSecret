@@ -1,11 +1,7 @@
 ﻿<div class="col-xs-12 welcome-input">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10">
-        <input type="text" pattern="[0-9]*" required name="code" ng-class={'number':isEmpty}
-               placeholder="Agent Code" style="text-align: center;"
-               ng-model="code" ng-change="check()" ng-disabled="disabled">
-    </div>
-    <div class="col-xs-1"></div>
+    <input type="text" pattern="[0-9]*" required name="code" ng-class={'number':isEmpty}
+           placeholder="Agent Code" style="text-align: center;"
+           ng-model="code" ng-change="check()" ng-disabled="disabled">
 </div>
 <div class="col-xs-12 error">
     <div class="error-msg" ng-show="error">

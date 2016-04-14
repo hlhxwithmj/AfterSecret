@@ -11,7 +11,8 @@
         <span id="ticketCode"></span>
     </div>
     <div>
-
+        <span>Inviter</span>
+        <span id="inviter"></span>
     </div>
     <button>
         Invite Your Friend
@@ -36,8 +37,8 @@
 
     $(document).ready(function () {
         var ticketCode = getUrlParameter('ticketCode');
-        var purchaseId = getUrlParameter('purchaseId');
+        var inviter = getUrlParameter('inviter');
         $("#ticketCode").html(ticketCode);
-        $("#purchaseId").html(purchaseId);
+        $("#inviter").html(inviter);
     });
 </script>

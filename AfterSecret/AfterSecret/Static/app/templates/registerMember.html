@@ -1,55 +1,69 @@
-﻿<div class="col-xs-12" style="height:40px;display:block"></div>
-<div class="row">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-10">
-        <form role="form" novalidate="novalidate">
-            <div class="form-inline">
-                <label>NAME</label>
-                <div class="form-group col-xs-4">
-                    <input type="text" class="form-control" ng-model="model.firstName" required placeholder="FIRST NAME">
+﻿<div style="padding:50px 0">
+    <div class="title form-group">YOUR INFORMATION</div>
+    <div>
+        <form role="form" name="form" novalidate="novalidate">
+            <div class="form-group col-xs-12">
+
+                <div>
+                    <label style="width:100%">NAME</label>
                 </div>
-                <div class="form-group col-xs-4">
-                    <input type="text" class="form-control" ng-model="model.lastName" required placeholder="LAST NAME">
-                </div>
+                <input class="col-xs-5" type="text" name="firstName" ng-model="model.firstName" required placeholder="FIRST NAME">
+                <input style="margin-left:10px;" class="col-xs-5" type="text" name="lastName" ng-model="model.lastName" required placeholder="LAST NAME">
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>GENDER</label>
-                <input type="checkbox" data-on-text="M" data-off-text="F"
-                       checked name="gender" ng-checked="model.gender">
+                <div class="col-xs-1"></div>
+                <label class="radio-inline">
+                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Male" checked="checked">Male
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Female">Female
+                </label>
+
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>NATIONALITY</label>
-                <select class="form-control" required ng-model="model.nationality">
-                    <option></option>
-                    <option>CN</option>
-                    <option>US</option>
-                    <option>HK</option>
-                    <option>UK</option>
-                </select>
+                <div class="col-xs-1"></div>
+                <div class="col-xs-5">
+                    <select ng-model="model.nationality">
+                        <option ng-selected="{{m == model.nationality}}" ng-repeat="m in nationalityList track by $index"
+                                value="{{m}}">
+                            {{m}}
+                        </option>
+                    </select>
+                </div>
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>MOBILE</label>
-                <input type="tel" maxlength="11" class="form-control" ng-model="model.mobile" required>
+                <div class="col-xs-1"></div>
+                <input class="col-xs-5" type="tel" maxlength="11" name="mobile" ng-model="model.mobile" required>
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>EMAIL</label>
-                <input type="email" class="form-control" ng-model="model.email" required>
+                <div class="col-xs-1"></div>
+                <input class="col-xs-6" type="email" name="email" ng-model="model.email" required>
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>WECHAT ID(Optional)</label>
-                <input type="text" class="form-control" ng-model="model.wechatID">
+                <div class="col-xs-8"></div>
+                <input class="col-xs-6" type="text" ng-model="model.wechatID">
             </div>
-            <div class="form-group">
+            <div class="col-xs-12 form-group">
                 <label>OCCUPTAION(Optional)</label>
-                <input type="text" class="form-control" ng-model="model.occupation">
+                <div class="col-xs-8"></div>
+                <input class="col-xs-6" type="text" ng-model="model.occupation">
             </div>
-            <div class="checkbox">
+            <div class=" form-group col-xs-12 checkbox">
                 <label>
-                    <input type="checkbox" checked> <a>TERMS AND CONTDITIONS</a>
+                    <input type="checkbox" checked>
+                    TERMS AND CONTDITIONS
                 </label>
             </div>
-            <div class="form-group">
-                <button type="submit" ng-click="save()" class="btn btn-success btn-block">SUBMIT AND CHOOSE YOUR EVENT PURCHASE</button>
+            <div class="col-xs-2"></div>
+            <div class="form-group col-xs-8">
+                <input type="submit" ng-disabled="form.firstName.$invalid || form.lastName.$invalid || form.nationality.$invalid
+                        || form.email.$invalid || form.mobile.$invalid || form.gender.$invalid" ng-click="save()"
+                       value="SUBMIT" />
             </div>
         </form>
     </div>

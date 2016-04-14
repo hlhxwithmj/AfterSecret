@@ -40,22 +40,26 @@
                templateUrl: "/static/app/templates/ticket.html",
                controller: 'ticketCtrl'
            });
-           $routeProvider.otherwise("/register", {
-               templateUrl: "/static/app/templates/register.html",
-               controller: 'registerCtrl'
+           //$routeProvider.otherwise("/register", {
+           //    templateUrl: "/static/app/templates/register.html",
+           //    controller: 'registerCtrl'
+           //});
+           $routeProvider.otherwise("/registerMember", {
+               templateUrl: "/static/app/templates/registerMember.html",
+               controller: 'registerMemberCtrl'
            });
-       })
-.config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.interceptors.push(function ($q, $location) {
-        return {
-            'responseError': function (rejection) {
-                var defer = $q.defer();
-                if (rejection.status == 401) {
-                    $location.path("/unauthorized");
-                }
-                defer.reject(rejection);
-                return defer.promise;
-            }
-        };
-    });
-}]);
+       });
+//.config(['$httpProvider', function ($httpProvider) {
+//    $httpProvider.interceptors.push(function ($q, $location) {
+//        return {
+//            'responseError': function (rejection) {
+//                var defer = $q.defer();
+//                if (rejection.status == 401) {
+//                    $location.path("/unauthorized");
+//                }
+//                defer.reject(rejection);
+//                return defer.promise;
+//            }
+//        };
+//    });
+//}]);
