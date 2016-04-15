@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class ShareController : BaseApiController
     {
         public IHttpActionResult Get()

@@ -75,7 +75,7 @@ namespace AfterSecret.APIControllers
                     .Select(a => new OrderVM()
                     {
                         id = a.Id,
-                        amount = a.Amount,
+                        amount = a.Amount / 100,
                         order_no = a.Order_No,
                         orderStatus = a.OrderStatus,
                         purchases = a.Purchases.Select(b => new PurchaseVM()

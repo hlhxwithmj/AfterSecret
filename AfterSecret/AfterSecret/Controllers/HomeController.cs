@@ -121,7 +121,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     Response.StatusCode = 500;
                 }
             }
-            
+
             return Content("");
         }
 
@@ -269,7 +269,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
         {
             var result = string.Empty;
             var description = string.Empty;
-            var picUrl = string.Empty;
+            var picUrl = SubscribeConfig.DOMAIN + "/Static/image/";
             var title = string.Empty;
             var url = string.Empty;
             var openId = (string)jObj["xml"]["FromUserName"]["#cdata-section"];
@@ -278,27 +278,33 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             {
                 case SubscribeConfig.mREGISTER:
                     path = "register";
-                    description = "register";
-                    picUrl = "a";
-                    title = "register";
+                    description = "Enter your agent code, register and join the Secret After Party!";
+                    picUrl = picUrl + "registration.jpg";
+                    title = "Registration";
                     break;
                 case SubscribeConfig.mPURCHASE:
                     path = "items";
-                    description = "purchase";
-                    picUrl = "a";
-                    title = "purchase";
+                    description = "Would like to purchase more tickets and invite your guests? Click here!";
+                    picUrl = picUrl + "purchase.jpg";
+                    title = "Purchase";
                     break;
                 case SubscribeConfig.myPURCHASE:
                     path = "orders";
-                    description = "orders";
-                    picUrl = "a";
-                    title = "orders";
+                    description = "You can review your shopping cart here!";
+                    picUrl = picUrl + "shopping-cart.jpg";
+                    title = "My Purchase";
                     break;
                 case SubscribeConfig.myTICKET:
                     path = "ticket";
-                    description = "ticket";
-                    picUrl = "a";
-                    title = "ticket";
+                    description = "Review your ticket, save it on your phone and see you at the event!";
+                    picUrl = picUrl + "my-ticket.jpg";
+                    title = "My Ticket";
+                    break;
+                case SubscribeConfig.INVITATION:
+                    path = "invite";
+                    description = "You receive a ticket from your friend. Register and get your ticket to join the Secret After Party!";
+                    picUrl = picUrl + "invitation.jpg";
+                    title = "Invitation";
                     break;
                 default:
                     break;

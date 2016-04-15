@@ -17,7 +17,6 @@ namespace AfterSecret.APIControllers
             try
             {
                 var ticket = UW.TicketRepository.Get().Where(a => a.RegisterMember.OpenId == OpenId).SingleOrDefault();
-
                 if (ticket != null)
                     return Ok(new
                     {
@@ -27,7 +26,7 @@ namespace AfterSecret.APIControllers
                         ticketId = ticket.Id
                     });
                 else
-                    return BadRequest();
+                    return BadRequest("invite");
             }
             catch (Exception ex)
             {

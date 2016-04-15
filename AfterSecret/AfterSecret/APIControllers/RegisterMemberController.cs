@@ -70,10 +70,10 @@ namespace AfterSecret.APIControllers
                         else
                         {
                             scope.Dispose();
-                            return BadRequest();
+                            return BadRequest("fail");
                         }            
                     }
-                    return Ok("ticket");
+                    return Ok("success");
                 }
                 return Ok();
             }

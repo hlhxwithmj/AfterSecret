@@ -8,6 +8,42 @@
         $http.defaults.headers.common['openIdForPay'] = window.sessionStorage["openIdForPay"];
         $location.path('/' + window.sessionStorage["path"]);
     })
+    .controller('invitationCtrl', function ($scope, $rootScope, $routeParams, $location, invitationService) {
+        $rootScope.bg = "bg-img";
+        invitationService.wxConfig();
+        wx.ready(function () {
+            wx.hideMenuItems({
+                menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+            });
+            wx.onMenuShareAppMessage({
+                title: '', // 分享标题
+                desc: '', // 分享描述
+                link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
+                    + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
+                imgUrl: '', // 分享图标
+                type: 'link', // 分享类型,music、video或link，不填默认为link
+                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    $location.path('/invite');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+
+        $scope.invite = function () {
+            $scope.isShare = true;
+        };
+
+        $scope.back = function () {
+            $location.path('/invite');
+        };
+
+        $scope.ticketCode = $routeParams.code;
+        $scope.inviter = $routeParams.inviter;
+    })
     .controller('registerCtrl', function ($rootScope, $scope, $location, registerService) {
         $rootScope.bg = "welcome";
         $scope.error = false;
@@ -27,13 +63,11 @@
             };
         };
     })
-    .controller('termsCtrl', function ($scope, $location) {
-        $scope.back = function () {
-            $location.path('/registerMember');
-        };
-    })
     .controller('registerMemberCtrl', function ($rootScope, $scope, $location, registerMemberService, constantService) {
         $rootScope.bg = "bg-img";
+        $scope.success = false;
+        $scope.fail = false;
+        $scope.showTerms = false;
         $scope.nationalityList = constantService.nationality;
         $scope.occupationList = constantService.occupation;
         registerMemberService.doGet().success(function (data) {
@@ -44,18 +78,24 @@
         $scope.save = function () {
             $scope.model.gender = $("[name='gender']").bootstrapSwitch('state') == true ? "Male" : "Female";
             registerMemberService.doSave($scope.model).success(function (data) {
-                if (data && data == 'ticket') {
-
+                if (data && data.Message == 'ticket') {
+                    $scope.success = true;
                 }
                 else
                     $location.path("/items");
-            }).error(function () {
-
+            }).error(function (data) {
+                if (data && data.Message == 'fail') {
+                    $scope.fail = true;
+                }
             });
         };
 
         $scope.terms = function () {
-            $location.path('/terms');
+            $scope.showTerms = true;
+        }
+
+        $scope.ticket = function () {
+            $location.path('/ticket');
         }
     })
     .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, itemsService, orderService, inviteService) {
@@ -212,7 +252,7 @@
                     for (j = 0; j < $scope.model[i].seats; j++) {
                         if (!$scope.model[i].attendees[j]) {
                             $scope.model[i].attendees.push({
-                                name: "Seat" + j,
+                                name: "Seat " + j,
                                 registerMemberId: 0
                             });
                         }
@@ -242,42 +282,25 @@
             });
         };
     })
-    .controller('invitationCtrl', function ($scope, $location, invitationService) {
-        //invitationService.wxConfig();
-        //wx.ready(function () {
-        //    wx.hideMenuItems({
-        //        menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-        //    });
-        //    wx.onMenuShareAppMessage({
-        //        title: '', // 分享标题
-        //        desc: '', // 分享描述
-        //        link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
-        //            + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
-        //        imgUrl: '', // 分享图标
-        //        type: 'link', // 分享类型,music、video或link，不填默认为link
-        //        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-        //        success: function () {
-        //            // 用户确认分享后执行的回调函数
-        //            $location.path('/invite');
-        //        },
-        //        cancel: function () {
-        //            // 用户取消分享后执行的回调函数
-        //        }
-        //    });
-        //});
-
-
-        //$scope.back = function () {
-        //    $location.path('/invite');
-        //};
-        ////$scope.ticketCode = $routeParams.code;
-        ////$scope.inviter = $routeParams.inviter;
-
-        //$scope.ticketCode = '123141141241';
-        //$scope.inviter = 'villa tan';
-    })
-    .controller('ticketCtrl', function ($scope, ticketService) {
+    .controller('ticketCtrl', function ($scope, $rootScope, $location, ticketService) {
+        $rootScope.bg = "bg-img";
+        leftPadding = function (str) {
+            var pad = "000000";
+            var ans = pad.substring(0, pad.length - str.length) + str;
+            return ans;
+        };
         ticketService.doGet().success(function (data) {
             $scope.model = data;
-        }).error(function () { });
-    });
+            $scope.model.ticketId = leftPadding($scope.model.ticketId+'');
+        }).error(function (data) {
+            if (data && data.Message == 'invite')
+                $location.path('/invite');
+        });
+    })
+.controller('shareCtrl', function ($scope, $rootScope, ticketService) {
+    $rootScope.bg = "bg-img";
+
+    ticketService.doGet().success(function (data) {
+        $scope.model = data;
+    }).error(function () { });
+});

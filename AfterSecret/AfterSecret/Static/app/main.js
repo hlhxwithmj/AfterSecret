@@ -4,10 +4,6 @@
                templateUrl: "/static/app/templates/register.html",
                controller: 'registerCtrl'
            });
-           $routeProvider.when("/terms", {
-               templateUrl: "/static/app/templates/terms.html",
-               controller: 'termsCtrl'
-           });
            $routeProvider.when("/registerMember", {
                templateUrl: "/static/app/templates/registerMember.html",
                controller: 'registerMemberCtrl'
@@ -32,34 +28,34 @@
                templateUrl: "/static/app/templates/invite.html",
                controller: 'inviteCtrl'
            });
-           //$routeProvider.when("/invitation/:code/:inviter", {
-           //    templateUrl: "/static/app/templates/invitation.html",
-           //    controller: 'invitationCtrl'
-           //});
+           $routeProvider.when("/invitation/:code/:inviter", {
+               templateUrl: "/static/app/templates/invitation.html",
+               controller: 'invitationCtrl'
+           });
            $routeProvider.when("/ticket", {
                templateUrl: "/static/app/templates/ticket.html",
                controller: 'ticketCtrl'
            });
-           //$routeProvider.otherwise("/register", {
-           //    templateUrl: "/static/app/templates/register.html",
-           //    controller: 'registerCtrl'
-           //});
-           $routeProvider.otherwise("/invitation", {
-               templateUrl: "/static/app/templates/invitation.html",
-               controller: 'invitationCtrl'
+           $routeProvider.when("/share", {
+               templateUrl: "/static/app/templates/share.html",
+               controller: 'shareCtrl'
            });
-       });
-//.config(['$httpProvider', function ($httpProvider) {
-//    $httpProvider.interceptors.push(function ($q, $location) {
-//        return {
-//            'responseError': function (rejection) {
-//                var defer = $q.defer();
-//                if (rejection.status == 401) {
-//                    $location.path("/unauthorized");
-//                }
-//                defer.reject(rejection);
-//                return defer.promise;
-//            }
-//        };
-//    });
-//}]);
+           $routeProvider.otherwise("/register", {
+               templateUrl: "/static/app/templates/register.html",
+               controller: 'registerCtrl'
+           });
+       })
+.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($q, $location) {
+        return {
+            'responseError': function (rejection) {
+                var defer = $q.defer();
+                if (rejection.status == 401) {
+                    $location.path("/unauthorized");
+                }
+                defer.reject(rejection);
+                return defer.promise;
+            }
+        };
+    });
+}]);

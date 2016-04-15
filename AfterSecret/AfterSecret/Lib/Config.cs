@@ -16,6 +16,7 @@ namespace AfterSecret.Lib
         public const string mPURCHASE = "PURCHASE";
         public const string myPURCHASE = "MYPURCHASE";
         public const string myTICKET = "MYTICKET";
+        public const string INVITATION = "INVITATION";
         public const string _seedUser_Prefix = "88";
         public const string _invitedUser_Prefix = "16";
         public const string _shareUser_Prefix = "18";
