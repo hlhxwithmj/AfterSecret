@@ -14,29 +14,9 @@ using System.Transactions;
 namespace AfterSecret.APIControllers
 {
     [ApiAuthorize]
-    public class OrderDetailController : BaseApiController
+    public class OrderDeleteController : BaseApiController
     {
         public IHttpActionResult Get(int id)
-        {
-            var order = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId)
-                .Where(a => a.Id == id).SingleOrDefault();
-            if (order != null)
-            {
-
-                var max = from a in order.Purchases
-                          group a by a.ItemId into g
-                          select new
-                          {
-                              id = g.Key,
-                              count = g.Count()
-                          };
-                return Ok(max);
-            }
-            else
-                return BadRequest();
-        }
-
-        public IHttpActionResult Post(int id)
         {
             try
             {
@@ -60,7 +40,7 @@ namespace AfterSecret.APIControllers
             {
                 log.Warn(ex);
 
-            } 
+            }
             return BadRequest();
         }
     }

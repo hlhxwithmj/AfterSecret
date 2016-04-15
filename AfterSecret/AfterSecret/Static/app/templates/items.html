@@ -12,12 +12,12 @@
                 <div class="remark" ng-bind="item.remark"></div>
                 <div>
                     <span class="price" ng-bind="'¥'+item.unitPrice"></span>
-                    <span class="available" ng-bind="'Available sales: '+item.total"></span>
+                    <span class="available" ng-bind="'Available sales: '+item.remain"></span>
                 </div>
 
             </div>
             <div style="padding-right:10px;">
-                <input type="text" maxlength="1" style="width:100%;max-height:30px;max-width:30px;" pattern="[0-9]*" ng-model="item.count" />
+                <input type="text" maxlength="2" max="20" style="width:100%;max-height:30px;max-width:30px;" pattern="[0-9]*" ng-model="item.count" />
             </div>
         </div>
     </div>

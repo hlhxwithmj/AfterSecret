@@ -42,7 +42,7 @@ namespace AfterSecret.Models
                     return Total - uw.PurchaseRepository.Get()
                         .Where(a => a.Order.OrderStatus == OrderStatus.Unpaid
                             || a.Order.OrderStatus == OrderStatus.Paid).Where(a => a.ItemId == Id)
-                            .Select(a => a.Quantity).ToList().Sum();
+                            .Count();
                 }
             }
         }

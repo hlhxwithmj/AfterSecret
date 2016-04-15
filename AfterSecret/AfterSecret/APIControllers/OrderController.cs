@@ -41,12 +41,11 @@ namespace AfterSecret.APIControllers
                     var random = new Random();
                     foreach (var m in model)
                     {
-                        if (m.Count > 0)
+                        for (int i = 0; i < m.Count; i++)
                             UW.PurchaseRepository.Insert(new Purchase()
                             {
                                 ItemId = m.Id,
                                 OrderId = charge.Id,
-                                Quantity = m.Count,
                                 TicketCode = Common.GenerateTicketCode(random)
                             });
                     }
@@ -71,22 +70,42 @@ namespace AfterSecret.APIControllers
         {
             try
             {
-                var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList()
-                    .Select(a => new OrderVM()
+                List<OrderVM> model = new List<OrderVM>();
+                var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList();
+                foreach (var order in result)
+                {
+                    var max = from a in order.Purchases
+                              group a by a.ItemId into g
+                              select new
+                              {
+                                  ItemId = g.Key,
+                                  Quantity = g.Count()
+                              };
+
+                    var purchases = order.Purchases.ToList();
+                    List<PurchaseVM> vm = new List<PurchaseVM>();
+                    foreach (var i in max)
                     {
-                        id = a.Id,
-                        amount = a.Amount / 100,
-                        order_no = a.Order_No,
-                        orderStatus = a.OrderStatus,
-                        purchases = a.Purchases.Select(b => new PurchaseVM()
+                        var item = purchases.Where(a => a.ItemId == i.ItemId).FirstOrDefault();
+                        vm.Add(new PurchaseVM()
                         {
-                            name = b.Item.Name,
-                            remark = b.Item.Remark,
-                            quantity = b.Quantity,
-                            amount = b.Item.UnitPrice * b.Quantity / 100
-                        }).ToList()
+                            name = item.Item.Name,
+                            remark = item.Item.Remark,
+                            quantity = i.Quantity,
+                            amount = item.Item.UnitPrice * i.Quantity / 100
+                        });
+                    }
+                    model.Add(new OrderVM()
+                    {
+                        id = order.Id,
+                        amount = order.Amount / 100,
+                        order_no = order.Order_No,
+                        orderStatus = order.OrderStatus,
+                        purchases = vm
                     });
-                return Ok(result);
+                }
+
+                return Ok(model);
             }
             catch (Exception ex)
             {
@@ -111,19 +130,6 @@ namespace AfterSecret.APIControllers
             else
                 count = result.Count();
             return Ok(count);
-        }
-
-        public IHttpActionResult Delete(int id)
-        {
-            var order = UW.OrderRepository.Get().Where(a => a.Id == id)
-                .Where(a => a.OpenId == OpenId).SingleOrDefault();
-            if (order != null)
-            {
-                UW.OrderRepository.Delete(order);
-                UW.context.SaveChanges();
-                return Ok();
-            }
-            return BadRequest();
         }
     }
 }

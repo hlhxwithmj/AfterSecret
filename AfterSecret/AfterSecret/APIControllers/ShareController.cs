@@ -25,10 +25,20 @@ namespace AfterSecret.APIControllers
 
         public IHttpActionResult Post()
         {
-            Random r = new Random();
-            var code = Common.GenerateShareCode(r);
-            UW.AgentCodeListRepository.Insert(new Models.AgentCodeList() { AgentCode = code, OpenId = OpenId });
-            return Ok(code);
+            try
+            {
+                Random r = new Random();
+                var code = Common.GenerateShareCode(r);
+                var member = UW.RegisterMemberRepository.Get().Where(a => a.OpenId == OpenId).SingleOrDefault();
+                UW.AgentCodeListRepository.Insert(new Models.AgentCodeList() { AgentCode = code, OpenId = OpenId });
+                UW.context.SaveChanges();
+                return Ok(new { ticketCode = code, inviter = member.ToString() });
+            }
+            catch (Exception ex)
+            {
+                log.Warn(ex);
+                return BadRequest();
+            }
         }
     }
 }

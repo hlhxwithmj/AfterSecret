@@ -31,3 +31,12 @@
    在 System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
    在 System.Data.Entity.DbContext.SaveChanges()
    在 AfterSecret.APIControllers.OrderController.Post(List`1 model) 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 31
+2016-04-16 02:46:41,085 [32] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.InvalidOperationException: 序列包含一个以上的元素
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 AfterSecret.APIControllers.OrderController.Get() 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 89
+2016-04-16 02:47:38,654 [35] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.InvalidOperationException: 序列包含一个以上的元素
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 AfterSecret.APIControllers.OrderController.Get() 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 89
+2016-04-16 02:48:03,498 [22] WARN  AfterSecret.APIControllers.BaseApiController [(null)] - System.InvalidOperationException: 序列包含一个以上的元素
+   在 System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   在 AfterSecret.APIControllers.OrderController.Get() 位置 c:\Users\pennsong\Source\Repos\AfterSecret\AfterSecret\AfterSecret\APIControllers\OrderController.cs:行号 89

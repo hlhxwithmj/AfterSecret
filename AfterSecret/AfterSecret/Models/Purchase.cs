@@ -16,9 +16,6 @@ namespace AfterSecret.Models
         public int ItemId { get; set; }
         public virtual Item Item { get; set; }
 
-        [JsonProperty("quantity")]
-        public int Quantity { get; set; }
-
         //剩余
         [JsonProperty("remain")]
         public int Remain
@@ -31,7 +28,7 @@ namespace AfterSecret.Models
                     if(purchase != null)
                     {
                         var tickets = purchase.Tickets.Count();
-                        return purchase.Item.Seats * purchase.Quantity - tickets;
+                        return purchase.Item.Seats - tickets;
                     }
                     return 0;
                 }

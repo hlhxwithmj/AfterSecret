@@ -8,8 +8,13 @@
         $http.defaults.headers.common['openIdForPay'] = window.sessionStorage["openIdForPay"];
         $location.path('/' + window.sessionStorage["path"]);
     })
-    .controller('invitationCtrl', function ($scope, $rootScope, $routeParams, $location, invitationService) {
+    .controller('invitationCtrl', function ($scope, $rootScope, $routeParams, $location, registerMemberService, invitationService) {
         $rootScope.bg = "bg-img";
+        registerMemberService.doGet().success(function () {
+
+        }).error(function () {
+            $location.path('/register');
+        });
         invitationService.wxConfig();
         wx.ready(function () {
             wx.hideMenuItems({
@@ -68,11 +73,13 @@
         $scope.success = false;
         $scope.fail = false;
         $scope.showTerms = false;
+        $scope.agreement = true;
+        $scope.model = {};
+        $scope.model.agentCode = $rootScope.agentCode;
         $scope.nationalityList = constantService.nationality;
         $scope.occupationList = constantService.occupation;
         registerMemberService.doGet().success(function (data) {
             $scope.model = data || {};
-            $scope.model.agentCode = $rootScope.agentCode;
         }).error(function () { });
 
         $scope.save = function () {
@@ -97,11 +104,21 @@
         $scope.ticket = function () {
             $location.path('/ticket');
         }
+        $scope.purchase = function () {
+            $location.path('/items');
+        }
     })
-    .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, itemsService, orderService, inviteService) {
+    .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, registerMemberService, itemsService, orderService, inviteService) {
         $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
+
+        registerMemberService.doGet().success(function () {
+
+        }).error(function () {
+            $location.path('/register');
+        });
+
         orderService.doCheck().success(function (data) {
             if (data > 0)
                 $location.path('/orders');
@@ -126,7 +143,7 @@
                     imgSrc: item.imgSrc,
                     total: item.total,
                     id: item.Id,
-                    count: 0
+                    count: undefined
                 });
             });
             if ($routeParams.id) {
@@ -147,7 +164,7 @@
         $scope.$watch(function () {
             var sum = 0;
             angular.forEach($scope.model, function (item, index) {
-                sum = sum + item.unitPrice * item.count;
+                sum = sum + item.unitPrice * (item.count ? item.count : 0);
             });
             return sum;
         }, function (sum) {
@@ -218,8 +235,13 @@
         else
             $location.path('/items');
     })
-    .controller('ordersCtrl', function ($rootScope, $scope, $location, orderService) {
+    .controller('ordersCtrl', function ($rootScope, $scope, $location, registerMemberService, orderService) {
         $rootScope.bg = "bg-img";
+        registerMemberService.doGet().success(function () {
+
+        }).error(function () {
+            $location.path('/register');
+        });
         $scope.model = [];
 
         orderService.doGet().success(function (data) {
@@ -241,10 +263,15 @@
             $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-right');
         };
     })
-    .controller('inviteCtrl', function ($rootScope, $scope, $location, inviteService) {
+    .controller('inviteCtrl', function ($rootScope, $scope, $location, registerMemberService, inviteService, shareService) {
         $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
+        registerMemberService.doGet().success(function () {
+
+        }).error(function () {
+            $location.path('/register');
+        });
         var getData = function () {
             inviteService.doGet().success(function (data) {
                 $scope.model = data;
@@ -281,9 +308,22 @@
                 getData();
             });
         };
+        $scope.share = function () {
+            shareService.doPost().success(function (data) {
+                $scope.model = data;
+                $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
+            }).error(function () {
+
+            });
+        }
     })
-    .controller('ticketCtrl', function ($scope, $rootScope, $location, ticketService) {
+    .controller('ticketCtrl', function ($scope, $rootScope, $location, registerMemberService, ticketService) {
         $rootScope.bg = "bg-img";
+        registerMemberService.doGet().success(function () {
+
+        }).error(function () {
+            $location.path('/register');
+        });
         leftPadding = function (str) {
             var pad = "000000";
             var ans = pad.substring(0, pad.length - str.length) + str;
@@ -291,16 +331,9 @@
         };
         ticketService.doGet().success(function (data) {
             $scope.model = data;
-            $scope.model.ticketId = leftPadding($scope.model.ticketId+'');
+            $scope.model.ticketId = leftPadding($scope.model.ticketId + '');
         }).error(function (data) {
             if (data && data.Message == 'invite')
                 $location.path('/invite');
         });
-    })
-.controller('shareCtrl', function ($scope, $rootScope, ticketService) {
-    $rootScope.bg = "bg-img";
-
-    ticketService.doGet().success(function (data) {
-        $scope.model = data;
-    }).error(function () { });
-});
+    });

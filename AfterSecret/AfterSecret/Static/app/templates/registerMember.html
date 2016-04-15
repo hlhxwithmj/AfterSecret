@@ -1,4 +1,4 @@
-﻿<div style="padding:50px 0" ng-show="!showTerms">
+﻿<div style="padding:50px 0" ng-show="!showTerms && !fail && !success">
     <div class="title form-group">YOUR INFORMATION</div>
     <div>
         <form role="form" name="form" novalidate="novalidate">
@@ -60,7 +60,7 @@
             </div>
             <div class=" form-group col-xs-12 checkbox">
                 <label>
-                    <input type="checkbox" name="terms" checked>
+                    <input type="checkbox" name="terms" ng-model="agreement" required />
                 </label>
                 <span ng-click="terms()" style="color:white;">TERMS AND CONTDITIONS</span>
             </div>
@@ -75,7 +75,7 @@
 <div ng-show="success" class="cover-msg" ng-click="ticket()">
     <img src="../static/image/ticket-get-success.png" />
 </div>
-<div ng-show="fail" class="cover-msg" ng-click="fail=false;">
+<div ng-show="fail" class="cover-msg" ng-click="purchase()">
     <img src="../static/image/ticket-get-fail.png" />
 </div>
 

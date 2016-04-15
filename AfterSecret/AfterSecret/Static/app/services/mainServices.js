@@ -62,9 +62,11 @@
         };
         _service.doDelete = function (id) {
             return $http({
-                method: 'delete',
-                url: '/api/Order',
-                param: { id: id }
+                method: 'get',
+                url: '/api/OrderDelete',
+                params: {
+                    id: id
+                }
             });
         };
         return _service;
@@ -146,6 +148,16 @@
                     signature: data.signature,// 必填，签名，见附录1
                     jsApiList: ['onMenuShareAppMessage', 'hideMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
                 });
+            });
+        };
+        return _service;
+    }])
+    .factory("shareService", ['$http', function ($http) {
+        var _service = {};
+        _service.doPost = function () {
+            return $http({
+                method: 'post',
+                url: '/api/Share'
             });
         };
         return _service;

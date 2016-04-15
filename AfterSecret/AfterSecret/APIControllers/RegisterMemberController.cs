@@ -89,7 +89,10 @@ namespace AfterSecret.APIControllers
             try
             {
                 var result = UW.RegisterMemberRepository.Get().Where(a => a.OpenId == OpenId).SingleOrDefault();
-                return Ok(result);
+                if (result != null)
+                    return Ok(result);
+                else
+                    return BadRequest();
             }
             catch (Exception ex)
             {

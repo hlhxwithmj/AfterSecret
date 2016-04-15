@@ -15,17 +15,19 @@ namespace AfterSecret.APIControllers
 {
     [ApiAuthorize]
     public class InviteController : BaseApiController
-    {       
+    {
         public IHttpActionResult Get()
         {
             try
             {
                 var purchases = UW.PurchaseRepository.Get().Where(a => a.Order.OpenId == OpenId)
-                    .Where(a => a.Item.NeedInvite == true).ToList();
+                    .Where(a => a.Item.NeedInvite == true)
+                    .Where(a => a.Order.OrderStatus == Models.Constant.OrderStatus.Paid)
+                    .ToList();
                 var result = purchases.Select(a => new TicketVM()
                 {
                     purchaseId = a.Id,
-                    seats = a.Quantity,
+                    seats = a.Item.Seats,
                     ticketCode = a.TicketCode,
                     inviter = a.Order.RegisterMember.ToString(),
                     attendees = a.Tickets.Select(b => new AttendeeVM()
