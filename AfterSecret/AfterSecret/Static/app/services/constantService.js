@@ -21,4 +21,8 @@
              'Tobagan', 'Tobagonian', 'Togolese', 'Trinidadian', 'Tunisian', 'Turkish', 'Turkoman', 'Tuvaluan', 'Ugandan',
              'Ukrainian', 'Uruguayan', 'Uzbek', 'Vanuatuan', 'Venezuelan', 'Vietnamese', 'Welsh', 'Western Samoan',
              'Yemeni', 'Yugoslav', 'Zaïrean', 'Zambian', 'Zimbabwean'];
+         this.occupation = ['Agriculture', 'Business', 'Chemical industry', 'Communications', 'Construction', 'Designer',
+             'Doctor', 'Education', 'Energy industry', 'Entertainment', 'Fashion and Accessories', 'Finacial activities',
+             'Government', 'Health care', 'Information', 'IT', 'Leisure and hospitality', 'Manufacturing', 'Mass Media',
+             'Military', 'Retail Trade', 'Telecommunications', 'Transportation and warehousing', 'Wholesale trade', 'Others'];
      }]);

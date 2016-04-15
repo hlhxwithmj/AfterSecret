@@ -71,9 +71,9 @@ namespace AfterSecret.APIControllers
                         {
                             scope.Dispose();
                             return BadRequest();
-                        }
-                            
+                        }            
                     }
+                    return Ok("ticket");
                 }
                 return Ok();
             }

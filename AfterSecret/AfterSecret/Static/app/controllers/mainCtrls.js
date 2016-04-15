@@ -1,4 +1,4 @@
-﻿angular.module("WeChat.Controllers", ["WeChat.Services","constantService"])
+﻿angular.module("WeChat.Controllers", ["WeChat.Services", "constantService"])
     .controller("MainCtrl", function ($scope, $location, $http, httpRequestTracker) {
         $scope.hasPendingRequests = function () {
             return httpRequestTracker.hasPendingRequests();
@@ -27,13 +27,15 @@
             };
         };
     })
-    .controller('termsCtrl', function () {
-
+    .controller('termsCtrl', function ($scope, $location) {
+        $scope.back = function () {
+            $location.path('/registerMember');
+        };
     })
-    .controller('registerMemberCtrl', function ($rootScope, $scope, $location, registerMemberService,constantService) {
-        $rootScope.bg = "bg-star";
+    .controller('registerMemberCtrl', function ($rootScope, $scope, $location, registerMemberService, constantService) {
+        $rootScope.bg = "bg-img";
         $scope.nationalityList = constantService.nationality;
-    
+        $scope.occupationList = constantService.occupation;
         registerMemberService.doGet().success(function (data) {
             $scope.model = data || {};
             $scope.model.agentCode = $rootScope.agentCode;
@@ -41,15 +43,23 @@
 
         $scope.save = function () {
             $scope.model.gender = $("[name='gender']").bootstrapSwitch('state') == true ? "Male" : "Female";
-            registerMemberService.doSave($scope.model).success(function () {
-                $location.path("/items");
+            registerMemberService.doSave($scope.model).success(function (data) {
+                if (data && data == 'ticket') {
+
+                }
+                else
+                    $location.path("/items");
             }).error(function () {
 
             });
         };
+
+        $scope.terms = function () {
+            $location.path('/terms');
+        }
     })
     .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, itemsService, orderService, inviteService) {
-        $rootScope.bg = "bg-star";
+        $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
         orderService.doCheck().success(function (data) {
@@ -69,10 +79,12 @@
                 $scope.model.push({
                     name: item.name,
                     remark: item.remark,
-                    factor: item.factor,
-                    unitPrice: item.unitPrice,
+                    seats: item.seats,
+                    unitPrice: item.unitPrice / 100,
                     remain: item.remain,
                     order: item.order,
+                    imgSrc: item.imgSrc,
+                    total: item.total,
                     id: item.Id,
                     count: 0
                 });
@@ -95,7 +107,7 @@
         $scope.$watch(function () {
             var sum = 0;
             angular.forEach($scope.model, function (item, index) {
-                sum = sum + item.unitPrice * item.factor * item.count;
+                sum = sum + item.unitPrice * item.count;
             });
             return sum;
         }, function (sum) {
@@ -167,8 +179,9 @@
             $location.path('/items');
     })
     .controller('ordersCtrl', function ($rootScope, $scope, $location, orderService) {
-        $rootScope.bg = "bg-star";
+        $rootScope.bg = "bg-img";
         $scope.model = [];
+
         orderService.doGet().success(function (data) {
             $scope.model = data;
         }).error(function () { });
@@ -183,14 +196,28 @@
         $scope.edit = function (id) {
             $location.path('/items/' + id);
         };
+
+        $scope.toggle = function (e) {
+            $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-right');
+        };
     })
     .controller('inviteCtrl', function ($rootScope, $scope, $location, inviteService) {
-        $rootScope.bg = "bg-star";
+        $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
         var getData = function () {
             inviteService.doGet().success(function (data) {
                 $scope.model = data;
+                for (i = 0; i < $scope.model.length; i++) {
+                    for (j = 0; j < $scope.model[i].seats; j++) {
+                        if (!$scope.model[i].attendees[j]) {
+                            $scope.model[i].attendees.push({
+                                name: "Seat" + j,
+                                registerMemberId: 0
+                            });
+                        }
+                    }
+                }
             }).error(function () { });
             inviteService.share().success(function () {
                 $scope.hasPermission = true;
@@ -215,36 +242,39 @@
             });
         };
     })
-    .controller('invitationCtrl', function ($scope, $location, $routeParams, invitationService) {
-        invitationService.wxConfig();
-        wx.ready(function () {
-            wx.hideMenuItems({
-                menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
-            });
-            wx.onMenuShareAppMessage({
-                title: '', // 分享标题
-                desc: '', // 分享描述
-                link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
-                    + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
-                imgUrl: '', // 分享图标
-                type: 'link', // 分享类型,music、video或link，不填默认为link
-                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                success: function () {
-                    // 用户确认分享后执行的回调函数
-                    $location.path('/invite');
-                },
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
-            });
-        });
+    .controller('invitationCtrl', function ($scope, $location, invitationService) {
+        //invitationService.wxConfig();
+        //wx.ready(function () {
+        //    wx.hideMenuItems({
+        //        menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
+        //    });
+        //    wx.onMenuShareAppMessage({
+        //        title: '', // 分享标题
+        //        desc: '', // 分享描述
+        //        link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
+        //            + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
+        //        imgUrl: '', // 分享图标
+        //        type: 'link', // 分享类型,music、video或link，不填默认为link
+        //        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        //        success: function () {
+        //            // 用户确认分享后执行的回调函数
+        //            $location.path('/invite');
+        //        },
+        //        cancel: function () {
+        //            // 用户取消分享后执行的回调函数
+        //        }
+        //    });
+        //});
 
 
-        $scope.back = function () {
-            $location.path('/invite');
-        };
-        $scope.ticketCode = $routeParams.code;
-        $scope.inviter = $routeParams.inviter;
+        //$scope.back = function () {
+        //    $location.path('/invite');
+        //};
+        ////$scope.ticketCode = $routeParams.code;
+        ////$scope.inviter = $routeParams.inviter;
+
+        //$scope.ticketCode = '123141141241';
+        //$scope.inviter = 'villa tan';
     })
     .controller('ticketCtrl', function ($scope, ticketService) {
         ticketService.doGet().success(function (data) {

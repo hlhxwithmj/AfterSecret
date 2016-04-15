@@ -1,36 +1,50 @@
-﻿<div class="col-md-12 number" ng-hide="isConfirmed">
+﻿<div class="logo-panel">
+    <img class="logo-sm" src="../static/image/logo-sm.png" />
+</div>
+<div class="items font-helvetica" ng-hide="isConfirmed">
     <div ng-repeat="item in model | orderBy:'order'">
-        <div class="col-md-2">
-            <img ng-src="{{item.imgSrc}}" />
-        </div>
-        <div class="col-md-8 number">
-            <span ng-bind="item.name"></span>
-            <span ng-bind="'￥'+item.unitPrice*item.factor"></span>
-            <span ng-bind="item.remark"></span>
-        </div>
-        <div class="col-md-2" style="color:black;">
-            <input type="text" pattern="[0-9]*" ng-model="item.count" />
+        <div class="col-xs-12 rows">
+            <div class="col-xs-2">
+                <img ng-src="{{item.imgSrc}}" />
+            </div>
+            <div class="col-xs-8" style="margin-bottom:-4px;">
+                <div class="name" ng-bind="item.name"></div>
+                <div class="remark" ng-bind="item.remark"></div>
+                <div>
+                    <span class="price" ng-bind="'¥'+item.unitPrice"></span>
+                    <span class="available" ng-bind="'Available sales: '+item.total"></span>
+                </div>
+
+            </div>
+            <div style="padding-right:10px;">
+                <input type="text" maxlength="1" style="width:100%;max-height:30px;max-width:30px;" pattern="[0-9]*" ng-model="item.count" />
+            </div>
         </div>
     </div>
 
-    <div>
-        <span>total:</span>
-        <span class="number" ng-bind="total"></span>
+    <div class="col-xs-12 total">
+        <span class="label font-penguin">Total:</span>
+        <span class="number price" ng-bind="'¥'+total"></span>
     </div>
-    <div>
-        <button type="submit" ng-click="skip()" ng-show="hasPermission" class="btn btn-success">skip</button>
-        <button type="submit" ng-click="confirm()" class="btn btn-success">confirm</button>
+    <div class="col-xs-12" style="float:right;">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-3">
+            <input type="submit" ng-click="skip()" value="Skip" ng-show="hasPermission"/>
+        </div>
+        <div class="col-xs-7">
+            <input type="submit" ng-click="confirm()" value="Confirm and Pay" />
+        </div>
     </div>
 </div>
-<div class="col-md-12" ng-show="isConfirmed">
+<div class="col-xs-12" ng-show="isConfirmed">
     <div ng-repeat="item in model | filter:greaterThan('count', 0)" track by $index">
-        <div class="col-md-8 number">
+        <div class="col-xs-8 number">
             <span ng-bind="item.name"></span>
             <span ng-bind="item.remark"></span>
         </div>
-        <div class="col-md-2" style="color:black;">
+        <div class="col-xs-2" style="color:black;">
             <span ng-bind="item.count"></span>
-            <span ng-bind="'￥'+item.unitPrice*item.factor*item.count"></span>
+            <span ng-bind="'￥'+item.unitPrice*item.count"></span>
         </div>
     </div>
     <div>

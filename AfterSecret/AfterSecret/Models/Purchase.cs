@@ -31,7 +31,7 @@ namespace AfterSecret.Models
                     if(purchase != null)
                     {
                         var tickets = purchase.Tickets.Count();
-                        return purchase.Item.Factor * purchase.Quantity - tickets;
+                        return purchase.Item.Seats * purchase.Quantity - tickets;
                     }
                     return 0;
                 }

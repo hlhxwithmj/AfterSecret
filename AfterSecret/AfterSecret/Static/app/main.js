@@ -32,10 +32,10 @@
                templateUrl: "/static/app/templates/invite.html",
                controller: 'inviteCtrl'
            });
-           $routeProvider.when("/invitation/:code/:inviter", {
-               templateUrl: "/static/app/templates/invitation.html",
-               controller: 'invitationCtrl'
-           });
+           //$routeProvider.when("/invitation/:code/:inviter", {
+           //    templateUrl: "/static/app/templates/invitation.html",
+           //    controller: 'invitationCtrl'
+           //});
            $routeProvider.when("/ticket", {
                templateUrl: "/static/app/templates/ticket.html",
                controller: 'ticketCtrl'
@@ -44,9 +44,9 @@
            //    templateUrl: "/static/app/templates/register.html",
            //    controller: 'registerCtrl'
            //});
-           $routeProvider.otherwise("/registerMember", {
-               templateUrl: "/static/app/templates/registerMember.html",
-               controller: 'registerMemberCtrl'
+           $routeProvider.otherwise("/invitation", {
+               templateUrl: "/static/app/templates/invitation.html",
+               controller: 'invitationCtrl'
            });
        });
 //.config(['$httpProvider', function ($httpProvider) {

@@ -1,24 +1,59 @@
-﻿<div ng-repeat="m in model track by $index">
-    <div>
-        order no: <span ng-bind="m.order_no"></span>
-        <span ng-bind="m.amount"></span>
-        <span ng-bind="m.orderStatus==10?'Unpaid'
-                       :m.orderStatus==20?'Paid'
-                       :m.orderStatus==30?'Failed'
-                       :m.orderStatus==40?'Expired':''"></span>
-    </div>
-    <div ng-repeat="item in m.purchases">
-        <div>
-            <span ng-bind="item.name"></span>
-            <span ng-bind="item.quantity"></span>
-            <span ng-bind="item.amount"></span>
+﻿<div class="logo-panel">
+    <img class="logo-lg" src="../static/image/logo-lg.png" />
+</div>
+<div class="col-xs-12 orders font-helvetica" ng-repeat="m in model track by $index" my-repeat-directive>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="{{'#collapse'+$index}}"
+                     ng-click="toggle($event)">
+                    <span class="label font-penguin">Order No:</span><span ng-bind="m.order_no"></span>
+                    <div class="pull-right">
+                        <span class="price font-penguin" ng-bind="m.orderStatus==10?'Unpaid'
+                              :m.orderStatus==20?'Paid'
+                              :m.orderStatus==30?'Failed'
+                              :m.orderStatus==40?'Expired':''">
+                        </span>
+                        <i class="indicator glyphicon glyphicon-menu-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="{{'collapse'+$index}}" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div ng-repeat="item in m.purchases" class="col-xs-12" style="padding-right:15px;padding-left:0px;margin-bottom:10px;">
+                        <div class="col-xs-8 name" ng-bind="item.name" style="padding-left:0px;"></div>
+                        <div class="col-xs-1" ng-bind="item.quantity"></div>
+                        <div class="pull-right" ng-bind="'¥'+item.amount" style="padding-right:0px;"></div>
+                        <div class="remark col-xs-8" ng-bind="item.remark"></div>
+                    </div>
+                    <div class="col-xs-6">
+
+                    </div>
+                    <div class="pull-right" style="padding-right:14px;border-top:solid 1px;">
+                        <div>
+                            <span class="font-penguin">Total:</span>
+                            <span class="price pull-right" ng-bind="'¥'+m.amount"></span>
+                        </div>
+                        <div>
+                            <input type="submit" ng-click="edit(m.id)" ng-show="m.orderStatus==10" value="Edit and Pay" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div>
-        <button ng-click="edit(m.id)" ng-show="m.orderStatus==10">Edit and Pay</button>
-    </div>
+</div>
+<div class="col-xs-3 orders" style="border-top:solid 1px white;margin-bottom:10px;margin-left:15px;" ></div>
+<div class="font-penguin orders col-xs-12">
+    Refund Policy: The deadline for refunds is five days before the event. Please contact our customer support team to assist you with your refund.
 </div>
 <div>
-    <button type="submit" ng-click="purchase()" class="btn btn-success">New Purchase</button>
-    <button type="submit" ng-click="invite()" class="btn btn-success">Send Tickets</button>
+    <div class="form-group col-xs-6">
+        <input type="submit" ng-click="invite()"
+               value="Send Tickets" />
+    </div>
+    <div class="form-group col-xs-6">
+        <input type="submit" ng-click="purchase()"
+               value="New Purchase" />
+    </div>
 </div>

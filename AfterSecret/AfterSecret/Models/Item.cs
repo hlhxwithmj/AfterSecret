@@ -17,15 +17,14 @@ namespace AfterSecret.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(200)]
         [JsonProperty("remark")]
         public string Remark { get; set; }
 
         //系数
         [DefaultValue(1)]
-        [JsonProperty("factor")]
-        public int Factor { get; set; }
+        [JsonProperty("seats")]
+        public int Seats { get; set; }
 
         [JsonProperty("unitPrice")]
         public decimal UnitPrice { get; set; }

@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace AfterSecret.APIControllers
 {
-    [ApiAuthorize]
+    //[ApiAuthorize]
     public class ShareController : BaseApiController
     {
         public IHttpActionResult Get()
@@ -27,7 +27,7 @@ namespace AfterSecret.APIControllers
         {
             Random r = new Random();
             var code = Common.GenerateShareCode(r);
-            UW.AgentCodeListRepository.Insert(new Models.AgentCodeList() { AgentCode = code });
+            UW.AgentCodeListRepository.Insert(new Models.AgentCodeList() { AgentCode = code, OpenId = OpenId });
             return Ok(code);
         }
     }

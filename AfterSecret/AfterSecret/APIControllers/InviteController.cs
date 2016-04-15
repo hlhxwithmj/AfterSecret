@@ -13,9 +13,9 @@ using System.Transactions;
 
 namespace AfterSecret.APIControllers
 {
-    [ApiAuthorize]
+    //[ApiAuthorize]
     public class InviteController : BaseApiController
-    {
+    {       
         public IHttpActionResult Get()
         {
             try

@@ -41,7 +41,26 @@ input {
         font-size: larger;
         font-weight: 200;
         color: #333;
+        font-family: 'Penguin Sans 0.500';
     }
+
+        input[type=submit].submit-sm {
+            height: 26px;
+            line-height: 26px;
+            font-size: 13px;
+            border-radius: 3px;
+            width: initial;
+            border: solid 1px black;
+            background-color: transparent;
+            vertical-align: middle;
+        }
+
+        input[type=submit].submit-sm-grey {
+            height: 26px;
+            line-height: 26px;
+            width: initial;
+            float:right;
+        }
 
 label {
     float: left;
@@ -52,7 +71,7 @@ label {
 }
 
 select {
-    background: transparent url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat 60px center;
+    background: transparent;
     border: solid 1px white;
     width: 100%;
     font-family: 'Penguin Sans 0.500';
@@ -65,17 +84,40 @@ select {
         background-color: black;
         font-family: 'Penguin Sans 0.500';
     }
+
+textarea {
+    width: 100%;
+    overflow: scroll;
+    background-color: #acadae;
+    opacity: 0.75;
+    font-weight: 500;
+}
 /****************************************************/
 
-.bg-star {
-    background-image: url('../image/bg.png');
+.bg-img {
+    background-image: url('../image/bg.jpg');
 }
+
 
 .bg {
     width: 100%;
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.logo-sm {
+    max-width: 100px;
+}
+
+.logo-lg {
+    max-width: 120px;
+}
+
+.logo-panel {
+    padding-top: 40px;
+    padding-left: 30px;
+    padding-bottom: 20px;
 }
 
 html, body {
@@ -126,10 +168,6 @@ label {
     text-align: center;
 }
 
-.bg-star {
-    background-image: url('../image/bg-star.jpg');
-}
-
 .title {
     width: 80%;
     padding-left: 15px;
@@ -138,6 +176,104 @@ label {
     height: 35px;
 }
 
+.loading {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.items {
+    color: white;
+    letter-spacing: 0px;
+}
+
+    .items img {
+        max-width: 60px;
+        max-height: 80px;
+    }
+
+    .items .rows {
+        margin-bottom: 10px;
+        float: left;
+    }
+
+        .items .rows > * {
+            float: none;
+            vertical-align: bottom;
+            display: inline-block;
+            /* ie6/7 */
+            *display: inline;
+            zoom: 1;
+        }
+
+.price {
+    color: #c2a400;
+}
+
+.items .available, .remark {
+    font-size: 6px;
+}
+
+.total {
+    margin-top: 10px;
+    text-align: right;
+}
+
+    .total .label {
+        font-size: 14px;
+        font-weight: 100;
+        letter-spacing: 1px;
+    }
+
+    .total .number {
+        font-size: 20px;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+.orders {
+    color: white;
+    letter-spacing: initial;
+}
+
+    .orders .label {
+        font-weight: initial;
+        font-size: 14px;
+    }
+
+    .orders .panel {
+        background-color: transparent;
+    }
+
+    .orders .panel-heading {
+        background-color: transparent;
+        background-image: none;
+        color: white;
+        padding: 5px 10px;
+    }
+
+.invite-header {
+    background-color: white;
+    color: black;
+    height: 30px;
+    padding: 2px 10px;
+    font-size: initial;
+}
+
+.invitee {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.font-penguin {
+    font-family: 'Penguin Sans 0.500';
+}
+
+.font-helvetica {
+    font-family: 'Helvetica Light';
+}
 
 @font-face {
     font-family: 'Penguin Sans 0.500';
@@ -147,4 +283,34 @@ label {
 @font-face {
     font-family: 'Helvetica Light';
     src: url('../fonts/Helvetica Light.ttf') format('truetype');
+}
+
+
+.glyphicon-spin {
+    -webkit-animation: spin 1000ms infinite linear;
+    animation: spin 1000ms infinite linear;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }

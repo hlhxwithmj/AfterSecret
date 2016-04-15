@@ -28,13 +28,12 @@
 <body ng-app="WeChat" ng-controller="MainCtrl" ui-prevent-touchmove-defaults="">
     <div class="{{bg}} bg">
         <!-- App Body -->
-        @*<div class="loading" ng-show="hasPendingRequests()">
-                <i class="fa fa-spinner fa-spin loading-spinner"></i>
-            </div>*@
         <div>
             <ng-view>
 
             </ng-view>
+            <div class="loading" ng-show="hasPendingRequests()" id="cssload-pgloading">
+            </div>
         </div>
     </div><!-- ~ .app -->
 </body>

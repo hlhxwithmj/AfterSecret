@@ -50,46 +50,46 @@ namespace AfterSecret.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Purchase](TicketCode)");
             db.Item.Add(new Item()
             {
-                Factor = 5,
-                Name = "5人卡座",
-                Remark = "5个座位",
-                Total = 100,
-                UnitPrice = 10,
+                Seats = 1,
+                Name = "Event Ticket",
+                Remark = "",
+                Total = 500,
+                UnitPrice = 20000,
                 Order = 10,
                 NeedInvite = true,
-                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
             });
 
             db.Item.Add(new Item()
             {
-                Factor = 2,
-                Name = "2人卡座",
-                Remark = "2个座位",
-                Total = 2,
-                UnitPrice = 11,
+                Seats = 4,
+                Name = "Table for 4 + 1 bottle of Wine",
+                Remark = "(including 10 event tickets)",
+                Total = 300,
+                UnitPrice = 100000,
                 Order = 20,
                 NeedInvite = true,
-                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
             });
 
             db.Item.Add(new Item()
             {
-                Factor = 1,
-                Name = "葡萄酒",
-                Remark = "原产地法国",
+                Seats = 8,
+                Name = "Table for 8 + 1 bottle of Wine",
+                Remark = "(including 8 event tickets)",
                 Total = 500,
-                UnitPrice = 12,
+                UnitPrice = 200000,
                 Order = 30,
-                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
             });
 
             db.Item.Add(new Item()
             {
-                Factor = 1,
-                Name = "鸡尾酒",
-                Remark = "现场制作",
+                Seats = 10,
+                Name = "Table for 10 + 1 bottle of Wine",
+                Remark = "(including 18 event tickets)",
                 Total = 700,
-                UnitPrice = 13,
+                UnitPrice = 300000,
                 Order = 40,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });

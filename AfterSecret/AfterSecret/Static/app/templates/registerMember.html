@@ -51,18 +51,22 @@
             <div class="col-xs-12 form-group">
                 <label>OCCUPTAION(Optional)</label>
                 <div class="col-xs-8"></div>
-                <input class="col-xs-6" type="text" ng-model="model.occupation">
+                <select class="col-xs-6" ng-model="model.occupation">
+                    <option ng-selected="{{m == model.occupation}}" ng-repeat="m in occupationList track by $index"
+                            value="{{m}}">
+                        {{m}}
+                    </option>
+                </select>
             </div>
             <div class=" form-group col-xs-12 checkbox">
                 <label>
-                    <input type="checkbox" checked>
-                    TERMS AND CONTDITIONS
+                    <input type="checkbox" name="terms" checked>
                 </label>
+                <span ng-click="terms()" style="color:white;">TERMS AND CONTDITIONS</span>
             </div>
             <div class="col-xs-2"></div>
             <div class="form-group col-xs-8">
-                <input type="submit" ng-disabled="form.firstName.$invalid || form.lastName.$invalid || form.nationality.$invalid
-                        || form.email.$invalid || form.mobile.$invalid || form.gender.$invalid" ng-click="save()"
+                <input type="submit" ng-disabled="form.$invalid" ng-click="save()"
                        value="SUBMIT" />
             </div>
         </form>
