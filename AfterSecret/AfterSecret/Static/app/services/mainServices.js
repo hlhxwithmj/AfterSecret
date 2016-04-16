@@ -69,6 +69,15 @@
                 }
             });
         };
+        _service.doUpdate = function (id) {
+            return $http({
+                method: 'post',
+                url: '/api/OrderPaid',
+                data: {
+                    id: id
+                }
+            });
+        };
         return _service;
     }])
     .factory("orderService", ['$http', function ($http) {

@@ -75,7 +75,7 @@
         $scope.showTerms = false;
         $scope.agreement = true;
         $scope.model = {};
-        $scope.model.agentCode = $rootScope.agentCode;
+
         $scope.nationalityList = constantService.nationality;
         $scope.occupationList = constantService.occupation;
         registerMemberService.doGet().success(function (data) {
@@ -83,9 +83,10 @@
         }).error(function () { });
 
         $scope.save = function () {
+            $scope.model.AgentCode = $rootScope.agentCode;
             $scope.model.gender = $("[name='gender']").bootstrapSwitch('state') == true ? "Male" : "Female";
             registerMemberService.doSave($scope.model).success(function (data) {
-                if (data && data.Message == 'ticket') {
+                if (data == 'success') {
                     $scope.success = true;
                 }
                 else
@@ -93,6 +94,10 @@
             }).error(function (data) {
                 if (data && data.Message == 'fail') {
                     $scope.fail = true;
+                }
+                else if (data && data.Message == 'ticket') {
+                    alert("您当前已有一张门票，如需绑定新门票，请通知您现有门票的agent!");
+                    $location.path("/register");
                 }
             });
         };
@@ -168,7 +173,7 @@
             });
             return sum;
         }, function (sum) {
-            $scope.total = sum;
+            $scope.total = sum.toFixed(2);
         });
 
         $scope.skip = function () {
@@ -199,6 +204,7 @@
             }
             if ($scope.total > 0) {
                 $scope.isConfirmed = true;
+                $scope.style = { 'border': 'none' };
             }
         };
         $scope.greaterThan = function (prop, val) {

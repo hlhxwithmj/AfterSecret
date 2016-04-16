@@ -268,7 +268,7 @@ namespace AfterSecret.Lib
             try
             {
                 var param = Common.DesEncrypt(openId);
-                var url = SubscribeConfig.DOMAIN + "/Static/ticket.html?param=" + param;
+                var url = SubscribeConfig.DOMAIN + "/Static/CheckIn.html?param=" + param;
                 string path = AppDomain.CurrentDomain.BaseDirectory + SystemConfig.QRPATH;
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);

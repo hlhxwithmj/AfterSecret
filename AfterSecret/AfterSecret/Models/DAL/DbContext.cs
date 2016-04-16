@@ -48,13 +48,71 @@ namespace AfterSecret.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Order](Order_No)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [RegisterMember](OpenId)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON [Purchase](TicketCode)");
+            db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON dbo.Ticket(PurchaseId,RegisterMemberId)");
+            //db.Item.Add(new Item()
+            //{
+            //    Seats = 1,
+            //    Name = "Event Ticket",
+            //    Remark = "",
+            //    Total = 500,
+            //    UnitPrice = 20000,
+            //    Order = 10,
+            //    NeedInvite = true,
+            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
+            //});
+
+            //db.Item.Add(new Item()
+            //{
+            //    Seats = 4,
+            //    Name = "Table for 4 + 1 bottle of Wine",
+            //    Remark = "(including 10 event tickets)",
+            //    Total = 300,
+            //    UnitPrice = 100000,
+            //    Order = 20,
+            //    NeedInvite = true,
+            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
+            //});
+
+            //db.Item.Add(new Item()
+            //{
+            //    Seats = 8,
+            //    Name = "Table for 8 + 1 bottle of Wine",
+            //    Remark = "(including 8 event tickets)",
+            //    Total = 500,
+            //    UnitPrice = 200000,
+            //    Order = 30,
+            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
+            //});
+
+            //db.Item.Add(new Item()
+            //{
+            //    Seats = 10,
+            //    Name = "Table for 10 + 1 bottle of Wine",
+            //    Remark = "(including 18 event tickets)",
+            //    Total = 700,
+            //    UnitPrice = 300000,
+            //    Order = 40,
+            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
+            //});  
+       
             db.Item.Add(new Item()
             {
                 Seats = 1,
                 Name = "Event Ticket",
                 Remark = "",
                 Total = 500,
-                UnitPrice = 20000,
+                UnitPrice = 20,
+                Order = 10,
+                NeedInvite = true,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
+            });
+            db.Item.Add(new Item()
+            {
+                Seats = 1,
+                Name = "Event Ticket",
+                Remark = "",
+                Total = 500,
+                UnitPrice = 20,
                 Order = 10,
                 NeedInvite = true,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
@@ -66,7 +124,7 @@ namespace AfterSecret.Models.DAL
                 Name = "Table for 4 + 1 bottle of Wine",
                 Remark = "(including 10 event tickets)",
                 Total = 300,
-                UnitPrice = 100000,
+                UnitPrice = 30,
                 Order = 20,
                 NeedInvite = true,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
@@ -78,8 +136,9 @@ namespace AfterSecret.Models.DAL
                 Name = "Table for 8 + 1 bottle of Wine",
                 Remark = "(including 8 event tickets)",
                 Total = 500,
-                UnitPrice = 200000,
+                UnitPrice = 50,
                 Order = 30,
+                NeedInvite = true,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
             });
 
@@ -89,8 +148,9 @@ namespace AfterSecret.Models.DAL
                 Name = "Table for 10 + 1 bottle of Wine",
                 Remark = "(including 18 event tickets)",
                 Total = 700,
-                UnitPrice = 300000,
+                UnitPrice = 80,
                 Order = 40,
+                NeedInvite = true,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
             });
             for (int i = 0; i < 20; i++)

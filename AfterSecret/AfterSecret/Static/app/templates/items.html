@@ -1,9 +1,9 @@
 ﻿<div class="logo-panel">
     <img class="logo-sm" src="../static/image/logo-sm.png" />
 </div>
-<div class="items font-helvetica" ng-hide="isConfirmed">
+<div class="items font-helvetica">
     <div ng-repeat="item in model | orderBy:'order'">
-        <div class="col-xs-12 rows">
+        <div class="col-xs-12 rows" ng-show="!isConfirmed || (isConfirmed && item.count > 0)">
             <div class="col-xs-2">
                 <img ng-src="{{item.imgSrc}}" />
             </div>
@@ -14,10 +14,10 @@
                     <span class="price" ng-bind="'¥'+item.unitPrice"></span>
                     <span class="available" ng-bind="'Available sales: '+item.remain"></span>
                 </div>
-
             </div>
             <div style="padding-right:10px;">
-                <input type="text" maxlength="2" max="20" style="width:100%;max-height:30px;max-width:30px;" pattern="[0-9]*" ng-model="item.count" />
+                <input type="text" ng-disabled="isConfirmed" maxlength="2" max="20" ng-style="style"
+                       style="width:100%;max-height:30px;max-width:30px;" pattern="[0-9]*" ng-model="item.count" />
             </div>
         </div>
     </div>
@@ -29,29 +29,11 @@
     <div class="col-xs-12" style="float:right;">
         <div class="col-xs-2"></div>
         <div class="col-xs-3">
-            <input type="submit" ng-click="skip()" value="Skip" ng-show="hasPermission"/>
+            <input type="submit" ng-show="!isConfirmed" ng-click="skip()" value="Skip" ng-show="hasPermission" />
         </div>
         <div class="col-xs-7">
-            <input type="submit" ng-click="confirm()" value="Confirm and Pay" />
+            <input type="submit" ng-show="!isConfirmed" ng-click="confirm()" value="Confirm and Pay" />
+            <input type="submit" ng-show="isConfirmed" ng-click="pay()" value="Pay" />
         </div>
-    </div>
-</div>
-<div class="col-xs-12" ng-show="isConfirmed">
-    <div ng-repeat="item in model | filter:greaterThan('count', 0)" track by $index">
-        <div class="col-xs-8 number">
-            <span ng-bind="item.name"></span>
-            <span ng-bind="item.remark"></span>
-        </div>
-        <div class="col-xs-2" style="color:black;">
-            <span ng-bind="item.count"></span>
-            <span ng-bind="'￥'+item.unitPrice*item.count"></span>
-        </div>
-    </div>
-    <div>
-        <span>total:</span>
-        <span class="number" ng-bind="total"></span>
-    </div>
-    <div>
-        <button type="submit" ng-click="pay()" class="btn btn-success">pay</button>
     </div>
 </div>
