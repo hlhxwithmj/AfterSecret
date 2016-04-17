@@ -106,17 +106,6 @@ namespace AfterSecret.Models.DAL
                 NeedInvite = true,
                 ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
             });
-            db.Item.Add(new Item()
-            {
-                Seats = 1,
-                Name = "Event Ticket",
-                Remark = "",
-                Total = 500,
-                UnitPrice = 20,
-                Order = 10,
-                NeedInvite = true,
-                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
-            });
 
             db.Item.Add(new Item()
             {
