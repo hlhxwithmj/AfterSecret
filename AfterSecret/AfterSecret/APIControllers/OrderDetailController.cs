@@ -35,33 +35,5 @@ namespace AfterSecret.APIControllers
             else
                 return BadRequest();
         }
-
-        public IHttpActionResult Post(int id)
-        {
-            try
-            {
-                var order = UW.OrderRepository.Get().Where(a => a.Id == id)
-                    .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid)
-                    .Where(a => a.OpenId == OpenId).SingleOrDefault();
-                if (order != null)
-                {
-                    var purchases = order.Purchases.ToList();
-                    foreach (var p in purchases)
-                    {
-                        UW.PurchaseRepository.Delete(p);
-                    }
-                    UW.context.SaveChanges();
-                    UW.OrderRepository.Delete(order);
-                    UW.context.SaveChanges();
-                    return Ok();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Warn(ex);
-
-            } 
-            return BadRequest();
-        }
     }
 }

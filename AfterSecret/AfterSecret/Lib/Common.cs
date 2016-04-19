@@ -239,7 +239,8 @@ namespace AfterSecret.Lib
             {
                 using (var uw = new UnitOfWork())
                 {
-                    var model = uw.OrderRepository.Get(false).Where(a => a.ChargeId == chargeId).SingleOrDefault();
+                    var model = uw.OrderRepository.Get(false).Where(a => a.ChargeId == chargeId)
+                        .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Processing || a.OrderStatus == Models.Constant.OrderStatus.Unpaid).SingleOrDefault();
                     model.OrderStatus = Models.Constant.OrderStatus.Paid;
                     model.PaidTime = DateTime.Now;
                     uw.context.SaveChanges();

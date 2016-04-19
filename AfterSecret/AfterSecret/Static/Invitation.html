@@ -22,7 +22,7 @@
                 <span>Agent Code</span>
             </div>
             <div class="col-xs-6">
-                <span><a class="font-helvetica" id="ticketCode"></a></span>
+                <span class="font-helvetica" id="ticketCode"></span>
             </div>
         </div>
         <div class="col-xs-12" style="margin-bottom:30px;">
@@ -60,7 +60,7 @@
     $(document).ready(function () {
         var ticketCode = getUrlParameter('ticketCode');
         var inviter = getUrlParameter('inviter');
-        $("#ticketCode").html(ticketCode);
-        $("#inviter").html(inviter);
+        $("#ticketCode").html('&nbsp;' + ticketCode + '&nbsp;');
+        $("#inviter").html('&nbsp;' + inviter + '&nbsp;');
     });
 </script>

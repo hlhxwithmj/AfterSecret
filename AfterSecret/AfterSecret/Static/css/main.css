@@ -1,6 +1,6 @@
 ﻿::-webkit-input-placeholder {
     text-align: center;
-    font-family: 'Penguin Sans 0.500';
+    font-family: 'Helvetica Light';
 }
 
 :-moz-placeholder { /* Firefox 18- */
@@ -78,11 +78,15 @@ select {
     color: white;
     text-align: center;
     height: 24px;
+    -webkit-appearance: none;
+    border-radius: 0px;
+    padding-left: 15px;
 }
 
     select option {
         background-color: black;
         font-family: 'Penguin Sans 0.500';
+        text-align: center;
     }
 
 textarea {

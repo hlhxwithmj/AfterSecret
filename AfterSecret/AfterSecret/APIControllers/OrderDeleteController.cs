@@ -20,21 +20,21 @@ namespace AfterSecret.APIControllers
         {
             try
             {
-                var order = UW.OrderRepository.Get().Where(a => a.Id == id)
-                    .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid)
+                var order = UW.OrderRepository.Get(false).Where(a => a.Id == id)
                     .Where(a => a.OpenId == OpenId).SingleOrDefault();
-                if (order != null)
+                if (order != null && order.OrderStatus == Models.Constant.OrderStatus.Unpaid)
                 {
                     var purchases = order.Purchases.ToList();
                     foreach (var p in purchases)
                     {
-                        UW.PurchaseRepository.Delete(p);
+                        p.IsValidate = false;
                     }
-                    UW.context.SaveChanges();
-                    UW.OrderRepository.Delete(order);
+                    order.IsValidate = false;
                     UW.context.SaveChanges();
                     return Ok();
                 }
+                else if(order != null && order.OrderStatus == Models.Constant.OrderStatus.Paid)
+                    return BadRequest("paid");
             }
             catch (Exception ex)
             {

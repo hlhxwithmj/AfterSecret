@@ -170,4 +170,17 @@
             });
         };
         return _service;
+    }])
+    .factory("payService", ['$http', function ($http) {
+        var _service = {};
+        _service.doProcessing = function (chargeId) {
+            return $http({
+                method: 'get',
+                url: '/api/OrderProcessing',
+                params: {
+                    chargeId: chargeId
+                }
+            })
+        };
+        return _service;
     }]);

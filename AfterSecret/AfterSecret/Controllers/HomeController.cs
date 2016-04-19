@@ -81,7 +81,6 @@ namespace AfterSecret.Controllers
 
         public ActionResult WebHooks()
         {
-            log.Warn("start");
             if (Request.HttpMethod == "POST")
             {
                 //获取 post 的 event 对象
@@ -112,7 +111,6 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     // TODO what you need do    
                     var chargeId = jObject["data"]["object"]["id"].Value<string>();
                     Common.OrderSucceeded(chargeId);
-                    log.Warn("end");
                     Response.StatusCode = 200;
                 }
                 else
@@ -121,7 +119,6 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     Response.StatusCode = 500;
                 }
             }
-
             return Content("");
         }
 

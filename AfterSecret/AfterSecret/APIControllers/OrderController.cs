@@ -71,7 +71,8 @@ namespace AfterSecret.APIControllers
             try
             {
                 List<OrderVM> model = new List<OrderVM>();
-                var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId).ToList();
+                var result = UW.OrderRepository.Get()
+                    .Where(a => a.OpenId == OpenId).Where(a => a.OrderStatus != Models.Constant.OrderStatus.Expired).ToList();
                 foreach (var order in result)
                 {
                     var max = from a in order.Purchases

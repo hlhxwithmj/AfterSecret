@@ -173,7 +173,7 @@
             });
             return sum;
         }, function (sum) {
-            $scope.total = sum.toFixed(2);
+            $scope.total = sum;
         });
 
         $scope.skip = function () {
@@ -191,6 +191,9 @@
                     }).error(function () {
 
                     });
+                }).error(function (data) {
+                    if (data && data.Message == 'paid')
+                        alert("订单已支付，不能修改");
                 });
             else {
                 orderService.doCheck('unpaid').success(function (data) {
@@ -218,12 +221,13 @@
             $location.path('/pay');
         };
     })
-    .controller('payCtrl', function ($rootScope, $scope, $location, itemsService) {
+    .controller('payCtrl', function ($rootScope, $scope, $location, itemsService,payService) {
         if ($rootScope.order) {
             itemsService.doSave($rootScope.order).success(function (charge) {
                 pingpp.createPayment(charge, function (result, error) {
                     if (result == "success") {
-                        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。            
+                        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
+                        payService.doProcessing(charge.id).then();
                     } else if (result == "fail") {
                         // charge 不正确或者微信公众账号支付失败时会在此处返回
                     } else if (result == "cancel") {
@@ -266,7 +270,7 @@
         };
 
         $scope.toggle = function (e) {
-            $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-right');
+            $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-up');
         };
     })
     .controller('inviteCtrl', function ($rootScope, $scope, $location, registerMemberService, inviteService, shareService) {
@@ -285,7 +289,7 @@
                     for (j = 0; j < $scope.model[i].seats; j++) {
                         if (!$scope.model[i].attendees[j]) {
                             $scope.model[i].attendees.push({
-                                name: "Seat " + j,
+                                name: "Seat " + (j + 1),
                                 registerMemberId: 0
                             });
                         }
