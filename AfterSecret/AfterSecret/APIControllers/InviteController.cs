@@ -14,7 +14,7 @@ using AfterSecret.Models.Constant;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class InviteController : BaseApiController
     {
         public IHttpActionResult Get()
@@ -23,13 +23,14 @@ namespace AfterSecret.APIControllers
             {
                 var invitation = UW.InvitationRepository.Get().Where(a => a.Inviter.OpenId == OpenId).SingleOrDefault();
                 if (invitation != null)
-                    return Ok(new InviteVM
-                    {
-                        HasTable = invitation.TableTotal > 0,
-                        HasTicket = invitation.TicketTotal > 0,
-                        FullTable = invitation.TableRemain == 0 && invitation.TableTotal > 0,
-                        FullTicket = invitation.TicketRemain == 0 && invitation.TicketTotal > 0
-                    });
+                    return Ok(
+                        new InviteVM
+                        {
+                            HasTable = invitation.TableTotal > 0,
+                            HasTicket = invitation.TicketTotal > 0,
+                            FullTable = invitation.TableRemain == 0 && invitation.TableTotal > 0,
+                            FullTicket = invitation.TicketRemain == 0 && invitation.TicketTotal > 0
+                        });
                 return BadRequest();
             }
             catch (Exception ex)

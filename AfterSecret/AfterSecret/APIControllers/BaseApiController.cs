@@ -18,7 +18,7 @@ namespace AfterSecret.APIControllers
         {
             get
             {
-                return "x";
+                //return "x";
                 if (string.IsNullOrEmpty(_openId))
                     _openId = Common.DesDecrypt(this.Request.Headers.GetValues("openId").SingleOrDefault());
                 return _openId;

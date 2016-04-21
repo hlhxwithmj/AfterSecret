@@ -44,13 +44,9 @@
                templateUrl: "/static/app/templates/inviteGuest.html",
                controller: 'inviteGuestCtrl'
            });
-           //$routeProvider.otherwise("/register", {
-           //    templateUrl: "/static/app/templates/register.html",
-           //    controller: 'registerCtrl'
-           //});
-           $routeProvider.otherwise("/invite", {
-               templateUrl: "/static/app/templates/invite.html",
-               controller: 'inviteCtrl'
+           $routeProvider.otherwise("/register", {
+               templateUrl: "/static/app/templates/register.html",
+               controller: 'registerCtrl'
            });
        });
     //.config(['$httpProvider', function ($httpProvider) {

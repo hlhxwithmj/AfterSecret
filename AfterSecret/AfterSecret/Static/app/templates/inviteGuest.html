@@ -1,38 +1,63 @@
-﻿<div class="logo-panel">
-    <img class="logo-lg" src="../static/image/logo-lg.png" />
+﻿<div>
+    <div class="logo-panel">
+        <img class="logo-lg" src="../static/image/logo-lg.png" />
+    </div>
+    <div class="title title-lg form-group" ng-class="{true: 'ticket-title', false: 'table-title'}[invitationType==10]" ng-bind="title"></div>
 </div>
-<div class="title form-group"></div>
-
-<div class="col-xs-3" ng-repeat="var m in model.invitees track by $index">
+<div class="col-xs-3" ng-repeat="m in model.invitees track by $index" style="max-width:100px;text-align:center;">
     <div>
-        <div>
+        <div class="delete-btn" ng-click="deleteConfirm(m.inviteeId,m.name)">
 
         </div>
+        <img class="seat" ng-src="{{m.src}}" />
     </div>
     <div>
-        <span ng-bind="m.name"></span>
+        <p ng-bind="m.name" class="font-color-white overflow"></p>
     </div>
 </div>
 <div class="col-xs-3" ng-show="model.left>0">
-
+    <img class="add" src="../static/image/add.png" ng-click="arrange()" />
 </div>
 
-<div ng-show="takeMySeat">
-    <div>Do you want to take a seat at this table?</div>
-    <div class="col-xs-12">
-        <input type="submit" ng-click="no()"
-               value="No" />
-        <input type="submit" ng-click="myseat()"
-               value="Yes" />
+<div class="col-xs-12" style="margin-top:30px;">
+    <span class="font-color-white" style="border-top:solid 1px #f4f4f4;" ng-bind="invitationtype==10?'Tickets left':'seats left'+model.left"></span>
+</div>
+
+
+<div ng-show="takeMySeat" class="confirm">
+    <div class="confirm-msg font-color-white">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8" ng-bind="confirmMsg">
+
+        </div>
+    </div>
+    <div class="confirm-btn">
+        <div class="col-xs-6">
+            <input type="submit" ng-click="no()"
+                   value="No" />
+        </div>
+        <div class="col-xs-6">
+            <input type="submit" ng-click="myseat()"
+                   value="Yes" />
+        </div>
     </div>
 </div>
 
-<div ng-show="delete">
-    <div ng-bind="deleteConfirmation"></div>
-    <div class="col-xs-12">
-        <input type="submit" ng-click="delete=false"
-               value="No" />
-        <input type="submit" ng-click="cancel(inviteeId)"
-               value="Yes" />
+<div ng-show="delete" class="confirm">
+    <div class="confirm-msg font-color-white">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8" ng-bind="deleteConfirmation">
+
+        </div>
+    </div>
+    <div class="confirm-btn">
+        <div class="col-xs-6">
+            <input type="submit" ng-click="delete=false"
+                   value="No" />
+        </div>
+        <div class="col-xs-6">
+            <input type="submit" ng-click="cancel()"
+                   value="Yes" />
+        </div>
     </div>
 </div>

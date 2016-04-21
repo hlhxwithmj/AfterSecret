@@ -3,7 +3,7 @@
     <div class="items font-helvetica">
         <div ng-repeat="item in model | orderBy:'order'">
             <div class="rows" ng-show="!isConfirmed || (isConfirmed && item.count > 0)">
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="margin-bottom:10px;">
                     <div style="height:50px;width:50px;background-color:white;display:inline-block;float:left;"></div>
                     <div class="col-xs-8" style="height:50px;display:inline-block;">
                         <div style="position:absolute;bottom:-5px;width:100%;">

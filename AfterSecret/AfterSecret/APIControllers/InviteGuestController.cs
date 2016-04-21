@@ -14,7 +14,7 @@ using AfterSecret.Models.Constant;
 
 namespace AfterSecret.APIControllers
 {
-    //[ApiAuthorize]
+    [ApiAuthorize]
     public class InviteGuestController : BaseApiController
     {
         public IHttpActionResult Get(InvitationType invitationType)
@@ -26,7 +26,7 @@ namespace AfterSecret.APIControllers
                 {
                     var result = new InvitationVM()
                     {
-                        Invitees = invitation.Tickets.Select(a => new InviteeVM() { InviteeId = a.InviteeId, Name = a.Invitee.ToString() }).ToList(),
+                        Invitees = invitation.Tickets.Where(a => a.InvitationType == invitationType).Select(a => new InviteeVM() { InviteeId = a.InviteeId, Name = a.Invitee.ToString() }).ToList(),
                         InviterId = invitation.InviterId,
                         Inviter = invitation.Inviter.ToString(),
                         InvitationCode = invitationType == InvitationType.Ticket ? invitation.TicketCode : invitation.TableCode,

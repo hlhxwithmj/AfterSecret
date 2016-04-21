@@ -52,6 +52,7 @@ namespace AfterSecret.APIControllers
                     result.Nationality = model.Nationality;
                     result.Occupation = model.Occupation;
                     result.WeChatID = model.WeChatID;
+                    result.EditTime = DateTime.Now;
                     UW.context.SaveChanges();
                 }
 
@@ -73,7 +74,6 @@ namespace AfterSecret.APIControllers
                             {
                                 InvitationType = Models.Constant.InvitationType.Table,
                                 InvitationId = invitation.Id,
-
                                 QRCodePath = Common.GenerateQRImage(OpenId),
                                 InviteeId = result.Id
                             });

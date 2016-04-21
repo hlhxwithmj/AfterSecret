@@ -113,7 +113,7 @@
             $location.path('/items');
         }
     })
-    .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, registerMemberService, itemsService, orderService, inviteService) {
+    .controller('itemsCtrl', function ($rootScope, $scope, $location, $routeParams, registerMemberService, itemsService, orderService, inviteGuestService) {
         $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
@@ -129,7 +129,7 @@
                 $location.path('/orders');
         }).error(function () { });
 
-        inviteService.share().success(function () {
+        inviteGuestService.share().success(function () {
             $scope.hasPermission = true;
         })
         .error(function () {
@@ -278,34 +278,41 @@
         $scope.model = [];
         $scope.hasPermission = false;
 
-        //registerMemberService.doGet().success(function () {
+        registerMemberService.doGet().success(function () {
 
-        //}).error(function () {
-        //    $location.path('/register');
-        //});
+        }).error(function () {
+            $location.path('/register');
+        });
         var getData = function () {
             inviteService.doGet().success(function (data) {
                 $scope.model = data;
             }).error(function () { });
         };
         getData();
+
+        $scope.invite = function (invitationType) {
+            $location.path('/inviteGuest/' + invitationType);
+        }
     })
-    .controller('inviteGuestCtrl', function ($rootScope, $scope, $location, inviteGuestService, ticketService) {
+    .controller('inviteGuestCtrl', function ($rootScope, $routeParams, $scope, $location, inviteGuestService, ticketService) {
         $rootScope.bg = "bg-img";
         $scope.invitationType = $routeParams.invitationType;
+        $scope.title = $scope.invitationType == 10 ? 'Tickets' : 'Tables';
         $scope.hasMyTicket = false;
         $scope.takeMySeat = false;
         $scope.delete = false;
         $scope.inviteeId = 0;
 
         $scope.myseat = function () {
-            inviteService.myseat($scope.invitationType).then(function () {
-
+            inviteGuestService.myseat($scope.invitationType).then(function () {
+                $scope.takeMySeat = false;
+                getData();
             });
         };
         $scope.arrange = function () {
             if (!$scope.hasMyTicket) {
                 $scope.takeMySeat = true;
+                $scope.confirmMsg = $scope.invitationType == 10 ? 'Do you want to own this entrance ticket?' : 'Do you want to take a seat at this table?';
             }
             else
                 $location.path('/invitation/' + $scope.model.invitationCode + '/' + $scope.model.inviter);
@@ -322,9 +329,9 @@
         };
 
         $scope.cancel = function () {
-            inviteService.cancel($scope.inviteeId).then(function () {
+            inviteGuestService.cancel($scope.inviteeId).then(function () {
                 getData();
-                if (inviteeId == $scope.model.inviterId)
+                if ($scope.inviteeId == $scope.model.inviterId)
                     $scope.hasMyTicket = false;
                 $scope.deleteConfirmation = '';
                 $scope.delete = false;
@@ -334,7 +341,6 @@
         $scope.share = function () {
             shareService.doPost().success(function (data) {
                 $scope.model = data;
-                $scope.left = data.total - data.invitees.length;
                 $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
             }).error(function () {
 
@@ -344,6 +350,13 @@
         var getData = function () {
             inviteGuestService.doGet($scope.invitationType).success(function (data) {
                 $scope.model = data;
+                $scope.model.left = data.total - data.invitees.length;
+                angular.forEach($scope.model.invitees, function (item, index) {
+                    if ($scope.model.inviterId == item.inviteeId)
+                        $scope.model.invitees[index].src = $scope.invitationType == 10 ? '../static/image/ticketseat-gold.png' : '../static/image/seat-gold.png';
+                    else
+                        $scope.model.invitees[index].src = $scope.invitationType == 10 ? '../static/image/ticketseat-white.png' : '../static/image/seat-white.png';
+                });
             }).error(function () { });
         };
         getData();

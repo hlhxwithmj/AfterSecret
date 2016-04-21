@@ -148,6 +148,7 @@
                 url: '/api/Share'
             });
         };
+        return _service;
     }])
     .factory("invitationService", ['$http', '$location', function ($http, $location) {
         var _service = {};

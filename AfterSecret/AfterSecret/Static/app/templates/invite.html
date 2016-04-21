@@ -1,26 +1,15 @@
-﻿<div class="logo-panel">
-    <img class="logo-lg" src="../static/image/logo-lg.png" />
+﻿<div>
+    <div class="logo-panel">
+        <img class="logo-lg" src="../static/image/logo-lg.png" />
+    </div>
+    <div class="title title-lg form-group">My Invites</div>
 </div>
 
-<div class="col-xs-6">
-    <div class="no-ticket" ng-show="!model.hasTicket">
-
-    </div>
-    <div class="remain-ticket" ng-show="model.hasTicket && !model.fullTicket">
-
-    </div>
-    <div class="full-ticket" ng-show="model.hasTicket && model.fullTicket">
-
-    </div>
-</div>
-<div class="col-xs-6">
-    <div class="no-table" ng-show="!model.hasTable">
-
-    </div>
-    <div class="remain-table" ng-show="model.hasTable && !model.fullTable">
-
-    </div>
-    <div class="full-table" ng-show="model.hasTable && model.fullTable">
-
-    </div>
+<div class="col-xs-12 invite">
+    <img src="../static/image/ticket-grey.png" ng-show="!model.hasTicket" />
+    <img src="../static/image/ticket-white.png" ng-show="model.hasTicket && !model.fullTicket" ng-click="invite(10)" />
+    <img src="../static/image/ticket-golden.png" ng-show="model.hasTicket && model.fullTicket" ng-click="invite(10)" />
+    <img src="../static/image/table-grey.png" ng-show="!model.hasTable" />
+    <img src="../static/image/table-white.png" ng-show="model.hasTable && !model.fullTable" ng-click="invite(20)" />
+    <img src="../static/image/table-golden.png" ng-show="model.hasTable && model.fullTable" ng-click="invite(20)" />
 </div>
