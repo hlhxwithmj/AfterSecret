@@ -282,19 +282,19 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                 case SubscribeConfig.mPURCHASE:
                     path = "items";
                     description = "Would like to purchase more tickets and invite your guests? Click here!";
-                    picUrl = picUrl + "purchase.jpg";
+                    picUrl = picUrl + "shop.jpg";
                     title = "Purchase";
                     break;
                 case SubscribeConfig.myPURCHASE:
                     path = "orders";
                     description = "You can review your shopping cart here!";
-                    picUrl = picUrl + "shopping-cart.jpg";
+                    picUrl = picUrl + "my-invitees.jpg";
                     title = "My Purchase";
                     break;
                 case SubscribeConfig.myTICKET:
                     path = "ticket";
                     description = "Review your ticket, save it on your phone and see you at the event!";
-                    picUrl = picUrl + "my-ticket.jpg";
+                    picUrl = picUrl + "my-pass.jpg";
                     title = "My Ticket";
                     break;
                 case SubscribeConfig.INVITATION:
