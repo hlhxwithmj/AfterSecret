@@ -1,0 +1,38 @@
+﻿<div class="logo-panel">
+    <img class="logo-lg" src="../static/image/logo-lg.png" />
+</div>
+<div class="title form-group"></div>
+
+<div class="col-xs-3" ng-repeat="var m in model.invitees track by $index">
+    <div>
+        <div>
+
+        </div>
+    </div>
+    <div>
+        <span ng-bind="m.name"></span>
+    </div>
+</div>
+<div class="col-xs-3" ng-show="model.left>0">
+
+</div>
+
+<div ng-show="takeMySeat">
+    <div>Do you want to take a seat at this table?</div>
+    <div class="col-xs-12">
+        <input type="submit" ng-click="no()"
+               value="No" />
+        <input type="submit" ng-click="myseat()"
+               value="Yes" />
+    </div>
+</div>
+
+<div ng-show="delete">
+    <div ng-bind="deleteConfirmation"></div>
+    <div class="col-xs-12">
+        <input type="submit" ng-click="delete=false"
+               value="No" />
+        <input type="submit" ng-click="cancel(inviteeId)"
+               value="Yes" />
+    </div>
+</div>

@@ -17,8 +17,6 @@ namespace AfterSecret.APIControllers
         {
             try
             {
-
-
                 var ticket = Common.get_jsapi_ticket(SubscribeConfig.APPID, SubscribeConfig.APPSECRET);
                 var nonceStr = Guid.NewGuid().ToString();
                 var timestamp = (long)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds / 1000;

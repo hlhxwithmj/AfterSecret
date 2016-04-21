@@ -107,26 +107,6 @@
                 url: '/api/Invite'
             });
         };
-        _service.myseat = function (purchaseId) {
-            return $http({
-                method: 'post',
-                url: '/api/Invite',
-                data: purchaseId
-            });
-        };
-        _service.cancel = function (registerMemberId) {
-            return $http({
-                method: 'get',
-                url: '/api/Invite',
-                params: { registerMemberId: registerMemberId }
-            });
-        };
-        _service.share = function () {
-            return $http({
-                method: 'get',
-                url: '/api/Share'
-            });
-        };
         return _service;
     }])
     .factory("ticketService", ['$http', function ($http) {
@@ -138,6 +118,36 @@
             });
         };
         return _service;
+    }])
+    .factory("inviteGuestService", ['$http', function ($http) {
+        var _service = {};
+        _service.doGet = function (invitationType) {
+            return $http({
+                method: 'get',
+                url: '/api/InviteGuest',
+                params: { invitationType: invitationType }
+            });
+        };
+        _service.myseat = function (invitationType) {
+            return $http({
+                method: 'post',
+                url: '/api/InviteGuest',
+                data: invitationType
+            });
+        };
+        _service.cancel = function (inviteeId) {
+            return $http({
+                method: 'get',
+                url: '/api/InviteGuest',
+                params: { inviteeId: inviteeId }
+            });
+        };
+        _service.share = function () {
+            return $http({
+                method: 'get',
+                url: '/api/Share'
+            });
+        };
     }])
     .factory("invitationService", ['$http', '$location', function ($http, $location) {
         var _service = {};

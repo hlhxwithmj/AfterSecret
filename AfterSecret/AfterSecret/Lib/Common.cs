@@ -252,10 +252,17 @@ namespace AfterSecret.Lib
             }
         }
 
+
+        public static string GenerateTableCode(Random generator)
+        {
+            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            return SubscribeConfig._Table_Invitee_Prefix + n;
+        }
+
         public static string GenerateTicketCode(Random generator)
         {
             var n = generator.Next(1, int.MaxValue).ToString("D10");
-            return SubscribeConfig._invitedUser_Prefix + n;
+            return SubscribeConfig._Ticket_Invitee_Prefix + n;
         }
 
         public static string GenerateShareCode(Random generator)

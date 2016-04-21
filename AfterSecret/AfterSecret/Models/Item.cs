@@ -41,7 +41,8 @@ namespace AfterSecret.Models
                 {
                     return Total - uw.PurchaseRepository.Get()
                         .Where(a => a.Order.OrderStatus == OrderStatus.Unpaid
-                            || a.Order.OrderStatus == OrderStatus.Paid).Where(a => a.ItemId == Id)
+                            || a.Order.OrderStatus == OrderStatus.Paid 
+                            || a.Order.OrderStatus == OrderStatus.Processing).Where(a => a.ItemId == Id)
                             .Count();
                 }
             }
@@ -50,8 +51,8 @@ namespace AfterSecret.Models
         [JsonProperty("order")]
         public int Order { get; set; }
 
-        [JsonProperty("needInvite")]
-        public bool NeedInvite { get; set; }
+        [JsonProperty("invitationType")]
+        public InvitationType InvitationType { get; set; }
 
         [Required]
         [MaxLength(200)]

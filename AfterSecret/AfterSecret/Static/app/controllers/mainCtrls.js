@@ -221,7 +221,7 @@
             $location.path('/pay');
         };
     })
-    .controller('payCtrl', function ($rootScope, $scope, $location, itemsService,payService) {
+    .controller('payCtrl', function ($rootScope, $scope, $location, itemsService, payService) {
         if ($rootScope.order) {
             itemsService.doSave($rootScope.order).success(function (charge) {
                 pingpp.createPayment(charge, function (result, error) {
@@ -273,59 +273,85 @@
             $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-up');
         };
     })
-    .controller('inviteCtrl', function ($rootScope, $scope, $location, registerMemberService, inviteService, shareService) {
+    .controller('inviteCtrl', function ($rootScope, $scope, $location, registerMemberService, inviteService, ticketService) {
         $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
-        registerMemberService.doGet().success(function () {
 
-        }).error(function () {
-            $location.path('/register');
-        });
+        //registerMemberService.doGet().success(function () {
+
+        //}).error(function () {
+        //    $location.path('/register');
+        //});
         var getData = function () {
             inviteService.doGet().success(function (data) {
                 $scope.model = data;
-                for (i = 0; i < $scope.model.length; i++) {
-                    for (j = 0; j < $scope.model[i].seats; j++) {
-                        if (!$scope.model[i].attendees[j]) {
-                            $scope.model[i].attendees.push({
-                                name: "Seat " + (j + 1),
-                                registerMemberId: 0
-                            });
-                        }
-                    }
-                }
             }).error(function () { });
-            inviteService.share().success(function () {
-                $scope.hasPermission = true;
-            }).error(function () {
-                $scope.hasPermission = false;
-            });
         };
         getData();
+    })
+    .controller('inviteGuestCtrl', function ($rootScope, $scope, $location, inviteGuestService, ticketService) {
+        $rootScope.bg = "bg-img";
+        $scope.invitationType = $routeParams.invitationType;
+        $scope.hasMyTicket = false;
+        $scope.takeMySeat = false;
+        $scope.delete = false;
+        $scope.inviteeId = 0;
 
-        $scope.myseat = function (purchaseId) {
-            inviteService.myseat(purchaseId).then(function () {
-                getData();
+        $scope.myseat = function () {
+            inviteService.myseat($scope.invitationType).then(function () {
+
             });
         };
-        $scope.arrange = function (ticketCode, inviter) {
-            $location.path('/invitation/' + ticketCode + '/' + inviter);
+        $scope.arrange = function () {
+            if (!$scope.hasMyTicket) {
+                $scope.takeMySeat = true;
+            }
+            else
+                $location.path('/invitation/' + $scope.model.invitationCode + '/' + $scope.model.inviter);
         };
 
-        $scope.cancel = function (registerMemberId) {
-            inviteService.cancel(registerMemberId).then(function () {
+        $scope.no = function () {
+            $location.path('/invitation/' + $scope.model.invitationCode + '/' + $scope.model.inviter);
+        }
+
+        $scope.deleteConfirm = function (inviteeId, name) {
+            $scope.deleteConfirmation = 'Are you sure you want to remove "' + name + '" from your guest lists?';
+            $scope.delete = true;
+            $scope.inviteeId = inviteeId;
+        };
+
+        $scope.cancel = function () {
+            inviteService.cancel($scope.inviteeId).then(function () {
                 getData();
+                if (inviteeId == $scope.model.inviterId)
+                    $scope.hasMyTicket = false;
+                $scope.deleteConfirmation = '';
+                $scope.delete = false;
+                $scope.inviteeId = 0;
             });
         };
         $scope.share = function () {
             shareService.doPost().success(function (data) {
                 $scope.model = data;
+                $scope.left = data.total - data.invitees.length;
                 $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
             }).error(function () {
 
             });
         }
+
+        var getData = function () {
+            inviteGuestService.doGet($scope.invitationType).success(function (data) {
+                $scope.model = data;
+            }).error(function () { });
+        };
+        getData();
+        ticketService.doGet().success(function () {
+            $scope.hasMyTicket = true;
+        }).error(function () {
+            $scope.hasMyTicket = false;
+        });
     })
     .controller('ticketCtrl', function ($scope, $rootScope, $location, registerMemberService, ticketService) {
         $rootScope.bg = "bg-img";

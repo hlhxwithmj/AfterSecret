@@ -40,22 +40,30 @@
                templateUrl: "/static/app/templates/share.html",
                controller: 'shareCtrl'
            });
-           $routeProvider.otherwise("/register", {
-               templateUrl: "/static/app/templates/register.html",
-               controller: 'registerCtrl'
+           $routeProvider.when("/inviteGuest/:invitationType", {
+               templateUrl: "/static/app/templates/inviteGuest.html",
+               controller: 'inviteGuestCtrl'
            });
-       })
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.interceptors.push(function ($q, $location) {
-            return {
-                'responseError': function (rejection) {
-                    var defer = $q.defer();
-                    if (rejection.status == 401) {
-                        $location.path("/unauthorized");
-                    }
-                    defer.reject(rejection);
-                    return defer.promise;
-                }
-            };
-        });
-    }]);
+           //$routeProvider.otherwise("/register", {
+           //    templateUrl: "/static/app/templates/register.html",
+           //    controller: 'registerCtrl'
+           //});
+           $routeProvider.otherwise("/invite", {
+               templateUrl: "/static/app/templates/invite.html",
+               controller: 'inviteCtrl'
+           });
+       });
+    //.config(['$httpProvider', function ($httpProvider) {
+    //    $httpProvider.interceptors.push(function ($q, $location) {
+    //        return {
+    //            'responseError': function (rejection) {
+    //                var defer = $q.defer();
+    //                if (rejection.status == 401) {
+    //                    $location.path("/unauthorized");
+    //                }
+    //                defer.reject(rejection);
+    //                return defer.promise;
+    //            }
+    //        };
+    //    });
+    //}]);

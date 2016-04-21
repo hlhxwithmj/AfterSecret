@@ -41,12 +41,12 @@ namespace AfterSecret.APIControllers
                     var random = new Random();
                     foreach (var m in model)
                     {
-                        for (int i = 0; i < m.Count; i++)
+                        if (m.Count > 0)
                             UW.PurchaseRepository.Insert(new Purchase()
                             {
                                 ItemId = m.Id,
                                 OrderId = charge.Id,
-                                TicketCode = Common.GenerateTicketCode(random)
+                                Quantity = m.Count,
                             });
                     }
                     UW.context.SaveChanges();
@@ -70,43 +70,18 @@ namespace AfterSecret.APIControllers
         {
             try
             {
-                List<OrderVM> model = new List<OrderVM>();
                 var result = UW.OrderRepository.Get()
-                    .Where(a => a.OpenId == OpenId).Where(a => a.OrderStatus != Models.Constant.OrderStatus.Expired).ToList();
-                foreach (var order in result)
-                {
-                    var max = from a in order.Purchases
-                              group a by a.ItemId into g
-                              select new
-                              {
-                                  ItemId = g.Key,
-                                  Quantity = g.Count()
-                              };
-
-                    var purchases = order.Purchases.ToList();
-                    List<PurchaseVM> vm = new List<PurchaseVM>();
-                    foreach (var i in max)
+                    .Where(a => a.OpenId == OpenId).Where(a => a.OrderStatus != Models.Constant.OrderStatus.Expired)
+                    .Select(a => new OrderVM()
                     {
-                        var item = purchases.Where(a => a.ItemId == i.ItemId).FirstOrDefault();
-                        vm.Add(new PurchaseVM()
-                        {
-                            name = item.Item.Name,
-                            remark = item.Item.Remark,
-                            quantity = i.Quantity,
-                            amount = item.Item.UnitPrice * i.Quantity / 100
-                        });
-                    }
-                    model.Add(new OrderVM()
-                    {
-                        id = order.Id,
-                        amount = order.Amount / 100,
-                        order_no = order.Order_No,
-                        orderStatus = order.OrderStatus,
-                        purchases = vm
-                    });
-                }
+                        amount = a.Amount / 100,
+                        id = a.Id,
+                        order_no = a.Order_No,
+                        orderStatus = a.OrderStatus,
+                        purchases = a.Purchases.Select(b => new PurchaseVM() { amount = b.Item.UnitPrice * b.Quantity / 100, name = b.Item.Name, quantity = b.Quantity, remark = b.Item.Remark }).ToList()
+                    }).ToList();
 
-                return Ok(model);
+                return Ok(result);
             }
             catch (Exception ex)
             {

@@ -16,14 +16,16 @@ namespace AfterSecret.APIControllers
         {
             try
             {
-                var ticket = UW.TicketRepository.Get().Where(a => a.RegisterMember.OpenId == OpenId).SingleOrDefault();
+                var ticket = UW.TicketRepository.Get().Where(a => a.Invitee.OpenId == OpenId).SingleOrDefault();
                 if (ticket != null)
                     return Ok(new
                     {
                         src = SubscribeConfig.DOMAIN + "/Content/QR/" + ticket.QRCodePath,
-                        inviter = ticket.RegisterMember.ToString(),
-                        invitee = ticket.Purchase.Order.RegisterMember.ToString(),
-                        ticketId = ticket.Id
+                        inviter = ticket.Invitee.ToString(),
+                        invitee = ticket.Invitation.Inviter.ToString(),
+                        ticketId = ticket.Id,
+                        invitationType = ticket.InvitationType,
+                        inviteeId = ticket.InviteeId
                     });
                 else
                     return BadRequest("invite");

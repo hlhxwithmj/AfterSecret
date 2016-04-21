@@ -11,14 +11,15 @@ namespace AfterSecret.Lib
         public const string APPSECRET = "39233b59278fe1c340a9e50812344fe2";
         public const string TOKEN = "SecretDinner";
         public const string ENCODINGAESKEY = "YlzZWOu7qS0giJmT29ogJopufCZZp9mxcXxiHYTOOlv";
-        public const string DOMAIN = "http://test.cwchros.com";
+        public const string DOMAIN = "http://sap.cwchros.com";
         public const string mREGISTER = "REGISTER";
         public const string mPURCHASE = "PURCHASE";
         public const string myPURCHASE = "MYPURCHASE";
         public const string myTICKET = "MYTICKET";
         public const string INVITATION = "INVITATION";
         public const string _seedUser_Prefix = "88";
-        public const string _invitedUser_Prefix = "16";
+        public const string _Ticket_Invitee_Prefix = "16";
+        public const string _Table_Invitee_Prefix = "68";
         public const string _shareUser_Prefix = "18";
     }
 

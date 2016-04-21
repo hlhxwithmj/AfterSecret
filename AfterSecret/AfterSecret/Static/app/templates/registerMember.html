@@ -1,9 +1,8 @@
-﻿<div style="padding:50px 0" ng-show="!showTerms && !fail && !success">
+﻿<div class="register-member" ng-show="!showTerms && !fail && !success">
     <div class="title form-group">YOUR INFORMATION</div>
     <div>
         <form role="form" name="form" novalidate="novalidate">
             <div class="form-group col-xs-12">
-
                 <div>
                     <label style="width:100%">NAME</label>
                 </div>
@@ -12,46 +11,38 @@
             </div>
             <div class="col-xs-12 form-group">
                 <label>GENDER</label>
-                <div class="col-xs-1"></div>
-                <label class="radio-inline">
-                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Male" checked="checked">Male
+                <label class="radio-inline" style="width:initial;">
+                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Male" checked="checked">MALE
                 </label>
-                <label class="radio-inline">
-                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Female">Female
+                <label class="radio-inline" style="width:initial;">
+                    <input type="radio" required name="optionsRadios" ng-model="model.gender" value="Female">FEMALE
                 </label>
 
             </div>
             <div class="col-xs-12 form-group">
                 <label>NATIONALITY</label>
-                <div class="col-xs-1"></div>
-                <div class="col-xs-5">
-                    <select ng-model="model.nationality">
-                        <option ng-selected="{{m == model.nationality}}" ng-repeat="m in nationalityList track by $index"
-                                value="{{m}}">
-                            {{m}}
-                        </option>
-                    </select>
-                </div>
+                <select class="col-xs-7" ng-model="model.nationality">
+                    <option ng-selected="{{m == model.nationality}}" ng-repeat="m in nationalityList track by $index"
+                            value="{{m}}">
+                        {{m}}
+                    </option>
+                </select>
             </div>
             <div class="col-xs-12 form-group">
                 <label>MOBILE</label>
-                <div class="col-xs-1"></div>
-                <input class="col-xs-5" type="tel" maxlength="11" name="mobile" ng-model="model.mobile" required>
+                <input class="col-xs-7" type="tel" maxlength="11" name="mobile" ng-model="model.mobile" required>
             </div>
             <div class="col-xs-12 form-group">
                 <label>EMAIL</label>
-                <div class="col-xs-1"></div>
-                <input class="col-xs-6" type="email" name="email" ng-model="model.email" required>
+                <input class="col-xs-7" type="email" name="email" ng-model="model.email" required>
             </div>
             <div class="col-xs-12 form-group">
                 <label>WECHAT ID(Optional)</label>
-                <div class="col-xs-8"></div>
-                <input class="col-xs-6" type="text" ng-model="model.wechatID">
+                <input class="col-xs-7" type="text" ng-model="model.wechatID">
             </div>
             <div class="col-xs-12 form-group">
-                <label>OCCUPTAION(Optional)</label>
-                <div class="col-xs-8"></div>
-                <select class="col-xs-6" ng-model="model.occupation">
+                <label>OCCUPATION(Optional)</label>
+                <select class="col-xs-7" ng-model="model.occupation">
                     <option ng-selected="{{m == model.occupation}}" ng-repeat="m in occupationList track by $index"
                             value="{{m}}">
                         {{m}}
@@ -61,14 +52,16 @@
             <div class=" form-group col-xs-12 checkbox">
                 <label>
                     <input type="checkbox" name="terms" ng-model="agreement" required />
+                    <a ng-click="terms()" class="font-color-white" style="text-decoration:underline">TERMS AND CONDITIONS</a>
                 </label>
-                <span ng-click="terms()" style="color:white;">TERMS AND CONTDITIONS</span>
+                
             </div>
-            <div class="col-xs-2"></div>
-            <div class="form-group col-xs-8">
+            <div class="col-xs-4"></div>
+            <div class="form-group col-xs-4 submit">
                 <input type="submit" ng-disabled="form.$invalid" ng-click="save()"
-                       value="SUBMIT" />
+                       value="Submit" />
             </div>
+            <div class="col-xs-4"></div>
         </form>
     </div>
 </div>
@@ -88,10 +81,11 @@
             </textarea>
         </div>
         <div>
-            <div class="col-xs-2"></div>
-            <div class="form-group col-xs-8">
+            <div class="col-xs-4"></div>
+            <div class="form-group col-xs-4 submit">
                 <input type="submit" ng-click="showTerms=false;" value="I AGREE" />
             </div>
+            <div class="col-xs-4"></div>
         </div>
     </div>
 </div>

@@ -27,16 +27,19 @@
 </head>
 <body class="{{bg}} bg" ng-app="WeChat" ng-controller="MainCtrl" ui-prevent-touchmove-defaults="">
     <div style="overflow:auto;">
+        <div class="loading" ng-show="hasPendingRequests()">
+            <div>
+                <img style="max-width:40%;" src="~/Static/image/Loading.gif" />
+            </div>
+        </div>
         <!-- App Body -->
         <div>
             <ng-view>
 
             </ng-view>
-            <div class="loading" ng-show="hasPendingRequests()">
-                <i class="glyphicon glyphicon-refresh glyphicon-spin"></i>
-            </div>
         </div>
     </div><!-- ~ .app -->
+
 </body>
 </html>
 <script>

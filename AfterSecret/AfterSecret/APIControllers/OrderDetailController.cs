@@ -23,14 +23,13 @@ namespace AfterSecret.APIControllers
             if (order != null)
             {
 
-                var max = from a in order.Purchases
-                          group a by a.ItemId into g
-                          select new
-                          {
-                              id = g.Key,
-                              count = g.Count()
-                          };
-                return Ok(max);
+                var purchases = from a in order.Purchases
+                                select new
+                                {
+                                    id = a.Id,
+                                    count = a.Quantity
+                                };
+                return Ok(purchases);
             }
             else
                 return BadRequest();

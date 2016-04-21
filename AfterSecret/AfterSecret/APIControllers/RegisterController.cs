@@ -19,8 +19,8 @@ namespace AfterSecret.APIControllers
                 return Ok();
             else
             {
-                var ticket = UW.PurchaseRepository.Get().Where(a => a.Item.NeedInvite == true)
-                    .Where(a => a.TicketCode == code).FirstOrDefault();
+                var ticket = UW.InvitationRepository.Get()
+                    .Where(a => a.TicketCode == code || a.TableCode == code).FirstOrDefault();
                 if (ticket != null)
                     return Ok();
             }

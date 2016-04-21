@@ -36,6 +36,10 @@ namespace AfterSecret.APIControllers
                         WeChatID = model.WeChatID
                     };
                     UW.RegisterMemberRepository.Insert(result);
+                    UW.context.SaveChanges();
+                    Random r = new Random();
+                    UW.InvitationRepository.Insert(new Invitation() { InviterId = result.Id, TableCode = Common.GenerateTableCode(r), TicketCode = Common.GenerateTicketCode(r) });
+                    UW.context.SaveChanges();
                 }
                 else
                 {
@@ -48,26 +52,43 @@ namespace AfterSecret.APIControllers
                     result.Nationality = model.Nationality;
                     result.Occupation = model.Occupation;
                     result.WeChatID = model.WeChatID;
+                    UW.context.SaveChanges();
                 }
-                UW.context.SaveChanges();
-                if (model.AgentCode.StartsWith(SubscribeConfig._invitedUser_Prefix))
+
+                if (model.AgentCode.StartsWith(SubscribeConfig._Table_Invitee_Prefix) || model.AgentCode.StartsWith(SubscribeConfig._Ticket_Invitee_Prefix))
                 {
                     using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot }))
                     {
-                        var ticket = UW.TicketRepository.Get().Where(a => a.RegisterMemberId == result.Id).ToList();
-                        if(ticket.Count>0)
+                        var ticket = UW.TicketRepository.Get().Where(a => a.InviteeId == result.Id).ToList();
+                        if (ticket.Count > 0)
                         {
                             return BadRequest("ticket");
                         }
-                        var purchase = UW.PurchaseRepository.Get().Where(a => a.TicketCode == model.AgentCode).SingleOrDefault();
-                        log.Warn(purchase.Remain);
-                        if (purchase.Remain > 0)
+                        var invitation = UW.InvitationRepository.Get().Where(a => a.TicketCode == model.AgentCode || a.TableCode == model.AgentCode).SingleOrDefault();
+                        log.Warn(invitation.TableRemain);
+                        log.Warn(invitation.TicketRemain);
+                        if (model.AgentCode.StartsWith(SubscribeConfig._Table_Invitee_Prefix) && invitation.TableRemain > 0)
                         {
                             UW.TicketRepository.Insert(new Ticket()
                             {
-                                PurchaseId = purchase.Id,
+                                InvitationType = Models.Constant.InvitationType.Table,
+                                InvitationId = invitation.Id,
+
                                 QRCodePath = Common.GenerateQRImage(OpenId),
-                                RegisterMemberId = result.Id
+                                InviteeId = result.Id
+                            });
+                            UW.context.SaveChanges();
+                            scope.Complete();
+                        }
+                        else if (model.AgentCode.StartsWith(SubscribeConfig._Ticket_Invitee_Prefix) && invitation.TicketRemain > 0)
+                        {
+                            UW.TicketRepository.Insert(new Ticket()
+                            {
+                                InvitationType = Models.Constant.InvitationType.Ticket,
+                                InvitationId = invitation.Id,
+
+                                QRCodePath = Common.GenerateQRImage(OpenId),
+                                InviteeId = result.Id
                             });
                             UW.context.SaveChanges();
                             scope.Complete();
@@ -76,7 +97,7 @@ namespace AfterSecret.APIControllers
                         {
                             scope.Dispose();
                             return BadRequest("fail");
-                        }            
+                        }
                     }
                     return Ok("success");
                 }

@@ -16,29 +16,7 @@ namespace AfterSecret.Models
         public int ItemId { get; set; }
         public virtual Item Item { get; set; }
 
-        //剩余
-        [JsonProperty("remain")]
-        public int Remain
-        {
-            get
-            {
-                using (var uw = new UnitOfWork())
-                {
-                    var purchase = uw.PurchaseRepository.Get().Where(a => a.Id == Id).SingleOrDefault();
-                    if(purchase != null)
-                    {
-                        var tickets = purchase.Tickets.Count();
-                        return purchase.Item.Seats - tickets;
-                    }
-                    return 0;
-                }
-            }
-        }
-
-        [MaxLength(50)]
-        [JsonProperty("ticketCode")]
-        public string TicketCode { get; set; }
-
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        [JsonProperty("quantity")]
+        public int Quantity { get; set; }
     }
 }

@@ -16,11 +16,11 @@
 }
 
 input {
-    text-align: center;
+    /*text-align: center;*/
     background-color: transparent;
-    color: white;
+    color: #f4f4f4;
     border-radius: 0px;
-    border: solid 1px white;
+    border: solid 1px #f4f4f4;
     font-family: 'Helvetica Light';
 }
 
@@ -29,19 +29,20 @@ input {
     }
 
     input[type=radio] {
-        border: solid 1px white;
+        border: solid 1px #f4f4f4;
     }
 
     input[type=submit] {
         background-color: #d0d0d0;
-        width: 100%;
+        /*width: 100%;*/
         border: none;
-        height: 40px;
-        line-height: 40px;
+        height: 25px;
+        line-height: 25px;
         font-size: larger;
         font-weight: 200;
-        color: #333;
+        color: #262626;
         font-family: 'Penguin Sans 0.500';
+        padding: 2px 10px 0 10px;
     }
 
         input[type=submit].submit-sm {
@@ -67,15 +68,15 @@ label {
     line-height: 25px;
     height: 20px;
     font-family: 'Penguin Sans 0.500';
-    color: white;
+    color: #f4f4f4;
 }
 
 select {
     background: transparent;
-    border: solid 1px white;
+    border: solid 1px #f4f4f4;
     width: 100%;
     font-family: 'Penguin Sans 0.500';
-    color: white;
+    color: #f4f4f4;
     text-align: center;
     height: 24px;
     -webkit-appearance: none;
@@ -98,7 +99,7 @@ textarea {
 /****************************************************/
 
 .bg-img {
-    background-image: url('../image/bg.jpg');
+    background-image: url('../image/bg.png');
 }
 
 
@@ -118,10 +119,7 @@ textarea {
 }
 
 .logo-panel {
-    padding-top: 40px;
-    padding-left: 30px;
-    padding-right: 30px;
-    padding-bottom: 20px;
+    padding: 40px 15px;
 }
 
 .logo-panel-center {
@@ -135,7 +133,7 @@ html, body {
     width: 100%;
     font-family: 'Penguin Sans 0.500';
     letter-spacing: 3px;
-    background-attachment:fixed;
+    background-attachment: fixed;
 }
 
 label {
@@ -151,6 +149,11 @@ label {
     top: 75%;
 }
 
+.submit {
+    text-align: center;
+    margin: 15px 0;
+}
+
 .error-msg {
     text-align: center;
     background-color: black;
@@ -158,7 +161,7 @@ label {
     width: 90%;
     margin: 0 auto;
     font-weight: 200;
-    color: white;
+    color: #f4f4f4;
 }
 
 .welcome input {
@@ -169,7 +172,7 @@ label {
 }
 
     .welcome input::-webkit-input-placeholder {
-        color: white;
+        color: #f4f4f4;
         font-weight: 300;
     }
 
@@ -180,47 +183,65 @@ label {
 }
 
 .title {
-    width: 80%;
-    padding-left: 15px;
+    padding: 0 15px;
     background-color: #d2d2d3;
     line-height: 40px;
     height: 35px;
+    color: #262626;
+    display: inline-block;
 }
 
+.register-member {
+    padding: 50px 0;
+    color: #f4f4f4;
+}
+
+    .register-member label {
+        width: 100%;
+    }
+
 .items {
-    color: white;
+    color: #f4f4f4;
     letter-spacing: 0px;
 }
 
-    .items img {
-        max-width: 60px;
-        max-height: 80px;
+    .items input[type=text] {
+        text-align: center;
     }
 
-    .items .rows {
-        margin-bottom: 10px;
-        float: left;
-    }
+.rows {
+    margin-bottom: 10px;
+}
 
-        .items .rows > * {
-            float: none;
-            vertical-align: bottom;
-            display: inline-block;
-            /* ie6/7 */
-            *display: inline;
-            zoom: 1;
-        }
+.gift {
+    display: inline;
+}
+
+    .gift input {
+        background-image: url('../image/gift.png');
+        background-repeat: no-repeat;
+        background-position: left;
+        background-size: 15px;
+        background-position-x: 10px;
+        padding-left: 30px;
+    }
 
 .price {
     color: #c2a400;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .items .available, .remark {
-    font-size: 6px;
+    font-size: 12px;
+}
+
+.available {
+    color: #aeafb0;
 }
 
 .total {
-    margin-top: 10px;
+    margin: 10px 0;
     text-align: right;
 }
 
@@ -231,13 +252,12 @@ label {
     }
 
     .total .number {
-        font-size: 20px;
+        font-size: 18px;
         letter-spacing: 2px;
-        font-weight: 600;
     }
 
 .orders {
-    color: white;
+    color: #f4f4f4;
     letter-spacing: initial;
 }
 
@@ -253,12 +273,12 @@ label {
     .orders .panel-heading {
         background-color: transparent;
         background-image: none;
-        color: white;
+        color: #f4f4f4;
         padding: 5px 10px;
     }
 
 .invite-header {
-    background-color: white;
+    background-color: #f4f4f4;
     color: black;
     height: 30px;
     padding: 2px 10px;
@@ -272,8 +292,8 @@ label {
 
 .invitation-title {
     margin: 20px;
-    border-top: solid 1px white;
-    border-bottom: solid 1px white;
+    border-top: solid 1px #f4f4f4;
+    border-bottom: solid 1px #f4f4f4;
     padding: 10px 0 5px;
     display: inline-block;
 }
@@ -283,7 +303,7 @@ label {
     }
 
 .invitation {
-    color: white;
+    color: #f4f4f4;
 }
 
 .cover-msg {
@@ -295,8 +315,8 @@ label {
 }
 
     .cover-msg img {
-        max-width: 100%;
-        max-height: 100%;
+        width: 100%;
+        height: 100%;
         background-color: transparent;
         opacity: 0.95;
     }
@@ -307,6 +327,10 @@ label {
 
 .font-helvetica {
     font-family: 'Helvetica Light';
+}
+
+.font-color-white {
+    color: #f4f4f4;
 }
 
 @font-face {
@@ -321,44 +345,22 @@ label {
 
 .loading {
     z-index: 999;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color:white;
-    opacity:0.5;
+    background-image: url('../image/bg.png');
     text-align: center;
 }
 
-.glyphicon-spin {
-    -webkit-animation: spin 1000ms infinite linear;
-    animation: spin 1000ms infinite linear;
-    font-size: 50px;
-    width: 50px;
-    height: 50px;
-    top:50%;
-}
-
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
+    .loading :before {
+        content: ' ';
+        display: inline-block;
+        vertical-align: middle; /* vertical alignment of the inline element */
+        height: 100%;
     }
 
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
+    .loading div {
+        display: inline;
+        vertical-align: middle;
     }
-}
-
-@keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(359deg);
-        transform: rotate(359deg);
-    }
-}

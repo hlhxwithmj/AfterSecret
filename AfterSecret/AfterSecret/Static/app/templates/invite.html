@@ -1,29 +1,26 @@
 ﻿<div class="logo-panel">
     <img class="logo-lg" src="../static/image/logo-lg.png" />
 </div>
-<div class="col-xs-12 orders" ng-repeat="m in model track by $index">
-    <div>
-        <div class="invite-header">
-            <span class="font-penguin">Table for </span>
-            <span class="font-helvetica" ng-bind="m.seats"></span>
-            <span>-</span>
-            <span class="font-helvetica" ng-bind="m.purchaseId"></span>
-            <div class="pull-right">
-                <input type="submit" class="submit-sm" ng-click="myseat(m.purchaseId)" value="My seat" />
-                <input type="submit" class="submit-sm" ng-click="arrange(m.ticketCode,m.inviter)" value="Arrange" />
-            </div>
-        </div>
-    </div>
-    <div ng-repeat="p in m.attendees" class="col-xs-12">
-        <div class="invitee">
-            <i class="glyphicon glyphicon-user" style="color:white;"></i><span class="font-helvetica" ng-bind="p.name"></span>
-            <input ng-show="p.registerMemberId!=0" type="submit" class="submit-sm-grey" ng-click="cancel(p.registerMemberId)" value="cancel" />
-        </div>
-    </div>
-</div>
-<div class="col-xs-2">
 
+<div class="col-xs-6">
+    <div class="no-ticket" ng-show="!model.hasTicket">
+
+    </div>
+    <div class="remain-ticket" ng-show="model.hasTicket && !model.fullTicket">
+
+    </div>
+    <div class="full-ticket" ng-show="model.hasTicket && model.fullTicket">
+
+    </div>
 </div>
-<div class="col-xs-8" style="margin-top:20px;">
-    <input type="submit" ng-show="hasPermission" value="Share Information" ng-click="share();" />
+<div class="col-xs-6">
+    <div class="no-table" ng-show="!model.hasTable">
+
+    </div>
+    <div class="remain-table" ng-show="model.hasTable && !model.fullTable">
+
+    </div>
+    <div class="full-table" ng-show="model.hasTable && model.fullTable">
+
+    </div>
 </div>

@@ -13,4 +13,10 @@ namespace AfterSecret.Models.Constant
         Failed = 30,
         Expired = 40
     }
+
+    public enum InvitationType
+    {
+        Ticket = 10,
+        Table = 20
+    }
 }
