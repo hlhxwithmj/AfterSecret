@@ -15,6 +15,8 @@ namespace AfterSecret.Models.ViewModel
 
         public OrderStatus orderStatus { get; set; }
 
+        public DateTime expireTime { get; set; }
+
         public List<PurchaseVM> purchases { get; set; }
     }
 }

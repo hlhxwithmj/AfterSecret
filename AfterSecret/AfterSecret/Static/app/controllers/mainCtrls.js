@@ -10,6 +10,8 @@
     })
     .controller('invitationCtrl', function ($scope, $rootScope, $routeParams, $location, registerMemberService, invitationService) {
         $rootScope.bg = "bg-img";
+        $scope.ticketCode = $routeParams.code;
+        $scope.inviter = $routeParams.inviter;
         registerMemberService.doGet().success(function () {
 
         }).error(function () {
@@ -20,22 +22,40 @@
             wx.hideMenuItems({
                 menuList: ['menuItem:share:timeline'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
             });
-            wx.onMenuShareAppMessage({
-                title: '', // 分享标题
-                desc: '', // 分享描述
-                link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
-                    + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
-                imgUrl: '', // 分享图标
-                type: 'link', // 分享类型,music、video或link，不填默认为link
-                dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-                success: function () {
-                    // 用户确认分享后执行的回调函数
-                    $location.path('/invite');
-                },
-                cancel: function () {
-                    // 用户取消分享后执行的回调函数
-                }
-            });
+            if ($routeParams.code && $routeParams.code.substring(0,2) != '18')
+                wx.onMenuShareAppMessage({
+                    title: 'Invitation', // 分享标题
+                    desc: 'You receive a ticket from your friend. Register and get your ticket to join the Secret After Party!', // 分享描述
+                    link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
+                        + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
+                    imgUrl: $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/static/image/invitation.png', // 分享图标
+                    type: 'link', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        $location.path('/invite');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
+            else
+                wx.onMenuShareAppMessage({
+                    title: 'The Secret After Party', // 分享标题
+                    desc: 'Enter your agent code, register and come join me!', // 分享描述
+                    link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
+                        + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
+                    imgUrl: $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/static/image/share-sm.png', // 分享图标
+                    type: 'link', // 分享类型,music、video或link，不填默认为link
+                    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        $location.path('/invite');
+                    },
+                    cancel: function () {
+                        // 用户取消分享后执行的回调函数
+                    }
+                });
         });
 
         $scope.invite = function () {
@@ -45,9 +65,6 @@
         $scope.back = function () {
             $location.path('/invite');
         };
-
-        $scope.ticketCode = $routeParams.code;
-        $scope.inviter = $routeParams.inviter;
     })
     .controller('registerCtrl', function ($rootScope, $scope, $location, registerService) {
         $rootScope.bg = "welcome";
@@ -96,7 +113,7 @@
                     $scope.fail = true;
                 }
                 else if (data && data.Message == 'ticket') {
-                    alert("您当前已有一张门票，如需绑定新门票，请通知您现有门票的agent!");
+                    $scope.alreadyHas = true;
                     $location.path("/register");
                 }
             });
@@ -173,7 +190,7 @@
             });
             return sum;
         }, function (sum) {
-            $scope.total = sum;
+            $scope.total = sum.toFixed(0);
         });
 
         $scope.skip = function () {
@@ -181,6 +198,9 @@
         };
 
         $scope.confirm = function () {
+            if ($scope.total == 0) {
+                return;
+            }
             if ($routeParams.id)
                 itemsService.doDelete($routeParams.id).success(function () {
                     orderService.doCheck('unpaid').success(function (data) {
@@ -239,14 +259,25 @@
                     });
                 });
             }).error(function (error) {
+                if (error.Message == 'needtopay') {
+                    alert('您有未完成订单，请先支付完再下单');
+                }
                 $location.path('/orders');
             });
         }
         else
             $location.path('/items');
     })
-    .controller('ordersCtrl', function ($rootScope, $scope, $location, registerMemberService, orderService) {
+    .controller('ordersCtrl', function ($rootScope, $scope, $location, $interval, registerMemberService, orderService, inviteGuestService,shareService) {
         $rootScope.bg = "bg-img";
+        $scope.hasPermission = false;
+
+        inviteGuestService.share().success(function () {
+            $scope.hasPermission = true;
+        })
+        .error(function () {
+            $scope.hasPermission = false;
+        });
         registerMemberService.doGet().success(function () {
 
         }).error(function () {
@@ -256,6 +287,17 @@
 
         orderService.doGet().success(function (data) {
             $scope.model = data;
+            angular.forEach($scope.model, function (item, index) {
+                if (item.orderStatus == 10) {
+                    $scope.expire = item.expireTime;
+                    var a = $interval(function () {
+                        var d = moment.utc(moment($scope.expire).diff(moment())).format("mm:ss")
+                        if (d == "00:00")
+                            $interval.cancel(a);
+                        $scope.countdown = d;
+                    }, 1000);
+                }
+            });
         }).error(function () { });
 
         $scope.invite = function () {
@@ -272,6 +314,14 @@
         $scope.toggle = function (e) {
             $(e.target).parent().find('i.indicator').toggleClass('glyphicon-menu-down glyphicon-menu-up');
         };
+
+        $scope.share = function () {
+            shareService.doPost().success(function (data) {
+                $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
+            }).error(function () {
+
+            });
+        }
     })
     .controller('inviteCtrl', function ($rootScope, $scope, $location, registerMemberService, inviteService, ticketService) {
         $rootScope.bg = "bg-img";
@@ -304,8 +354,10 @@
         $scope.inviteeId = 0;
 
         $scope.myseat = function () {
-            inviteGuestService.myseat($scope.invitationType).then(function () {
+            inviteGuestService.myseat($scope.invitationType).success(function () {
                 $scope.takeMySeat = false;
+                getData();
+            }).error(function () {
                 getData();
             });
         };
@@ -358,13 +410,13 @@
                         $scope.model.invitees[index].src = $scope.invitationType == 10 ? '../static/image/ticketseat-white.png' : '../static/image/seat-white.png';
                 });
             }).error(function () { });
+            ticketService.doGet().success(function () {
+                $scope.hasMyTicket = true;
+            }).error(function () {
+                $scope.hasMyTicket = false;
+            });
         };
         getData();
-        ticketService.doGet().success(function () {
-            $scope.hasMyTicket = true;
-        }).error(function () {
-            $scope.hasMyTicket = false;
-        });
     })
     .controller('ticketCtrl', function ($scope, $rootScope, $location, registerMemberService, ticketService) {
         $rootScope.bg = "bg-img";

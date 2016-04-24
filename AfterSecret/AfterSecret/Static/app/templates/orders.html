@@ -7,11 +7,12 @@
             <div class="panel-heading">
                 <div class="accordion-toggle" data-toggle="collapse" data-parent="#{{'accordion'+$index}}" href="{{'#collapse'+$index}}"
                      ng-click="toggle($event)">
-                    <span class="label font-penguin" style="padding-left:5px;">Order No:</span><span ng-bind="m.order_no"></span>
+                    <span ng-show="m.orderStatus!=10" class="label font-penguin" style="padding-left:5px;">No:</span><span ng-show="m.orderStatus!=10" ng-bind="m.order_no"></span>
+                    <span ng-show="m.orderStatus==10" class="label font-penguin" style="padding-left:5px;">Time Left to Pay:</span><span class="price" ng-show="m.orderStatus==10" ng-bind="countdown"></span>
                     <div class="pull-right">
-                        <span class="price font-penguin" ng-bind="m.orderStatus==10?'Unpaid'
+                        <span ng-show="m.orderStatus!=10" class="price font-penguin" ng-bind="m.orderStatus==10?'Unpaid'
                               :m.orderStatus==15?'Processing Order'
-                              :m.orderStatus==20?'Paid'
+                              :m.orderStatus==20?'Confirmed'
                               :m.orderStatus==30?'Failed'
                               :m.orderStatus==40?'Expired':''">
                         </span>
@@ -37,7 +38,7 @@
                             <span class="price pull-right" ng-bind="'¥'+m.amount"></span>
                         </div>
                         <div>
-                            <input type="submit" ng-click="edit(m.id)" ng-show="m.orderStatus==10" value="Confirm and Pay" />
+                            <input style="height:20px;line-height:20px;padding:0 5px;font-size:small;" type="submit" ng-click="edit(m.id)" ng-show="m.orderStatus==10" value="Confirm and Pay" />
                         </div>
                     </div>
                 </div>
@@ -49,11 +50,21 @@
 <div class="font-penguin orders col-xs-12">
     Refund Policy: The deadline for refunds is five days before the event. Please contact our customer support team to assist you with your refund.
 </div>
-<div>
+<div ng-show="!hasPermission">
     <div class="col-xs-2"></div>
     <div class="submit col-xs-8">
         <input type="submit" ng-click="invite()"
                value="Manage My Invites" />
     </div>
     <div class="col-xs-2"></div>
+</div>
+<div ng-show="hasPermission">
+    <div class="col-xs-6" style="padding-right:5px;font-size:12px;">
+        <input style="padding-left:10px;padding-right:10px;width:100%;" type="submit" ng-click="share()"
+               value="Share The Secret" />
+    </div>
+    <div class="col-xs-6" style="padding-left:5px;font-size:12px;">
+        <input style="padding-left:10px;padding-right:10px;width:100%;" type="submit" ng-click="invite()"
+               value="Manage My Invites" />
+    </div>
 </div>

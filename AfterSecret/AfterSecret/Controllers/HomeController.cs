@@ -171,8 +171,16 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
         }
 
 
-        public ActionResult Oauth2(string path = null, string code = null, string state = null)
+        public ActionResult Oauth2(string path = null, string expire = null, string code = null, string state = null)
         {
+            TimeSpan now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+            long fromtime = 0;
+            long.TryParse(Common.DesDecrypt(expire), out fromtime);
+            var timediff = ((long)now.TotalMilliseconds - fromtime);
+            if (TimeSpan.FromMilliseconds((double)timediff).TotalMinutes > 5)
+            {
+                return View();
+            }
             if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(state))
             {
                 Session["openIdForPay"] = Common.DesEncrypt(WxPubUtils.GetOpenId(PayConfig.APPID, PayConfig.APPSECRET, code));//服务号openId
@@ -186,6 +194,11 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             {
                 return Content("没有参数Code, 非法操作！");
             }
+        }
+
+        public ActionResult Expire()
+        {
+            return View();
         }
 
         public ActionResult Default()
@@ -276,14 +289,14 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                 case SubscribeConfig.mREGISTER:
                     path = "register";
                     description = "Enter your agent code, register and join the Secret After Party!";
-                    picUrl = picUrl + "registration.jpg";
+                    picUrl = picUrl + "registration1.jpg";
                     title = "Registration";
                     break;
                 case SubscribeConfig.mPURCHASE:
                     path = "items";
                     description = "Would like to purchase more tickets and invite your guests? Click here!";
                     picUrl = picUrl + "shop.jpg";
-                    title = "Purchase";
+                    title = "Shop";
                     break;
                 case SubscribeConfig.myPURCHASE:
                     path = "orders";
@@ -297,17 +310,12 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     picUrl = picUrl + "my-pass.jpg";
                     title = "My Ticket";
                     break;
-                case SubscribeConfig.INVITATION:
-                    path = "invite";
-                    description = "You receive a ticket from your friend. Register and get your ticket to join the Secret After Party!";
-                    picUrl = picUrl + "invitation.jpg";
-                    title = "Invitation";
-                    break;
                 default:
                     break;
             }
+            var expire = Common.GenerateCredential("");
             url = @"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + PayConfig.APPID
-                + "&redirect_uri=" + HttpUtility.UrlEncode(SubscribeConfig.DOMAIN + "/Home/Oauth2?path=" + path)
+                + "&redirect_uri=" + HttpUtility.UrlEncode(SubscribeConfig.DOMAIN + "/Home/Oauth2?path=" + path + "&expire=" + expire)
                 + "&response_type=code&scope=snsapi_base&state=" + openId + "#wechat_redirect";
             log.Warn(url);
             result = new News()

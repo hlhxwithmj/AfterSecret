@@ -36,13 +36,13 @@ input {
         background-color: #d0d0d0;
         /*width: 100%;*/
         border: none;
-        height: 25px;
-        line-height: 25px;
+        height: 35px;
+        line-height: 30px;
         font-size: larger;
         font-weight: 200;
         color: #262626;
         font-family: 'Penguin Sans 0.500';
-        padding: 2px 10px 0 10px;
+        padding: 5px 25px 0 25px;
     }
 
         input[type=submit].submit-sm {
@@ -78,10 +78,10 @@ select {
     font-family: 'Penguin Sans 0.500';
     color: #f4f4f4;
     text-align: center;
-    height: 24px;
+    height: 28px;
     -webkit-appearance: none;
     border-radius: 0px;
-    padding-left: 15px;
+    padding: 0px 15px;
 }
 
     select option {
@@ -119,11 +119,11 @@ textarea {
 }
 
 .logo-panel {
-    padding: 40px 15px;
+    padding: 40px 15px 0px 15px;
 }
 
 .logo-panel-center {
-    padding-top: 80px;
+    padding-top: 10%;
     /*padding-bottom: 60px;*/
     text-align: center;
 }
@@ -152,6 +152,7 @@ label {
 .submit {
     text-align: center;
     margin: 15px 0;
+    height: 60px;
 }
 
 .error-msg {
@@ -217,18 +218,6 @@ label {
     margin-bottom: 10px;
 }
 
-.gift {
-    display: inline;
-}
-
-    .gift input {
-        background-image: url('../image/gift.png');
-        background-repeat: no-repeat;
-        background-position: left;
-        background-size: 15px;
-        background-position-x: 10px;
-        padding-left: 30px;
-    }
 
 .ticket-title {
     background-image: url('../image/ticket.png');
@@ -316,12 +305,13 @@ label {
     margin: 20px;
     border-top: solid 1px #f4f4f4;
     border-bottom: solid 1px #f4f4f4;
-    padding: 10px 0 5px;
+    padding-top: 5px;
     display: inline-block;
 }
 
     .invitation-title span {
         font-size: 25px;
+        letter-spacing: 8px;
     }
 
 .invitation {
@@ -334,13 +324,14 @@ label {
     z-index: 9999;
     height: 100%;
     width: 100%;
+    opacity: 0.9;
+    background-color: black;
 }
 
     .cover-msg img {
         width: 100%;
         height: 100%;
         background-color: transparent;
-        opacity: 0.95;
     }
 
 
@@ -356,8 +347,9 @@ label {
     }
 
 .add {
-    width: 75px;
-    height: 75px;
+    width: 62px;
+    height: 62px;
+    margin-top: 7px;
 }
 
 .font-penguin {
@@ -410,31 +402,36 @@ label {
     top: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../image/bg.png');
+    background-color: black;
+    opacity: 0.9;
     text-align: center;
 }
 
-.confirm-msg{
-    position:absolute;
+.confirm-msg {
+    position: absolute;
     top: 30%;
-    font-size:18px;
+    font-size: 18px;
 }
 
-.confirm-btn{
-    position:absolute;
-    bottom:30%;
-    width:100%;
-}
-.confirm-btn input{
-    width:100%;
+.confirm-btn {
+    position: absolute;
+    bottom: 30%;
+    width: 100%;
+    padding: 20px;
 }
 
-.seat{
-    width:75px;
-    height:75px;
+    .confirm-btn input {
+        width: 100%;
+        line-height: 40px;
+        height: 40px;
+    }
+
+.seat {
+    width: 70px;
+    height: 70px;
 }
 
-.delete-btn{
+.delete-btn {
     height: 30px;
     position: absolute;
     top: 0;
@@ -442,9 +439,9 @@ label {
     width: 30px;
 }
 
-.overflow{
+.overflow {
     text-overflow: ellipsis;
-    overflow:hidden;
-    width:75px;
-    white-space:nowrap;
+    overflow: hidden;
+    width: 75px;
+    white-space: nowrap;
 }

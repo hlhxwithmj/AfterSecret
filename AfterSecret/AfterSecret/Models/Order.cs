@@ -110,7 +110,7 @@ namespace AfterSecret.Models
             Body = body;
             Subject = PingConfig.SUBJECT;
             Client_Ip = ip;
-            ExpireTime = DateTime.Now.AddMinutes(15);
+            ExpireTime = DateTime.Now.AddMinutes(45);
             Channel = "wx_pub";
             Currency = "cny";
             AppId = PingConfig.APPID;

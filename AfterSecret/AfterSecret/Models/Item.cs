@@ -41,9 +41,9 @@ namespace AfterSecret.Models
                 {
                     return Total - uw.PurchaseRepository.Get()
                         .Where(a => a.Order.OrderStatus == OrderStatus.Unpaid
-                            || a.Order.OrderStatus == OrderStatus.Paid 
+                            || a.Order.OrderStatus == OrderStatus.Paid
                             || a.Order.OrderStatus == OrderStatus.Processing).Where(a => a.ItemId == Id)
-                            .Count();
+                            .Select(a => a.Quantity).ToList().Sum();
                 }
             }
         }

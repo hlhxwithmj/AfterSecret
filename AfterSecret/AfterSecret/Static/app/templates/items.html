@@ -3,7 +3,7 @@
     <div class="items font-helvetica">
         <div ng-repeat="item in model | orderBy:'order'">
             <div class="rows" ng-show="!isConfirmed || (isConfirmed && item.count > 0)">
-                <div class="col-xs-12" style="margin-bottom:10px;">
+                <div class="col-xs-12" style="margin-bottom:25px;">
                     <div style="height:50px;width:50px;background-color:white;display:inline-block;float:left;"></div>
                     <div class="col-xs-8" style="height:50px;display:inline-block;">
                         <div style="position:absolute;bottom:-5px;width:100%;">
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="text" ng-disabled="isConfirmed" maxlength="2" max="20" ng-style="style"
+                    <input type="text" class="font-helvetica font-color-white" ng-disabled="isConfirmed" maxlength="2" max="20" ng-style="style"
                            style="max-height:30px;max-width:30px;position:absolute;bottom:0;right:15px;" pattern="[0-9]*" ng-model="item.count" placeholder="0" />
                 </div>
             </div>
@@ -26,9 +26,9 @@
         </div>
         <div class="col-xs-12">
             <div class="pull-right">
-                <div class="gift">
+                <div style="display:inline;">
                     <span>
-                        <input type="submit" ng-show="true||!isConfirmed && hasPermission" ng-click="skip()" value="Gift" />
+                        <input type="submit" ng-show="!isConfirmed && hasPermission" ng-click="skip()" value="My Orders" />
                     </span>
                 </div>
                 <input type="submit" ng-show="!isConfirmed" ng-click="confirm()" value="Confirm and Pay" />

@@ -26,7 +26,7 @@ namespace AfterSecret.APIControllers
                 var purchases = from a in order.Purchases
                                 select new
                                 {
-                                    id = a.Id,
+                                    id = a.Item.Id,
                                     count = a.Quantity
                                 };
                 return Ok(purchases);

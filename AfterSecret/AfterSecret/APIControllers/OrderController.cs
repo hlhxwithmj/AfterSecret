@@ -18,7 +18,7 @@ namespace AfterSecret.APIControllers
     {
         public IHttpActionResult Post([FromBody]List<CheckoutList> model)
         {
-            var created = UW.OrderRepository.Get()
+            var created = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId)
                 .Where(a => a.OrderStatus == Models.Constant.OrderStatus.Unpaid).Count();
             if (created > 0)
             {
@@ -78,6 +78,7 @@ namespace AfterSecret.APIControllers
                         id = a.Id,
                         order_no = a.Order_No,
                         orderStatus = a.OrderStatus,
+                        expireTime = a.ExpireTime,
                         purchases = a.Purchases.Select(b => new PurchaseVM() { amount = b.Item.UnitPrice * b.Quantity / 100, name = b.Item.Name, quantity = b.Quantity, remark = b.Item.Remark }).ToList()
                     }).ToList();
 
@@ -92,7 +93,7 @@ namespace AfterSecret.APIControllers
 
         public IHttpActionResult Get(string status)
         {
-            log.Warn("status");
+            log.Warn(status);
             var result = UW.OrderRepository.Get().Where(a => a.OpenId == OpenId);
             int count = 0;
             if (status == "unpaid")
