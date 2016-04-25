@@ -179,7 +179,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             var timediff = ((long)now.TotalMilliseconds - fromtime);
             if (TimeSpan.FromMilliseconds((double)timediff).TotalMinutes > 5)
             {
-                return View();
+                return RedirectToAction("Expire");
             }
             if (!string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(state))
             {
@@ -260,6 +260,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     result = HandleClickEvent(jObj);
                     break;
                 case "subscribe":
+                    result = HandleClickEvent(jObj, true);
                     break;
                 case "unsubscribe":
                     break;
@@ -275,7 +276,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             return result;
         }
 
-        private string HandleClickEvent(JObject jObj)
+        private string HandleClickEvent(JObject jObj, bool isSubscribe = false)
         {
             var result = string.Empty;
             var description = string.Empty;
@@ -299,10 +300,10 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     title = "Shop";
                     break;
                 case SubscribeConfig.myPURCHASE:
-                    path = "orders";
-                    description = "You can review your shopping cart here!";
+                    path = "invite";
+                    description = "Manage your invites and send tickets to your guests!";
                     picUrl = picUrl + "my-invitees.jpg";
-                    title = "My Purchase";
+                    title = "My Invites";
                     break;
                 case SubscribeConfig.myTICKET:
                     path = "ticket";
@@ -312,6 +313,13 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
                     break;
                 default:
                     break;
+            }
+            if (isSubscribe == true)
+            {
+                path = "register";
+                description = "Enter your agent code, register and join the Secret After Party!";
+                picUrl = picUrl + "registration1.jpg";
+                title = "Registration";
             }
             var expire = Common.GenerateCredential("");
             url = @"https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + PayConfig.APPID

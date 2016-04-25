@@ -4,7 +4,7 @@
     </div>
     <div class="title title-lg form-group" ng-class="{true: 'ticket-title', false: 'table-title'}[invitationType==10]" ng-bind="title"></div>
 </div>
-<div class="col-xs-3" ng-repeat="m in model.invitees track by $index" style="max-width:100px;text-align:center;">
+<div ng-repeat="m in model.invitees track by $index" style="max-width:100px;text-align:center;float:left;margin:0 15px;position:relative;">
     <div>
         <div class="delete-btn" ng-click="deleteConfirm(m.inviteeId,m.name)">
 
@@ -15,7 +15,7 @@
         <p ng-bind="m.name" class="font-color-white overflow"></p>
     </div>
 </div>
-<div class="col-xs-3" ng-show="model.left>0">
+<div ng-show="model.left>0" style="margin:0 15px;">
     <img class="add" src="../static/image/add.png" ng-click="arrange()" />
 </div>
 

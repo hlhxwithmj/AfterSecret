@@ -114,7 +114,6 @@
                 }
                 else if (data && data.Message == 'ticket') {
                     $scope.alreadyHas = true;
-                    $location.path("/register");
                 }
             });
         };
@@ -205,8 +204,7 @@
                 itemsService.doDelete($routeParams.id).success(function () {
                     orderService.doCheck('unpaid').success(function (data) {
                         if (data > 0) {
-                            alert('您有未完成订单，请先支付完再下单');
-                            $location.path('/orders');
+                            $scope.hasUnpaid = true;
                         }
                     }).error(function () {
 
@@ -218,8 +216,7 @@
             else {
                 orderService.doCheck('unpaid').success(function (data) {
                     if (data > 0) {
-                        alert('您有未完成订单，请先支付完再下单');
-                        $location.path('/orders');
+                        $scope.hasUnpaid = true;
                     }
                 }).error(function () {
 
@@ -239,6 +236,10 @@
         $scope.pay = function () {
             $rootScope.order = $scope.model;
             $location.path('/pay');
+        };
+
+        $scope.unpaid = function () {
+            $location.path('/orders');
         };
     })
     .controller('payCtrl', function ($rootScope, $scope, $location, itemsService, payService) {
@@ -317,7 +318,7 @@
 
         $scope.share = function () {
             shareService.doPost().success(function (data) {
-                $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
+                $location.path('/Share/' + data.ticketCode + '/' + data.inviter);
             }).error(function () {
 
             });
