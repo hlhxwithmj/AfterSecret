@@ -1,5 +1,5 @@
 ﻿<div class="register-member" ng-show="!showTerms && !fail && !success">
-    <div class="title form-group">YOUR INFORMATION</div>
+    <div class="title form-group">MY INFORMATION</div>
     <div>
         <form role="form" name="form" novalidate="novalidate">
             <div class="form-group col-xs-12">
@@ -37,11 +37,11 @@
                 <input class="col-xs-7" type="email" name="email" ng-model="model.email" required>
             </div>
             <div class="col-xs-12 form-group">
-                <label>WECHAT ID(Optional)</label>
+                <label>WECHAT ID(OPTIONAL)</label>
                 <input class="col-xs-7" type="text" ng-model="model.wechatID">
             </div>
             <div class="col-xs-12 form-group">
-                <label>OCCUPATION(Optional)</label>
+                <label>OCCUPATION(OPTIONAL)</label>
                 <select class="col-xs-7" ng-model="model.occupation">
                     <option ng-selected="{{m == model.occupation}}" ng-repeat="m in occupationList track by $index"
                             value="{{m}}">
@@ -49,12 +49,11 @@
                     </option>
                 </select>
             </div>
-            <div class=" form-group col-xs-12 checkbox">
+            <div class="form-group col-xs-12 checkbox">
                 <label>
                     <input type="checkbox" name="terms" ng-model="agreement" required />
                     <a ng-click="terms()" class="font-color-white" style="text-decoration:underline">TERMS AND CONDITIONS</a>
                 </label>
-
             </div>
             <div class="col-xs-3"></div>
             <div class="form-group col-xs-6 submit">
@@ -83,7 +82,7 @@
             <textarea rows="15" readonly class="font-helvetica">
 【活动免责声明】
 
-1.本免责声明适用于微信531704发布的所有户外及户外活动。
+1.本免责声明适用于微信My531704发布的所有户外及户外活动。
 
 2.凡报名户外活动的参加者均视为具有完全民事行为能力人，如在活动中发生人身损害后果，赔偿责任本微信和发起人不承担，由受损害人依据法律规定和本声明依法解决，凡报名者均视为接受本声明。如报名者为未成年人或无民事行为能力人或限制民事行为能力人，则其监护人同意在活动中发生人身损害后果，赔偿责任本网站和发起人不承担，由监护人或受损害人依据法律规定和本声明依法解决，监护人虽没有直接报名仍视为接受本声明。代他人报名者，被代报名参加者如遭受人身损害，赔偿责任发起人或本网站同样不承担。本声明中关于免除发起人或本网站赔偿责任之约定效力，同样及于本次活动的共同发起人及钱物保管人员。本声明是根据最高人民法院于2004年5月1日起颁布施行的《关于审理人身损害赔偿案件适用法律若干问题的解释》而制定。
 

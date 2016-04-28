@@ -7,8 +7,8 @@ namespace AfterSecret.Lib
 {
     public class SubscribeConfig
     {
-        public const string APPID = "wxd19c259ce25e6ce4";
-        public const string APPSECRET = "39233b59278fe1c340a9e50812344fe2";
+        public const string APPID = "wx7328e16406a940eb";
+        public const string APPSECRET = "0f8beaabd159526a0bc344f003d45614";
         public const string TOKEN = "SecretDinner";
         public const string ENCODINGAESKEY = "YlzZWOu7qS0giJmT29ogJopufCZZp9mxcXxiHYTOOlv";
         public const string DOMAIN = "http://sap.cwchros.com";

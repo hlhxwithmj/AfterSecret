@@ -133,6 +133,8 @@
         $rootScope.bg = "bg-img";
         $scope.model = [];
         $scope.hasPermission = false;
+        $scope.refund = true;
+        $scope.showRefund = false;
 
         registerMemberService.doGet().success(function () {
 
@@ -365,7 +367,7 @@
         $scope.arrange = function () {
             if (!$scope.hasMyTicket) {
                 $scope.takeMySeat = true;
-                $scope.confirmMsg = $scope.invitationType == 10 ? 'Do you want to own this entrance ticket?' : 'Do you want to take a seat at this table?';
+                $scope.confirmMsg = $scope.invitationType == 10 ? 'Claim this ticket?' : 'Are you the host of this table?';
             }
             else
                 $location.path('/invitation/' + $scope.model.invitationCode + '/' + $scope.model.inviter);
@@ -376,7 +378,7 @@
         }
 
         $scope.deleteConfirm = function (inviteeId, name) {
-            $scope.deleteConfirmation = 'Are you sure you want to remove "' + name + '" from your guest lists?';
+            $scope.deleteConfirmation = 'Are you sure you want to remove "' + name + '" from your guest list?';
             $scope.delete = true;
             $scope.inviteeId = inviteeId;
         };

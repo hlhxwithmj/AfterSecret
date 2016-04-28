@@ -1,5 +1,5 @@
-﻿<div class="register-member">
-    <div class="title form-group">SHOPPING CART</div>
+﻿<div class="register-member" ng-show="!showRefund">
+    <div class="title form-group">SHOP</div>
     <div class="items font-helvetica">
         <div ng-repeat="item in model | orderBy:'order'">
             <div class="rows" ng-show="!isConfirmed || (isConfirmed && item.count > 0)">
@@ -11,7 +11,7 @@
                             <div class="remark" ng-bind="item.remark"></div>
                             <div>
                                 <span class="price" ng-bind="'¥ '+item.unitPrice"></span>
-                                <span class="available" ng-bind="item.seats==1?'Ticket Left: '+item.remain:item.seats>1?'Tables Left: '+item.remain:''"></span>
+                                <span class="available" ng-bind="item.seats==1?'Ticket Left: '+item.remain:item.seats>1?'Table Left: '+item.remain:''"></span>
                             </div>
                         </div>
                     </div>
@@ -23,12 +23,18 @@
         <div class="col-xs-12 total">
             <span class="label font-penguin">Total:</span>
             <span class="number price" ng-bind="'¥ '+total"></span>
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="terms" ng-model="refund" required />
+                    <a ng-click="showRefund=true;" class="font-color-white" style="text-decoration:underline">Refund Policy</a>
+                </label>
+            </div>
         </div>
         <div class="col-xs-12">
             <div class="pull-right">
                 <div style="display:inline;">
                     <span>
-                        <input type="submit" ng-show="!isConfirmed && hasPermission" ng-click="skip()" value="My Orders" />
+                        <input type="submit" ng-show="!isConfirmed && hasPermission" ng-click="skip()" value="My Order" />
                     </span>
                 </div>
                 <input type="submit" ng-show="!isConfirmed" ng-click="confirm()" value="Confirm and Pay" />
@@ -40,4 +46,23 @@
 </div>
 <div ng-show="hasUnpaid" class="cover-msg" ng-click="unpaid()">
     <img src="../static/image/unpaid-order.png" />
+</div>
+
+<div ng-show="showRefund" class="cover-msg">
+    <div style="padding-top:50px">
+        <div class="title form-group">Refund Policy</div>
+        <div class="col-xs-12">
+            <textarea rows="15" readonly class="font-helvetica">
+付款一旦确认，活动不支持退款。无论天气情况如何，来宾仍须出席活动。不管晴雨，不见不散。
+Once confirmed, the payment is non-refundable. Each guest’s participation becomes mandatory, regardless of weather conditions. Rain or shine the event will continue.
+            </textarea>
+        </div>
+        <div>
+            <div class="col-xs-3"></div>
+            <div class="form-group col-xs-6 submit">
+                <input type="submit" ng-click="showRefund=false;" value="I AGREE" />
+            </div>
+            <div class="col-xs-3"></div>
+        </div>
+    </div>
 </div>

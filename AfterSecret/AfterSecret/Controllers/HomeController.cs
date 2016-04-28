@@ -177,7 +177,7 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             long fromtime = 0;
             long.TryParse(Common.DesDecrypt(expire), out fromtime);
             var timediff = ((long)now.TotalMilliseconds - fromtime);
-            if (TimeSpan.FromMilliseconds((double)timediff).TotalMinutes > 5)
+            if (TimeSpan.FromMilliseconds((double)timediff).TotalMinutes > 30)
             {
                 return RedirectToAction("Expire");
             }
