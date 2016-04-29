@@ -36,10 +36,10 @@
                templateUrl: "/static/app/templates/ticket.html",
                controller: 'ticketCtrl'
            });
-           $routeProvider.when("/share", {
-               templateUrl: "/static/app/templates/share.html",
-               controller: 'shareCtrl'
-           });
+           //$routeProvider.when("/share", {
+           //    templateUrl: "/static/app/templates/share.html",
+           //    controller: 'shareCtrl'
+           //});
            $routeProvider.when("/inviteGuest/:invitationType", {
                templateUrl: "/static/app/templates/inviteGuest.html",
                controller: 'inviteGuestCtrl'

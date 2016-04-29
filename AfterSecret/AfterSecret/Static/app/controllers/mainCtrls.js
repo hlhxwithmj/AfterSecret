@@ -24,11 +24,11 @@
             });
             if ($routeParams.code && $routeParams.code.substring(0,2) != '18')
                 wx.onMenuShareAppMessage({
-                    title: 'Invitation', // 分享标题
+                    title: 'Invitation to The Secret Party', // 分享标题
                     desc: 'You receive a ticket from your friend. Register and get your ticket to join the Secret After Party!', // 分享描述
                     link: $location.protocol() + '://' + $location.host() + ':' + $location.port()
                         + '/Static/invitation.html?ticketCode=' + $routeParams.code + '&inviter=' + $routeParams.inviter, // 分享链接
-                    imgUrl: $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/static/image/invitation.png', // 分享图标
+                    imgUrl: $location.protocol() + '://' + $location.host() + ':' + $location.port() + '/static/image/share-sm.png', // 分享图标
                     type: 'link', // 分享类型,music、video或link，不填默认为link
                     dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                     success: function () {
@@ -320,7 +320,7 @@
 
         $scope.share = function () {
             shareService.doPost().success(function (data) {
-                $location.path('/Share/' + data.ticketCode + '/' + data.inviter);
+                $location.path('/invitation/' + data.ticketCode + '/' + data.inviter);
             }).error(function () {
 
             });
