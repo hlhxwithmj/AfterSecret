@@ -71,7 +71,7 @@
         $scope.error = false;
         $scope.check = function () {
             $scope.isEmpty = $scope.code && $scope.code.toString().length > 0;
-            if ($scope.code && $scope.code.toString().length == 12) {
+            if ($scope.code && $scope.code.toString().length == 6) {
                 $scope.disabled = true;
                 registerService.doSave($scope.code).success(function () {
                     $rootScope.agentCode = $scope.code;
@@ -273,14 +273,14 @@
     })
     .controller('ordersCtrl', function ($rootScope, $scope, $location, $interval, registerMemberService, orderService, inviteGuestService,shareService) {
         $rootScope.bg = "bg-img";
-        $scope.hasPermission = false;
+        //$scope.hasPermission = false;
 
-        inviteGuestService.share().success(function () {
-            $scope.hasPermission = true;
-        })
-        .error(function () {
-            $scope.hasPermission = false;
-        });
+        //inviteGuestService.share().success(function () {
+        //    $scope.hasPermission = true;
+        //})
+        //.error(function () {
+        //    $scope.hasPermission = false;
+        //});
         registerMemberService.doGet().success(function () {
 
         }).error(function () {

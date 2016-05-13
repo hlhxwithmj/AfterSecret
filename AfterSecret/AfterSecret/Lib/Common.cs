@@ -255,19 +255,19 @@ namespace AfterSecret.Lib
 
         public static string GenerateTableCode(Random generator)
         {
-            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            var n = generator.Next(1, 99999).ToString("D5");
             return SubscribeConfig._Table_Invitee_Prefix + n;
         }
 
         public static string GenerateTicketCode(Random generator)
         {
-            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            var n = generator.Next(1, 99999).ToString("D5");
             return SubscribeConfig._Ticket_Invitee_Prefix + n;
         }
 
         public static string GenerateShareCode(Random generator)
         {
-            var n = generator.Next(1, int.MaxValue).ToString("D10");
+            var n = generator.Next(1, 99999).ToString("D5");
             return SubscribeConfig._shareUser_Prefix + n;
         }
 
@@ -276,7 +276,7 @@ namespace AfterSecret.Lib
             try
             {
                 var param = Common.DesEncrypt(openId);
-                var url = SubscribeConfig.DOMAIN + "/Static/CheckIn.html?param=" + param;
+                var url = param;
                 string path = AppDomain.CurrentDomain.BaseDirectory + SystemConfig.QRPATH;
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);

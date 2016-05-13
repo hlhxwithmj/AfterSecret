@@ -21,11 +21,13 @@ namespace AfterSecret.APIControllers
                     return Ok(new
                     {
                         src = SubscribeConfig.DOMAIN + "/Content/QR/" + ticket.QRCodePath,
-                        inviter = ticket.Invitee.ToString(),
-                        invitee = ticket.Invitation.Inviter.ToString(),
+                        invitee = ticket.Invitee.ToString(),
+                        inviter = ticket.Invitation.Inviter.ToString(),
                         ticketId = ticket.Id,
                         invitationType = ticket.InvitationType,
-                        inviteeId = ticket.InviteeId
+                        inviteeId = ticket.InviteeId,
+                        mobile = ticket.Invitee.Mobile,
+                        table = ticket.TableNo
                     });
                 else
                     return BadRequest("invite");

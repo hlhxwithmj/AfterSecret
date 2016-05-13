@@ -321,6 +321,7 @@ label {
         padding: 5px;
         display: inline-block;
         width: 100%;
+        /*font-size:25px;*/
     }
 
 .cover-msg {

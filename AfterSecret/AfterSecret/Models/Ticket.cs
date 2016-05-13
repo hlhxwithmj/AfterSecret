@@ -19,6 +19,9 @@ namespace AfterSecret.Models
 
         public InvitationType InvitationType { get; set; }
 
+        [MaxLength(4)]
+        public string TableNo { get; set; }
+
         [Required]
         [MaxLength(128)]
         public string QRCodePath { get; set; }

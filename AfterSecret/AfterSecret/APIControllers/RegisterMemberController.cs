@@ -24,13 +24,13 @@ namespace AfterSecret.APIControllers
                 {
                     result = new RegisterMember()
                     {
-                        AgentCode = model.AgentCode,
-                        Email = model.Email,
-                        FirstName = model.FirstName,
-                        Gender = model.Gender,
-                        LastName = model.LastName,
-                        Mobile = model.Mobile,
-                        Nationality = model.Nationality,
+                        AgentCode = model.AgentCode.Trim(),
+                        Email = model.Email.Trim(),
+                        FirstName = model.FirstName.Trim(),
+                        Gender = model.Gender.Trim(),
+                        LastName = model.LastName.Trim(),
+                        Mobile = model.Mobile.Trim(),
+                        Nationality = model.Nationality.Trim(),
                         Occupation = model.Occupation,
                         OpenId = OpenId,
                         WeChatID = model.WeChatID
@@ -43,13 +43,13 @@ namespace AfterSecret.APIControllers
                 }
                 else
                 {
-                    result.AgentCode = model.AgentCode;
-                    result.Email = model.Email;
-                    result.FirstName = model.FirstName;
-                    result.Gender = model.Gender;
-                    result.LastName = model.LastName;
-                    result.Mobile = model.Mobile;
-                    result.Nationality = model.Nationality;
+                    result.AgentCode = model.AgentCode.Trim();
+                    result.Email = model.Email.Trim();
+                    result.FirstName = model.FirstName.Trim();
+                    result.Gender = model.Gender.Trim();
+                    result.LastName = model.LastName.Trim();
+                    result.Mobile = model.Mobile.Trim();
+                    result.Nationality = model.Nationality.Trim();
                     result.Occupation = model.Occupation;
                     result.WeChatID = model.WeChatID;
                     result.EditTime = DateTime.Now;

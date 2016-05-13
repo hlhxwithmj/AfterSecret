@@ -17,10 +17,10 @@ namespace AfterSecret.Lib
         public const string myPURCHASE = "MYPURCHASE";
         public const string myTICKET = "MYTICKET";
         public const string INVITATION = "INVITATION";
-        public const string _seedUser_Prefix = "88";
-        public const string _Ticket_Invitee_Prefix = "16";
-        public const string _Table_Invitee_Prefix = "68";
-        public const string _shareUser_Prefix = "18";
+        public const string _seedUser_Prefix = "8";
+        public const string _Ticket_Invitee_Prefix = "6";
+        public const string _Table_Invitee_Prefix = "7";
+        public const string _shareUser_Prefix = "9";
     }
 
     public class PayConfig
@@ -36,12 +36,19 @@ namespace AfterSecret.Lib
         public const string APPID = "app_4G0GS0eH4uPSDqv9";
         public const string TESTSECRETKEY = "sk_test_eDWfj5T88yT4jvz5m9yLSyDG";
         public const string LIVESECRETKEY = "sk_live_TyTOyLWHyPK8jHSWb9nDOSWH";
-        public const string SUBJECT = "Secret Dinner";
+        public const string SUBJECT = "The Secret After Party";
     }
 
     public class SystemConfig
     {
         public const string QRPATH = "Content/QR/";
+    }
+
+    public class CheckIn
+    {
+        public static readonly string[] Members = {
+            "otb_8vti-ldLRin7ljtViTlAFEX4"
+        };
     }
 }
 

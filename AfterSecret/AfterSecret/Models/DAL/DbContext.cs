@@ -52,57 +52,68 @@ namespace AfterSecret.Models.DAL
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index ON dbo.Ticket(InviteeId)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index1 ON dbo.Invitation(TicketCode)");
             db.Database.ExecuteSqlCommand("CREATE UNIQUE INDEX unique_index2 ON dbo.Invitation(TableCode)");
-            //db.Item.Add(new Item()
-            //{
-            //    Seats = 1,
-            //    Name = "Event Ticket",
-            //    Remark = "",
-            //    Total = 500,
-            //    UnitPrice = 20,
-            //    Order = 10,
-            //    NeedInvite = true,
-            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
-            //});
+            db.Item.Add(new Item()
+            {
+                Seats = 1,
+                Name = "Entry Ticket",
+                Remark = "(Incl. 1 drink)",
+                Total = 999,
+                UnitPrice = 20,
+                Order = 10,
+                InvitationType = Constant.InvitationType.Ticket,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/entry.png"
+            });
 
-            //db.Item.Add(new Item()
-            //{
-            //    Seats = 4,
-            //    Name = "Table for 4 + 1 bottle of Wine",
-            //    Remark = "(including 10 event tickets)",
-            //    Total = 300,
-            //    UnitPrice = 30,
-            //    Order = 20,
-            //    NeedInvite = true,
-            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
-            //});
+            db.Item.Add(new Item()
+            {
+                Seats = 4,
+                Name = "Guest Table (4 pax)",
+                Remark = "(Incl. 2 bottles of Champagne + 1 spirit)",
+                Total = 999,
+                UnitPrice = 30,
+                Order = 20,
+                InvitationType = Constant.InvitationType.Table,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/guest.png"
+            });
 
-            //db.Item.Add(new Item()
-            //{
-            //    Seats = 8,
-            //    Name = "Table for 8 + 1 bottle of Wine",
-            //    Remark = "(including 8 event tickets)",
-            //    Total = 500,
-            //    UnitPrice = 50,
-            //    Order = 30,
-            //    NeedInvite = true,
-            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg.jpg"
-            //});
+            db.Item.Add(new Item()
+            {
+                Seats = 8,
+                Name = "VIP Table (8 pax)",
+                Remark = "(Incl. 4 bottles of Champagne + 1 spirit)",
+                Total = 999,
+                UnitPrice = 50,
+                Order = 30,
+                InvitationType = Constant.InvitationType.Table,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/vip.png"
+            });
 
-            //db.Item.Add(new Item()
-            //{
-            //    Seats = 10,
-            //    Name = "Table for 10 + 1 bottle of Wine",
-            //    Remark = "(including 18 event tickets)",
-            //    Total = 700,
-            //    UnitPrice = 80,
-            //    Order = 40,
-            //    NeedInvite = true,
-            //    ImgSrc = SubscribeConfig.DOMAIN + "/static/image/bg-star.jpg"
-            //});
-            for (int i = 0; i < 20; i++)
+            db.Item.Add(new Item()
+            {
+                Seats = 8,
+                Name = "VVIP Table (8 pax)",
+                Remark = "(Incl. 6 bottles of Champagne + 1 spirit)",
+                Total = 999,
+                UnitPrice = 80,
+                Order = 40,
+                InvitationType = Constant.InvitationType.Table,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/vvip.png"
+            });
+            db.Item.Add(new Item()
+            {
+                Seats = 12,
+                Name = "VVVIP Table (12 pax)",
+                Remark = "(Incl. 10 bottles of Champagne + 2 spirits)",
+                Total = 999,
+                UnitPrice = 80,
+                Order = 50,
+                InvitationType = Constant.InvitationType.Table,
+                ImgSrc = SubscribeConfig.DOMAIN + "/static/image/vvvip.png"
+            });
+            for (int i = 0; i < 100; i++)
             {
                 Random generator = new Random(i);
-                var n = generator.Next(1, int.MaxValue).ToString("D10");
+                var n = generator.Next(1, 99999).ToString("D5");
                 db.AgentCodeList.Add(new AgentCodeList() { AgentCode = SubscribeConfig._seedUser_Prefix + n });
             }
 
