@@ -9,6 +9,8 @@ using Pingpp.Models;
 using Pingpp.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -225,8 +227,12 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
         {
             using (var uw = new UnitOfWork())
             {
-                var list = uw.RegisterMemberRepository.dbSet.OrderBy(a => a.Id).Skip(50).ToList();
-                return View(list);
+                string sql = "EXEC Manage";
+                SqlParameter[] param = new SqlParameter[1];
+                param[0] = new SqlParameter("@zhangtaoCycleId", SqlDbType.Int);
+                param[0].Value = 1;
+                var dt = Common.GetDataTable(sql,param);
+                return View(dt);
             }
         }
 

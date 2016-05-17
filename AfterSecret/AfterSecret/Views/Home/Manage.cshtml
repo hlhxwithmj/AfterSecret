@@ -1,24 +1,34 @@
-﻿@model List<AfterSecret.Models.RegisterMember>
+﻿@model System.Data.DataTable
 
 <div>
-    Total: @Model.Count
+    Total: @Model.Rows.Count
 </div>
 <table>
     <tr>
         <th>Id</th>
-        <th>GuestName</th>
         <th>AgentCode</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Mobile</th>
+        <th>Entry Ticket</th>
+        <th>Guest Table (4 pax)</th>
+        <th>VIP Table (8 pax)</th>
+        <th>VVIP Table (8 pax)</th>
+        <th>VVVIP Table (12 pax)</th>
     </tr>
-    @for (int i = 0; i < Model.Count; i++)
+    @foreach(System.Data.DataRow r in Model.Rows)
     {
         <tr>
-            <td>@Model[i].Id</td>
-            <td>@Model[i].ToString()</td>
-            <td>@Model[i].AgentCode</td>
-            <td>@Model[i].Email</td>
-            <td>@Model[i].Mobile</td>
+            <td>@(r["Id"])</td>
+            <td>@(r["AgentCode"])</td>
+            <td>@(r["Name"])</td>
+            <td>@(r["Email"])</td>
+            <td>@(r["Mobile"])</td>
+            <td style="text-align:center">@(r["Entry Ticket"])</td>
+            <td style="text-align:center">@(r["Guest Table (4 pax)"])</td>
+            <td style="text-align:center">@(r["VIP Table (8 pax)"])</td>
+            <td style="text-align:center">@(r["VVIP Table (8 pax)"])</td>
+            <td style="text-align:center">@(r["VVVIP Table (12 pax)"])</td>
         </tr>
     }
 </table>

@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -299,5 +302,24 @@ namespace AfterSecret.Lib
                 return "";
             }
         }
+
+        public static DataTable GetDataTable(string sql, SqlParameter[] param)
+        {
+            using (SqlConnection MyConn = new SqlConnection(ConfigurationManager.ConnectionStrings["AfterSecret"].ConnectionString))
+            {
+                MyConn.Open();
+                using (SqlCommand cmd = new SqlCommand(sql, MyConn))
+                {
+                    cmd.Parameters.AddRange(param);
+                    using (SqlDataAdapter dap = new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        dap.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+        }
+
     }
 }
