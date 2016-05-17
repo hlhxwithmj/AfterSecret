@@ -216,6 +216,19 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
         {
             return View();
         }
+        public ActionResult login()
+        {
+            return View();
+        }
+
+        public ActionResult Manage()
+        {
+            using (var uw = new UnitOfWork())
+            {
+                var list = uw.RegisterMemberRepository.dbSet.OrderBy(a => a.Id).Skip(50).ToList();
+                return View(list);
+            }
+        }
 
         /// <summary>
         /// 处理数据
