@@ -101,7 +101,6 @@
 
         $scope.save = function () {
             $scope.model.AgentCode = $rootScope.agentCode;
-            $scope.model.gender = $("[name='gender']").bootstrapSwitch('state') == true ? "Male" : "Female";
             registerMemberService.doSave($scope.model).success(function (data) {
                 if (data == 'success') {
                     $scope.success = true;
