@@ -10,7 +10,6 @@ using System.Web.Security;
 
 namespace AfterSecret.APIControllers
 {
-    [ApiAuthorize]
     public class WxConfigController : BaseApiController
     {
         public IHttpActionResult Get(string url)

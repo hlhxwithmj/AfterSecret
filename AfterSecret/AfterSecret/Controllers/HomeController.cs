@@ -236,6 +236,11 @@ lAynO+E3hCXvcdt0PqzS1DH9hq1fmP4hBxs9x6+ufeflg+qs/cXo49zeyr1Cv28u
             }
         }
 
+        public ActionResult CheckIn()
+        {
+            return View();
+        }
+
         /// <summary>
         /// 处理数据
         /// </summary>

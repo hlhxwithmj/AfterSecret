@@ -1,0 +1,139 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en-us" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CheckIn</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Static/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-switch.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/jweixin-1.0.0.js"></script>
+</head>
+<body ng-app="WeChat" ng-controller="MainCtrl" ui-prevent-touchmove-defaults="">
+    <div style="overflow:auto;height:100%;">
+        <div class="loading" ng-show="hasPendingRequests()">
+            <div>
+                <img style="max-width:80%;" src="~/Static/image/Loading.gif" />
+            </div>
+        </div>
+        <!-- App Body -->
+        <div class="checkin-container">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">门票序列号</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.id" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">门票类型</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.type" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">客人姓名</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.guest" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">手机号码</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.mobile" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">桌子主人</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.host" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">桌号</label>
+                    <div class="col-md-7">
+                        <input type="text" readonly class="form-control" ng-model="model.table" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">验票结果</label>
+                    <div class="col-md-7">
+                        <input class="form-control" readonly ng-model="model.msg" ng-style="{background_color: color}" />
+                    </div>
+                </div>
+                <center>
+                    <button type="button" class="btn btn-default btn-lg" ng-click="scanQRCode();">
+                        <span class="glyphicon glyphicon-qrcode">  扫码验证</span>
+                    </button>
+                </center>
+            </form>
+        </div>
+    </div><!-- ~ .app -->
+</body>
+</html>
+<script>
+    var app = angular.module("WeChat", []);
+    app.controller("MainCtrl", function ($scope, $http, $location) {
+        $scope.color = 'initial';
+        $scope.scanQRCode = function () {
+            wx.scanQRCode({
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    $http({
+                        method: 'get',
+                        url: '/api/checkin',
+                        params: {
+                            key: result
+                        }
+                    }).success(function (data) {
+                        $scope.model = data;
+                        $scope.color = $scope.model.success == 0 ? 'red' : 'green';
+                        $scope.model.msg = $scope.model.success == 0 ? '已经入场,请确认' : $scope.model.success == 1 ? '欢迎入场' : ''
+                    }).error(function (data) {
+                        alert(data.Message);
+                    });
+                }
+            });
+        };
+
+        function initWx() {
+            $http({
+                method: 'get',
+                url: '/api/wxConfig',
+                params: {
+                    url: $location.absUrl()
+                }
+            }).success(function (data) {
+                wx.config({
+                    //debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: data.appId, // 必填，公众号的唯一标识
+                    timestamp: data.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                    signature: data.signature,// 必填，签名，见附录1
+                    jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+            });
+        }
+        initWx();
+    });
+</script>
+
+<style>
+    div, span {
+        font-family: 'Microsoft YaHei';
+    }
+
+    .checkin-container {
+        padding: 50px;
+    }
+</style>
